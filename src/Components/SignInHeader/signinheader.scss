@@ -1,0 +1,106 @@
+#sign-in-header {
+
+    & .banner {
+        position: relative;
+
+        & .banner-wapper {
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.459);
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        & .form-sign-in {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            height: 500px;
+            width: 450px;
+            border-radius: 10px;
+            background-color: rgba(0, 0, 0, 0.699);
+            padding: 70px 50px;
+            font-family: 'Noto Sans Tai Viet', sans-serif;
+            color: rgb(233, 233, 233);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            & .option {
+                margin: 5px 0;
+            }
+
+            & h5 {
+                font-size: 19px;
+                font-weight: bold;
+            }
+
+            & .message {
+                font-size: 14px;
+                margin-bottom: 10px;
+            }
+
+            & .btn-sign-in {
+                padding: 8px 50px;
+                font-size: 17px;
+                color: white;
+                background-color: red;
+                font-weight: bold;
+                margin: 10px 0;
+            }
+
+            & .input-email {
+                width: 100%;
+                position: relative;
+
+                & .lbl-email-address {
+                    position: absolute;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    left: 15px;
+                    font-size: 15px;
+                    transition: 0.2s;
+                    font-family: 'Noto Sans Tai Viet', sans-serif;
+
+                    &-focused {
+                        font-size: 12px;
+                        top: 33%;
+                        color: #d3d3d3;
+                    }
+                }
+
+                & .txt-email-sign-up {
+                    background-color: #34343496;
+                    color: white;
+                    height: 52px;
+                    width: 100%;
+                    margin: 10px 0;
+                    border: 1px solid #bbbbbb;
+                    padding-left: 15px;
+                    padding-top: 15px;
+                    border-radius: 5px;
+                    font-size: 14px;
+                    font-family: 'Noto Sans Tai Viet', sans-serif;
+
+                    &:focus {
+                        outline: 0;
+                    }
+                }
+            }
+        }
+
+    }
+
+    & .header {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        background-color: #dbdbdb00;
+        z-index: 2;
+        padding: 25px 50px 0 50px;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+}

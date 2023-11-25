@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tai+Viet&family=Righteous&display=swap');
+
+#public--header {
+    position: relative;
+    overflow: hidden;
+    border-bottom: 5px solid #2e2e2e;
+
+    & .header {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        background-color: #dbdbdb00;
+        z-index: 2;
+        padding: 25px 50px 0 50px;
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        & .sign--parent {
+            display: flex;
+            justify-content: end;
+            align-items: center;
+
+
+            & button {
+                margin: 3px;
+                font-family: 'Noto Sans Tai Viet', sans-serif;
+                font-weight: bold;
+                border-radius: 5px;
+                padding: 6px 15px;
+                font-size: 14px;
+                border: 0;
+            }
+
+            & .sign-in {
+                background-color: red;
+                color: white;
+            }
+
+            & .sign-up {
+                background: 0;
+                color: white;
+                border: 2px solid #dbdbdb;
+            }
+        }
+    }
+
+    & #banner--public {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: auto;
+        flex-direction: column;
+
+
+        & .banner {
+            width: 100%;
+
+            & .wapper--banner {
+                background-color: rgba(0, 0, 0, 0.459);
+                width: 100%;
+                height: 100%;
+                z-index: 1;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+        }
+
+        & .greeting {
+            z-index: 1;
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translateY(-50%) translateX(-50%);
+            color: white;
+            font-family: 'Noto Sans Tai Viet', sans-serif;
+            text-align: center;
+
+            & .message--1 {
+                font-size: 24px;
+                line-height: 45px;
+            }
+
+            & .message--2 {
+                font-size: 40px;
+                font-weight: 800;
+            }
+
+            & .sign-up-now {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                & .input-email {
+                    width: 300px;
+                    position: relative;
+
+                    & .lbl-email-address {
+                        position: absolute;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        left: 15px;
+                        font-size: 15px;
+                        transition: 0.2s;
+                        font-family: 'Noto Sans Tai Viet', sans-serif;
+
+                        &-focused {
+                            font-size: 12px;
+                            top: 33%;
+                            color: #d3d3d3;
+                        }
+                    }
+
+                    & .txt-email-sign-up {
+                        background-color: #34343496;
+                        color: white;
+                        height: 52px;
+                        width: 300px;
+                        margin: 10px 0;
+                        border: 1px solid #bbbbbb;
+                        padding-left: 15px;
+                        padding-top: 15px;
+                        border-radius: 5px;
+                        font-size: 14px;
+                        font-family: 'Noto Sans Tai Viet', sans-serif;
+
+                        &:focus {
+                            outline: 0;
+                        }
+                    }
+                }
+
+                & button {
+                    height: 52px;
+                    margin: 0 10px;
+                    border: 0;
+                    padding: 5px 15px;
+                    border-radius: 5px;
+                    background-color: red;
+                    color: white;
+                    font-weight: 800;
+                    font-family: 'Noto Sans Tai Viet', sans-serif;
+                }
+            }
+        }
+    }
+}

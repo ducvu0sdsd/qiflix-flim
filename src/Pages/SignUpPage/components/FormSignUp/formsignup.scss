@@ -1,0 +1,109 @@
+#form-sign-up {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & .form {
+        width: 550px;
+        display: flex;
+        flex-direction: column;
+        font-family: 'Noto Sans Tai Viet', sans-serif;
+        overflow: hidden;
+
+        & .form-step-parent {
+            display: flex;
+            width: 300%;
+            transition: 0.5s;
+
+            & .form-step {
+                padding: 0 10px;
+                width: 550px;
+                display: flex;
+                flex-direction: column;
+            }
+        }
+
+        & span {
+            font-size: 16px;
+        }
+
+        & .process {
+            height: 10px;
+            width: 100%;
+            display: flex;
+            margin: 10px 0;
+
+            & .process-child {
+                width: 50px;
+                background-color: #ebebeb;
+                height: 100%;
+                transition: 0.5s;
+                margin: 0 3px;
+                border-radius: 5px;
+                cursor: pointer;
+
+                &-active {
+                    background-color: #999;
+                }
+            }
+        }
+
+        & label {
+            font-weight: 550;
+            line-height: 25px;
+
+        }
+
+        & .lbl-email {
+            font-weight: 800;
+            line-height: 25px;
+            margin-bottom: 10px;
+        }
+
+        & .input-group {
+            position: relative;
+            width: 100%;
+            margin-top: 15px;
+
+            & .lbl-password-focus {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                left: 20px;
+                font-weight: bold;
+                color: #999;
+                transition: 0.2s;
+                font-size: 15px;
+
+                &ed {
+                    font-size: 13px;
+                    top: 27%;
+                    left: 20px;
+                }
+            }
+
+            & .txt-password {
+                height: 60px;
+                width: 100%;
+                border-radius: 3px;
+                border: 1px solid #dbdbdb;
+                padding: 0 20px;
+                padding-top: 15px;
+
+                &:focus {
+                    outline: 0;
+                }
+            }
+        }
+
+        & .btn-next {
+            margin: 15px 0;
+            height: 50px;
+            font-size: 20px;
+            border: 0;
+            background-color: red;
+            color: white;
+            border-radius: 5px;
+        }
+    }
+}

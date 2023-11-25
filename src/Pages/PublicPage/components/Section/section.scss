@@ -1,0 +1,30 @@
+#section-public-page {
+    border-bottom: 5px solid #2e2e2e;
+    border-top: 5px solid #2e2e2e;
+    height: 550px;
+    background-color: black;
+    overflow: hidden;
+    padding: 0 250px;
+    display: flex;
+    justify-content: center;
+
+    & .section-child {
+        width: 50%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        color: white;
+
+        & h2 {
+            width: 100%;
+            text-align: start;
+        }
+
+        & p {
+            margin-top: 5px;
+            font-size: 18px;
+        }
+    }
+}
