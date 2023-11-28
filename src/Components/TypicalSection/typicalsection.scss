@@ -26,7 +26,7 @@
             z-index: 1;
 
             & h2 {
-                font-size: 45px;
+                font-size: 40px;
                 font-weight: bold;
                 color: white;
                 font-family: 'Roboto', sans-serif;
@@ -49,8 +49,8 @@
                 align-items: center;
 
                 & .btn-parent {
-                    padding: 7px 30px;
-                    font-size: 20px;
+                    padding: 5px 30px;
+                    font-size: 18px;
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -71,7 +71,7 @@
                 }
 
                 & .btn-detail {
-                    padding: 5px 28px;
+                    padding: 3px 28px;
                     background: 0;
                     border: 2px solid white;
                     color: white;
