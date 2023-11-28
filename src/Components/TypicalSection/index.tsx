@@ -29,7 +29,7 @@ const TypicalSection = () => {
                 <div className='trailer-wrapper'></div>
                 <div className='info'>
                     <h2>{datas[0].title.split(' - ')[1]}</h2>
-                    <div className='description'>{FilterText(datas[0].description, 115)}</div>
+                    <div className='description'>{FilterText(datas[0].description, 120)}</div>
                     <div className="btns">
                         <Link className='link' to={`/film-viewing-page/${datas[0].url}`}><button className='btn-parent btn-watch'><i className='bx bx-play'></i> Watch Now</button></Link>
                         <button className='btn-parent btn-detail'><i className='bx bx-info-circle' ></i> Detail</button>

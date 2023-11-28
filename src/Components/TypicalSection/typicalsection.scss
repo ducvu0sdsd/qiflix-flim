@@ -32,9 +32,9 @@
             }
 
             & .description {
-                font-size: 15px;
+                font-size: 14px;
                 color: white;
-                width: 550px;
+                width: 570px;
                 height: 160px;
                 display: flex;
                 flex-wrap: wrap;
@@ -63,14 +63,14 @@
                 }
 
                 & .btn-watch {
-                    background-color: red;
+                    background-color: rgb(234, 0, 0);
                     color: white;
                     font-weight: bold;
                     border: 0;
                 }
 
                 & .btn-detail {
-
+                    padding: 5px 28px;
                     background: 0;
                     border: 2px solid white;
                     color: white;
