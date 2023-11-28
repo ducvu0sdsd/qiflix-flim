@@ -12,10 +12,12 @@ export interface MousePositionType {
 export interface ViewProps {
     url: string,
     title: string,
-    name: string
+    name: string,
+    setCurrentEpisode: React.Dispatch<React.SetStateAction<number>>;
+    currentEpisode: number
 }
 
-const View = ({ url, title, name }: ViewProps) => {
+const View = ({ url, title, name, currentEpisode, setCurrentEpisode }: ViewProps) => {
 
     //state
     const [currentQuality, setCurrentQuality] = useState<string>('')
@@ -24,9 +26,8 @@ const View = ({ url, title, name }: ViewProps) => {
     const [mouseDownStick, setMouseDownStick] = useState<boolean>(false)
     const [duration, setDuration] = useState<number>(0)
     const [bufferTime, setBufferTime] = useState<number>(100)
-    const [end, setEnd] = useState<boolean>(false)
     const [controls, setControls] = useState<boolean>(true)
-    const [play, setPlay] = useState<boolean>(false)
+    const [play, setPlay] = useState<boolean>(true)
     const [mousePosition, setMousePosition] = useState<MousePositionType>({ x: 0, y: 0 })
 
     //ref
@@ -87,8 +88,18 @@ const View = ({ url, title, name }: ViewProps) => {
 
     useEffect(() => {
         const process = $('.process')
+        const btnSkip = $('#view .btn-skip')
         const processComplete = $('.process__complete').get(0)
-        if (processComplete && process.length > 0) {
+        if (processComplete && process.length > 0 && btnSkip.length > 0) {
+            if (duration !== 0 && bufferTime !== 0) {
+                if (bufferTime / duration > 0.985) {
+                    btnSkip.css('display', 'block')
+                } else {
+                    btnSkip.css('display', 'none')
+                }
+            } else {
+                btnSkip.css('display', 'none')
+            }
             let positionTime: number = (bufferTime / duration)
             const widthProcess: number = parseInt(process.css('width').replace('px', ''))
             processComplete.style.width = `${positionTime * widthProcess}px`
@@ -161,8 +172,7 @@ const View = ({ url, title, name }: ViewProps) => {
     }
 
     const handleEndVideo = (e: any) => {
-        e.target.pause()
-        setEnd(true)
+        setCurrentEpisode(p => p + 1)
     }
 
     const handleChange = (e: any) => {
@@ -201,7 +211,7 @@ const View = ({ url, title, name }: ViewProps) => {
         if (processStick && processComplete && process.length > 0) {
             if (mouseDownStick) {
                 const widthProcess: number = parseInt(process.css('width').replace('px', ''))
-                if (e.clientX >= 50 && e.clientX <= widthProcess + 50) {
+                if (e.clientX >= 50 && e.clientX <= widthProcess + 25) {
                     clearInterval(interval.current!)
                     processStick.style.marginLeft = e.clientX - 50 - (processComplete.style.width.replace('px', '') == '' ? 0 : parseInt(processComplete.style.width.replace('px', ''))) + 'px'
                 }
@@ -223,11 +233,6 @@ const View = ({ url, title, name }: ViewProps) => {
             const widthProcess: number = parseInt(process.css('width').replace('px', ''))
             setBufferTime(buffer / widthProcess * duration)
             video.seek(buffer / widthProcess * duration)
-            setTimeout(() => {
-                interval.current = setInterval(() => {
-                    setBufferTime((p) => p + 1)
-                }, 1000)
-            }, 200);
         }
     }
 
@@ -271,8 +276,11 @@ const View = ({ url, title, name }: ViewProps) => {
         }
     }
 
-    const handleProcess = (e: any) => {
-        console.log(e)
+    const handleWaiting = (e: any) => {
+        clearInterval(interval.current!)
+        interval.current = setInterval(() => {
+            setBufferTime(e.target.currentTime)
+        }, 1000)
     }
 
     return (
@@ -291,6 +299,8 @@ const View = ({ url, title, name }: ViewProps) => {
                     autoplay={true}
                     width='100%'
                     height='100%'
+                    onWaiting={(e: any) => handleWaiting(e)}
+                    onPause={() => setPlay(false)}
                     onAdStart={() => handleStartAD(true)}
                     onAdEnd={() => handleStartAD(false)}
                     onVideoStart={(e: any) => handleStartVideo(e)}
@@ -299,7 +309,7 @@ const View = ({ url, title, name }: ViewProps) => {
                     onApiReady={(e: any) => handleReadyVideo(e)}
                 />
                 <div className="wrapper-video"></div>
-
+                <button onClick={() => setCurrentEpisode(p => p + 1)} className="btn-skip">Next Episode &gt;</button>
                 <div onMouseOver={() => handleMouseTop(true)} onMouseOut={() => handleMouseTop(false)} className="controls-top-video controls">
                     <span>{title}</span><div className="box" /><span>{name}</span>
                 </div>
