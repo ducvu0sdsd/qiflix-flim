@@ -5,11 +5,14 @@ import Informations from './components/Infomations'
 import View from './components/View'
 import './filmviewingpage.scss'
 import React, { useEffect, useState } from 'react'
-import { datas } from '../../data'
+import { DataType } from '../../data'
+interface FilmViewingPageProp {
+    data: DataType
+}
 
-const FilmViewingPage = () => {
+const FilmViewingPage = ({ data }: FilmViewingPageProp) => {
 
-    const currentFilm = datas[0]
+    const currentFilm = data
     const [currentEpisode, setCurrentEpisode] = useState<number>(1)
 
     useEffect(() => {

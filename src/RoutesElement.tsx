@@ -7,6 +7,7 @@ import SignUpPage from './Pages/SignUpPage';
 import ManageProfilePage from './Pages/ManageProfilePage';
 import HomePage from './Pages/HomePage';
 import FilmViewingPage from './Pages/FilmViewingPage';
+import { datas } from './data';
 
 export interface RoutesType {
     name: string,
@@ -21,7 +22,9 @@ function RoutesElement() {
         { name: 'sign-up-page', component: <SignUpPage /> },
         { name: 'manage-profile-page', component: <ManageProfilePage /> },
         { name: 'home-page', component: <HomePage /> },
-        { name: 'film-viewing-page', component: <FilmViewingPage /> }
+        ...datas.map((data, index) => {
+            return { name: `film-viewing-page/${data.url}`, component: <FilmViewingPage data={data} /> }
+        })
     ]
 
     return (

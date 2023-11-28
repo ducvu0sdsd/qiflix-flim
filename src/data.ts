@@ -26,7 +26,7 @@ export const datas: DataType[] = [
         actors: ['Park Seo Joon', 'Park Min Young'],
         url: 'what-wrong-with-secretary-kim',
         thumbnail: 'https://static.vieon.vn/vieplay-image/carousel_web_v4/2020/08/25/9n58gaa6_1920x1080-carousel-saothethukykim.jpg',
-        trailerURL: 'https://drive.google.com/file/d/1jQcLBPqjSMkvEoN6AvVog0ruZhSzKuOY/view?usp=sharing',
+        trailerURL: 'https://drive.google.com/uc?export=download&id=1jQcLBPqjSMkvEoN6AvVog0ruZhSzKuOY',
         videosURL: [
             { num: 1, name: 'Episode 1', url: 'x8pc9z1' },
             { num: 2, name: 'Episode 2', url: 'x8pc9z2' },
