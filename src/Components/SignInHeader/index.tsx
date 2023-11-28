@@ -3,11 +3,15 @@ import './signinheader.scss'
 import React, { useState } from 'react'
 import Banner from '../../resources/banner.png'
 import Qiflix from '../../resources/qiflix.png'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const SignInHeader = () => {
-
+    const navigate = useNavigate()
     const [focuses, setFocuses] = useState<{ focusAddress: boolean, focusPassword: boolean }>({ focusAddress: false, focusPassword: false })
+
+    const handleSignIn = () => {
+        navigate('/manage-profile-page')
+    }
 
     return (
         <header id='sign-in-header' className='col-lg-12'>
@@ -30,7 +34,7 @@ const SignInHeader = () => {
                         <span className={`lbl-email-address ${(focuses.focusPassword) ? 'lbl-email-address-focused' : ''}`}>Password</span>
                         <input onFocus={() => setFocuses({ focusAddress: focuses.focusAddress, focusPassword: true })} onBlur={(e) => { e.target.value === '' && setFocuses({ focusAddress: focuses.focusAddress, focusPassword: false }) }} type='password' className='txt-email-sign-up' />
                     </div>
-                    <button className='btn-sign-in'>Sign in</button>
+                    <button onClick={() => handleSignIn()} className='btn-sign-in'>Sign in</button>
                     <span className='option'>Forgot Password ?</span>
                     <span className='option'>Don't have an account? <b><Link to={'/sign-up-page'}>Sign Up</Link></b></span>
                 </div>

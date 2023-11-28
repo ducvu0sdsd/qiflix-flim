@@ -12,7 +12,7 @@
 
         & .form-step-parent {
             display: flex;
-            width: 300%;
+            width: 400%;
             transition: 0.5s;
 
             & .form-step {
@@ -20,6 +20,10 @@
                 width: 550px;
                 display: flex;
                 flex-direction: column;
+
+                & .notify--success {
+                    margin: 50px;
+                }
             }
         }
 

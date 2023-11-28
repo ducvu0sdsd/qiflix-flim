@@ -1,0 +1,25 @@
+.list-film {
+    padding-left: 40px;
+    font-family: 'Roboto', sans-serif;
+
+    & h2 {
+        color: white;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+
+    & .wrapper-film {
+        overflow-x: hidden;
+        overflow-y: initial;
+        width: 100%;
+        height: 190px;
+        display: flex;
+
+        & .films {
+            display: flex;
+            width: auto;
+            transition: transform 0.5s ease;
+
+        }
+    }
+}

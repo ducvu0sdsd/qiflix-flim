@@ -1,0 +1,36 @@
+#manage-profile-page {
+    background-color: black;
+    font-family: 'Noto Sans Tai Viet', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    & h1 {
+        color: white;
+    }
+
+    & .profiles {
+        display: flex;
+        margin-top: 30px;
+        justify-content: center;
+
+        & .profile__child {
+            width: 130px;
+            height: 130px;
+            overflow: hidden;
+            border-radius: 50%;
+            margin: 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #4c4c4c;
+
+            & i {
+                color: rgb(224, 224, 224);
+                font-size: 100px;
+            }
+        }
+    }
+}

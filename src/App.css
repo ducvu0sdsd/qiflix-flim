@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Calistoga&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+/* font-family: 'Roboto', sans-serif; */
+
+.App {
+    font-family: 'Noto Sans Tai Viet', sans-serif;
+    background-color: black;
+}
+
+.link {
+    text-decoration: none;
+    color: rgb(38, 38, 38);
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #000000;
+    border-radius: 30px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #2f2f2f;
+}
+
+/* Cho Microsoft Edge và Internet Explorer */
+/* -ms-overflow-style: none; */

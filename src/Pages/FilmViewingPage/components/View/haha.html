@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Move Element with Mouse</title>
+  <style>
+    #movableElement {
+      width: 50px;
+      height: 50px;
+      background-color: blue;
+      position: absolute;
+      cursor: grab;
+    }
+  </style>
+</head>
+<body>
+
+<div id="movableElement"></div>
+
+<script>
+  var isDragging = false;
+  var offset = { x: 0, y: 0 };
+
+  var movableElement = document.getElementById('movableElement');
+
+  // Lắng nghe sự kiện chuột khi nhấn xuống để bắt đầu di chuyển
+  movableElement.addEventListener('mousedown', function (e) {
+    isDragging = true;
+    offset.x = e.clientX - movableElement.getBoundingClientRect().left;
+    offset.y = e.clientY - movableElement.getBoundingClientRect().top;
+    movableElement.style.cursor = 'grabbing';
+  });
+
+  // Lắng nghe sự kiện chuột khi thả ra để kết thúc di chuyển
+  document.addEventListener('mouseup', function () {
+    isDragging = false;
+    movableElement.style.cursor = 'grab';
+  });
+
+  // Lắng nghe sự kiện chuột khi di chuyển để cập nhật vị trí của phần tử
+  document.addEventListener('mousemove', function (e) {
+    if (isDragging) {
+      movableElement.style.left = e.clientX - offset.x + 'px';
+      movableElement.style.top = e.clientY - offset.y + 'px';
+    }
+  });
+</script>
+
+</body>
+</html>

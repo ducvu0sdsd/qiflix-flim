@@ -1,0 +1,179 @@
+#informations {
+    border-bottom: 5px solid #2e2e2e;
+    border-top: 5px solid #2e2e2e;
+    background-color: black;
+    overflow: hidden;
+    width: 100%;
+    padding: 30px 40px;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+
+    & .section-child {
+        padding: 0 20px;
+
+        &-left {
+            display: flex;
+            flex-direction: column;
+
+            & .title {
+                font-size: 17px;
+                color: white;
+                line-height: 35px;
+                display: flex;
+                align-items: center;
+                font-weight: 700;
+
+                & span {
+                    font-size: 16px;
+                    font-weight: 500;
+                }
+
+                & .box {
+                    border-left: 2px solid #999;
+                    height: 15px;
+                    margin: 0 10px;
+                }
+            }
+
+            & .description {
+                margin-top: 10px;
+                font-size: 14px;
+                color: white;
+            }
+        }
+
+        &-right {
+
+            & .btns {
+                display: flex;
+                margin-bottom: 30px;
+
+                & .btn-action {
+                    display: flex;
+                    flex-direction: column;
+                    font-size: 14px;
+                    color: white;
+                    align-items: center;
+                    background: 0;
+                    border: 0;
+                    margin-right: 20px;
+
+                    & i {
+                        font-size: 30px;
+                        margin-bottom: 7px;
+                    }
+                }
+            }
+
+            & .info-item {
+
+                color: white;
+                font-weight: bold;
+                margin: 10px 0;
+
+                & span {
+                    font-weight: 500;
+                    color: rgb(127, 127, 127);
+                    margin-right: 10px;
+                }
+            }
+        }
+    }
+
+    .episode-list {
+        padding: 40px 20px;
+
+        & .title {
+            color: white;
+            font-weight: bold;
+            font-size: 25px;
+
+            & span {
+                font-size: 15px;
+                margin-left: 10px;
+            }
+        }
+
+        & .session-episode {
+            color: rgb(127, 127, 127);
+            font-weight: bold;
+            font-size: 14px;
+            margin: 10px 0;
+
+            & span {
+                cursor: pointer;
+                margin: 0 10px;
+            }
+
+            & .active {
+                color: white;
+            }
+        }
+
+        & .wrapper-episodes {
+            position: relative;
+            box-shadow: inset -70px 0px 30px 0px rgb(0, 0, 0);
+
+            & .btn-action {
+                position: absolute;
+                top: 50%;
+                font-size: 25px;
+                transform: translateY(-50%);
+                color: white;
+                background-color: #9999992e;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 50px;
+                width: 50px;
+                border: 0;
+
+                &-prev {
+                    left: -55px;
+                }
+
+                &-next {
+                    right: -55px;
+                }
+            }
+
+            & .episodes {
+                display: flex;
+                margin-top: 30px;
+                overflow: hidden;
+                // background-color: aqua;
+
+                & .wrapper-episode {
+                    display: flex;
+                    transition: 0.5s;
+
+                    & .episode-item {
+                        width: 250px;
+                        display: flex;
+                        flex-direction: column;
+                        font-size: 16px;
+                        margin-right: 20px;
+                        cursor: pointer;
+
+                        & .episode-info {
+                            color: white;
+                            margin: 7px 0;
+                            font-weight: bold;
+                            display: flex;
+                            flex-direction: column;
+                            height: 60px;
+                            justify-content: space-evenly;
+
+                            & .duration {
+                                font-size: 13px;
+                                font-weight: 500;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,144 @@
+#view {
+    .daily-wrapper {
+        width: 100%;
+        height: 100%;
+        position: relative;
+
+        // & .video {
+        //     z-index: 3;
+        // }
+
+        & .wrapper-video {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        & .btn--play-pause {
+            height: 70px;
+            width: 70px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 0;
+            overflow: hidden;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.441);
+            transition: 0.3s;
+
+            & i {
+                color: white;
+                font-size: 50px;
+            }
+        }
+
+        & .controls {
+            position: absolute;
+            z-index: 1;
+
+            &-top-video {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                transition: 0.3s;
+                height: 80px;
+                display: flex;
+                align-items: center;
+                padding-left: 20px;
+                padding-top: 0px;
+                padding-bottom: 20px;
+                box-shadow: inset 0px 60px 20px 0px rgba(0, 0, 0, 0.573);
+
+                & .box {
+                    border-left: 3px solid #999;
+                    height: 30px;
+                }
+
+                & span {
+                    line-height: 30px;
+                    font-size: 18px;
+                    color: white;
+                    margin: 5px;
+                    padding: 0 10px;
+                }
+            }
+
+            &-bottom-video {
+                bottom: 0;
+                left: 0;
+                height: 80px;
+                padding-top: 10px;
+                box-shadow: inset 0px -50px 20px 0px rgba(0, 0, 0, 0.573);
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                transition: 0.3s;
+                opacity: 0;
+
+                & .btns {
+                    display: flex;
+                    justify-content: end;
+                    align-items: center;
+                    margin-top: 10px;
+                    padding-right: 10px;
+
+                    & .qualities {
+                        color: white;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        margin: 0 10px;
+                    }
+
+                    & .btn-volume,
+                    & .btn-fullscreen {
+                        background: 0;
+                        border: 0;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        margin-right: 5px;
+
+                        & i {
+                            font-size: 30px;
+                            color: white;
+
+                        }
+                    }
+                }
+
+                & .process {
+                    height: 3px;
+                    width: 90%;
+                    background-color: rgb(137, 137, 137);
+                    margin: 0 40px;
+                    margin-top: 10px;
+                    display: flex;
+                    align-items: center;
+
+                    &__stick {
+                        border-radius: 5px;
+                        width: 25px;
+                        height: 25px;
+                        background-color: rgba(255, 255, 255, 0.681);
+                        cursor: grabbing;
+                        // transition: 0.5s;
+                    }
+
+                    &__complete {
+                        height: 100%;
+                        width: 0px;
+                        background-color: rgb(194, 0, 0);
+                    }
+                }
+            }
+        }
+    }
+}

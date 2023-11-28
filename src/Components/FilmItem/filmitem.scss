@@ -1,0 +1,106 @@
+.films__film-item {
+    width: 280px;
+    margin-right: 13px;
+    box-sizing: border-box;
+    cursor: pointer;
+    position: relative;
+
+    & .themenail {
+        z-index: 1;
+    }
+
+    & .detail-film-mini {
+        width: 0;
+        height: 0;
+        overflow: hidden;
+        transition: 0.5s;
+        position: absolute;
+        display: flex;
+        justify-content: start;
+        flex-direction: column;
+        top: 50%;
+        left: 50%;
+        z-index: 1;
+        box-shadow: 50px 0px 50px 0px rgba(0, 0, 0, 0.912);
+
+        & .video-film {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            height: 129px;
+            position: relative;
+
+            & video {
+                width: 100%;
+            }
+        }
+
+        & .info {
+            color: white;
+            background-color: rgb(15, 15, 15);
+            // background-color: red;
+            font-weight: bold;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+
+            & button {
+                margin: 0 10px;
+                width: 35px;
+                height: 30px;
+                border: 1px solid white;
+                background: 0;
+                color: white;
+                padding: 3px 8px;
+                margin: 0 3px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 5px;
+                font-weight: bold;
+
+                & i {
+                    font-size: 20px;
+                    font-weight: bold;
+                }
+            }
+        }
+
+        & .btns {
+            position: absolute;
+            bottom: 5px;
+            left: 10px;
+            display: flex;
+            justify-content: start;
+
+            & .btn-watch {
+                width: 100px;
+                background-color: red;
+                border: 0;
+            }
+
+            & button {
+                width: 40px;
+                height: 30px;
+                border: 1px solid white;
+                background: 0;
+                color: white;
+                padding: 3px 8px;
+                margin: 0 3px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 5px;
+                font-weight: bold;
+
+                & i {
+                    font-size: 20px;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+}
