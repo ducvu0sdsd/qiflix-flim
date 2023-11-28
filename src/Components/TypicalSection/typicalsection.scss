@@ -1,6 +1,5 @@
 #typical-section {
     // background-color: rgb(0, 0, 0);
-    height: 650px;
     overflow: hidden;
 
     & .trailer {
@@ -21,7 +20,7 @@
 
         & .info {
             position: absolute;
-            top: 47%;
+            top: 40%;
             left: 70px;
             background: 0;
             z-index: 1;

@@ -18,7 +18,7 @@ const TypicalSection = () => {
 
     return (
         <section id='typical-section' className='col-lg-12' style={{ height: `${window.innerHeight}px` }}>
-            <div className='trailer col-lg-12' style={{ height: `${window.innerWidth / 2.37}px` }}>
+            <div className='trailer col-lg-12' style={{ height: `${window.innerWidth / 2.67}px` }}>
                 <video
                     className='col-lg-12'
                     autoPlay
