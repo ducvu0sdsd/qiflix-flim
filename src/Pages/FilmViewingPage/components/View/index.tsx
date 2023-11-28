@@ -236,13 +236,29 @@ const View = ({ url, title, name, currentEpisode, setCurrentEpisode }: ViewProps
         }
     }
 
-    const handleStartAD = (start: boolean) => {
+    const handleStartAD = (start: boolean, e: any) => {
         const video = $('#view .video').get(0)
         if (video) {
-            if (start) {
-                video.style.zIndex = 1
-            } else {
-                video.style.zIndex = 0
+            const wrapperVideo = $('#view .wrapper-video')
+            const btnPlayPause = $('.btn--play-pause')
+            const bottom = $('.controls-bottom-video')
+            const top = $('.controls-top-video')
+            if (wrapperVideo.length > 0 && btnPlayPause.length > 0 && bottom.length > 0 && top.length > 0) {
+                if (start) {
+                    wrapperVideo.css('display', 'none')
+                    btnPlayPause.css('display', 'none')
+                    bottom.css('display', 'none')
+                    top.css('display', 'none')
+                    clearInterval(interval.current!)
+                } else {
+                    wrapperVideo.css('display', 'block')
+                    btnPlayPause.css('display', 'flex')
+                    bottom.css('display', 'flex')
+                    top.css('display', 'flex')
+                    interval.current = setInterval(() => {
+                        setBufferTime(e.target.currentTime)
+                    }, 1000)
+                }
             }
         }
     }
@@ -301,8 +317,8 @@ const View = ({ url, title, name, currentEpisode, setCurrentEpisode }: ViewProps
                     height='100%'
                     onWaiting={(e: any) => handleWaiting(e)}
                     onPause={() => setPlay(false)}
-                    onAdStart={() => handleStartAD(true)}
-                    onAdEnd={() => handleStartAD(false)}
+                    onAdStart={(e: any) => handleStartAD(true, e)}
+                    onAdEnd={(e: any) => handleStartAD(false, e)}
                     onVideoStart={(e: any) => handleStartVideo(e)}
                     onVideoEnd={(e: any) => handleEndVideo(e)}
                     onTimeUpdate={(e: any) => handleChange(e)}
