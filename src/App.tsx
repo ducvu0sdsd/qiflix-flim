@@ -1,20 +1,25 @@
 import './App.css';
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { Route, BrowserRouter as Router, Routes, useLocation } from 'react-router-dom';
 import RoutesElement from './RoutesElement';
 import { CSSTransition } from 'react-transition-group';
+import { useEffect, useState } from 'react';
 
 function App() {
+
+  // const ScrollToTop = () => {
+  //   const [state, setState] = useState(true)
+  //   const { pathname } = useLocation();
+  //   useEffect(() => {
+  //     setState(!state)
+  //   }, [pathname]);
+
+  //   return <></>
+  // };
+
   return (
     <div className="App">
       <Router>
-        <CSSTransition
-          in={true}
-          timeout={3000}
-          classNames="your-transition"
-          unmountOnExit
-        >
-          <RoutesElement />
-        </CSSTransition>
+        <RoutesElement />
       </Router>
     </div>
   );

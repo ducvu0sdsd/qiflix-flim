@@ -242,25 +242,27 @@ const View = ({ url, title, name, numberOfEpisode, currentEpisode, setCurrentEpi
 
     const handleStartAD = (start: boolean, e: any) => {
         const video = $('#view .video').get(0)
-        e.setControls(false)
         if (video) {
             const wrapperVideo = $('#view .wrapper-video')
             const btnPlayPause = $('.btn--play-pause')
             const bottom = $('.controls-bottom-video')
             const top = $('.controls-top-video')
+            const bottomad = $('.wrapper-bottom-video')
             const elem: HTMLElement | null = document.documentElement as HTMLElement;
-            if (wrapperVideo.length > 0 && btnPlayPause.length > 0 && bottom.length > 0 && top.length > 0) {
+            if (wrapperVideo.length > 0 && btnPlayPause.length > 0 && bottom.length > 0 && top.length > 0 && bottomad.length > 0) {
                 if (start) {
                     wrapperVideo.css('display', 'none')
                     btnPlayPause.css('display', 'none')
                     bottom.css('display', 'none')
                     top.css('display', 'none')
+                    bottomad.css('display', 'block')
                     clearInterval(interval.current!)
                 } else {
                     wrapperVideo.css('display', 'block')
                     btnPlayPause.css('display', 'flex')
                     bottom.css('display', 'flex')
                     top.css('display', 'flex')
+                    bottomad.css('display', 'none')
                     interval.current = setInterval(() => {
                         setBufferTime(e.target.currentTime)
                     }, 1000)
@@ -330,6 +332,7 @@ const View = ({ url, title, name, numberOfEpisode, currentEpisode, setCurrentEpi
                     onTimeUpdate={(e: any) => handleChange(e)}
                     onApiReady={(e: any) => handleReadyVideo(e)}
                 />
+                <div className="wrapper-bottom-video"></div>
                 <div className="wrapper-video"></div>
                 <button onClick={() => setCurrentEpisode(p => p + 1)} className="btn-skip">Next Episode &gt;</button>
                 <div onMouseOver={() => handleMouseTop(true)} onMouseOut={() => handleMouseTop(false)} className="controls-top-video controls">
