@@ -19,7 +19,7 @@ function RoutesElement() {
     const routes: RoutesType[] = [
         { name: '', component: <PublicPage /> },
         { name: 'sign-in-page', component: <SignInPage /> },
-        { name: 'sign-up-page', component: <SignUpPage /> },
+        { name: 'sign-up-page/:email', component: <SignUpPage /> },
         { name: 'manage-profile-page', component: <ManageProfilePage /> },
         { name: 'home-page', component: <HomePage /> },
         ...datas.map((data, index) => {

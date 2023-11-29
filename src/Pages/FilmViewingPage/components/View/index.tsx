@@ -14,10 +14,11 @@ export interface ViewProps {
     title: string,
     name: string,
     setCurrentEpisode: React.Dispatch<React.SetStateAction<number>>;
+    numberOfEpisode: number,
     currentEpisode: number
 }
 
-const View = ({ url, title, name, currentEpisode, setCurrentEpisode }: ViewProps) => {
+const View = ({ url, title, name, numberOfEpisode, currentEpisode, setCurrentEpisode }: ViewProps) => {
 
     //state
     const [currentQuality, setCurrentQuality] = useState<string>('')
@@ -93,7 +94,9 @@ const View = ({ url, title, name, currentEpisode, setCurrentEpisode }: ViewProps
         if (processComplete && process.length > 0 && btnSkip.length > 0) {
             if (duration !== 0 && bufferTime !== 0) {
                 if (bufferTime / duration > 0.985) {
-                    btnSkip.css('display', 'block')
+                    if (currentEpisode < numberOfEpisode) {
+                        btnSkip.css('display', 'block')
+                    }
                 } else {
                     btnSkip.css('display', 'none')
                 }
@@ -162,6 +165,7 @@ const View = ({ url, title, name, currentEpisode, setCurrentEpisode }: ViewProps
     }
 
     const handleStartVideo = (e: any) => {
+        console.log(e)
         const video = $('#view .video').get(0)
         if (video) {
             setBufferTime(0)
@@ -238,11 +242,13 @@ const View = ({ url, title, name, currentEpisode, setCurrentEpisode }: ViewProps
 
     const handleStartAD = (start: boolean, e: any) => {
         const video = $('#view .video').get(0)
+        e.setControls(false)
         if (video) {
             const wrapperVideo = $('#view .wrapper-video')
             const btnPlayPause = $('.btn--play-pause')
             const bottom = $('.controls-bottom-video')
             const top = $('.controls-top-video')
+            const elem: HTMLElement | null = document.documentElement as HTMLElement;
             if (wrapperVideo.length > 0 && btnPlayPause.length > 0 && bottom.length > 0 && top.length > 0) {
                 if (start) {
                     wrapperVideo.css('display', 'none')

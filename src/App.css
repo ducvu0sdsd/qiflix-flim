@@ -26,5 +26,20 @@
     background-color: #2f2f2f;
 }
 
-/* Cho Microsoft Edge và Internet Explorer */
-/* -ms-overflow-style: none; */
+.your-transition-enter {
+    opacity: 0;
+}
+
+.your-transition-enter-active {
+    opacity: 1;
+    transition: opacity 300ms;
+}
+
+.your-transition-exit {
+    opacity: 1;
+}
+
+.your-transition-exit-active {
+    opacity: 0;
+    transition: opacity 300ms;
+}

@@ -24,7 +24,7 @@ const FilmViewingPage = ({ data }: FilmViewingPageProp) => {
 
     return (
         <>
-            <View currentEpisode={currentEpisode} setCurrentEpisode={setCurrentEpisode} title={currentFilm.title} url={currentFilm.videosURL[currentEpisode - 1].url} name={currentFilm.videosURL[currentEpisode - 1].name} />
+            <View currentEpisode={currentEpisode} numberOfEpisode={data.videosURL.length} setCurrentEpisode={setCurrentEpisode} title={currentFilm.title} url={currentFilm.videosURL[currentEpisode - 1].url} name={currentFilm.videosURL[currentEpisode - 1].name} />
             <Informations currentEpisode={currentEpisode} currentFilm={currentFilm} setCurrentEpisode={setCurrentEpisode} />
             <Footer />
         </>

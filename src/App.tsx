@@ -1,14 +1,20 @@
-import React from 'react';
 import './App.css';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import RoutesElement from './RoutesElement';
-import PublicPage from './Pages/PublicPage';
+import { CSSTransition } from 'react-transition-group';
 
 function App() {
   return (
     <div className="App">
       <Router>
-        <RoutesElement />
+        <CSSTransition
+          in={true}
+          timeout={3000}
+          classNames="your-transition"
+          unmountOnExit
+        >
+          <RoutesElement />
+        </CSSTransition>
       </Router>
     </div>
   );

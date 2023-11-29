@@ -2,10 +2,29 @@ import React, { useState } from 'react'
 import './publicheader.scss'
 import Qiflix from '../../resources/qiflix.png'
 import Banner from '../../resources/banner.png'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import $ from 'jquery'
+import axios from 'axios'
 
 const PublicHeader = () => {
+
+  const navigate = useNavigate()
   const [focus, setFocus] = useState<boolean>(false)
+
+
+
+  const handleCreateVerifyCode = () => {
+    const emailSignUp = $('.txt-email-sign-up').val()
+    if (/^[a-zA-Z0-9._%+-]+(@gmail.com)$/.test(emailSignUp)) {
+      axios.get(`/auths/create-verify-code/${emailSignUp}`)
+        .then(res => {
+          if (res.data === true) {
+            navigate(`/sign-up-page/${emailSignUp}`)
+          }
+        })
+    }
+  }
+
   return (
     <header id='public--header' style={{ height: `${window.innerHeight}px` }} className='col-lg-12'>
       <div className="header">
@@ -31,7 +50,7 @@ const PublicHeader = () => {
               <span className={`lbl-email-address ${(focus) ? 'lbl-email-address-focused' : ''}`}>Email address</span>
               <input onFocus={() => setFocus(true)} onBlur={(e) => { e.target.value === '' && setFocus(false) }} type='email' className='txt-email-sign-up' />
             </div>
-            <Link to={'/sign-up-page'}><button>Sign Up Now &gt;</button></Link>
+            <button onClick={() => handleCreateVerifyCode()}>Sign Up Now &gt;</button>
           </div>
         </div>
       </div>
