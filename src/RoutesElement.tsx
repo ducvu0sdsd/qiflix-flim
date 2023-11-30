@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PublicPage from './Pages/PublicPage';
 import SignInPage from './Pages/SignInPage';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
@@ -7,8 +7,8 @@ import SignUpPage from './Pages/SignUpPage';
 import ManageProfilePage from './Pages/ManageProfilePage';
 import HomePage from './Pages/HomePage';
 import FilmViewingPage from './Pages/FilmViewingPage';
-import { datas } from './data';
 import axios from 'axios';
+import { ThemeContext } from './Components/Context';
 
 export interface RoutesType {
     name: string,
@@ -18,6 +18,7 @@ export interface RoutesType {
 function RoutesElement() {
 
     const navigate = useNavigate()
+    const { datas, handles } = useContext(ThemeContext) || {}
 
     const CheckSignOut = () => {
         const { pathname } = useLocation();
@@ -105,6 +106,25 @@ function RoutesElement() {
         return <></>
     };
 
+    const CheckCurrentUser = () => {
+        const { pathname } = useLocation();
+        useEffect(() => {
+            const json = localStorage.getItem('currentUser')
+            const username = json && JSON.parse(json)
+            if (username) {
+                if (datas?.users) {
+                    const arr = datas?.users?.filter(item => item.name === username)
+                    if (arr.length > 0) {
+                        handles?.setCurrentUser(arr[0])
+                    }
+                }
+            } else {
+                navigate('/manage-profile-page')
+            }
+        }, [pathname]);
+        return <></>
+    }
+
     const routes: RoutesType[] = [
         { name: '', component: <PublicPage /> },
         { name: 'sign-in-page', component: <SignInPage /> },
@@ -113,9 +133,9 @@ function RoutesElement() {
     const routesUser: RoutesType[] = [
         { name: 'manage-profile-page', component: <ManageProfilePage /> },
         { name: 'home-page', component: <HomePage /> },
-        ...datas.map((data) => {
-            return { name: `film-viewing-page/${data.url}`, component: <FilmViewingPage data={data} /> }
-        })
+        // ...datas.map((data) => {
+        //     return { name: `film-viewing-page/${data.url}`, component: <FilmViewingPage data={data} /> }
+        // })
     ]
 
     return (
@@ -127,7 +147,7 @@ function RoutesElement() {
             })}
             {routesUser.map((route, index) => {
                 return (
-                    <Route key={index} path={`/${route.name}`} element={<><CheckSignOut />{route.component}</>} />
+                    <Route key={index} path={`/${route.name}`} element={<><CheckSignOut /><CheckCurrentUser />{route.component}</>} />
                 )
             })}
         </Routes>

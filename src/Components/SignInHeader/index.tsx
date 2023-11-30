@@ -1,14 +1,14 @@
 
 import './signinheader.scss'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Banner from '../../resources/banner.png'
 import Qiflix from '../../resources/qiflix.png'
 import { Link, useNavigate } from 'react-router-dom'
 import $ from 'jquery'
 import axios from 'axios'
+import { ThemeContext } from '../Context'
 
 const SignInHeader = () => {
-    const navigate = useNavigate()
     const [focuses, setFocuses] = useState<{ focusAddress: boolean, focusPassword: boolean }>({ focusAddress: false, focusPassword: false })
 
     const handleSignIn = () => {
