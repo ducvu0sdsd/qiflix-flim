@@ -9,6 +9,7 @@ import HomePage from './Pages/HomePage';
 import FilmViewingPage from './Pages/FilmViewingPage';
 import axios from 'axios';
 import { ThemeContext } from './Components/Context';
+import ManageMoviesPage from './Pages/ManageMoviesPage';
 
 export interface RoutesType {
     name: string,
@@ -133,6 +134,7 @@ function RoutesElement() {
     const routesUser: RoutesType[] = [
         { name: ':url', component: <ManageProfilePage /> },
         { name: 'home-page', component: <HomePage /> },
+        { name: 'manage-movies-page', component: <ManageMoviesPage /> },
         ...(datas?.movies ? datas.movies.map((movie) => {
             return { name: movie.url, component: <FilmViewingPage data={movie} /> }
         }) : []),

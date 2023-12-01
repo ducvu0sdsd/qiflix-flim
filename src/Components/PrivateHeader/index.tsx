@@ -4,7 +4,7 @@ import './privateheader.scss'
 import Qiflix from '../../resources/qiflix.png'
 import $ from 'jquery'
 import { UserInterface } from '../Context/interfaces'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const PrivateHeader = ({ users, currentUser }: { users: UserInterface[], currentUser: UserInterface | undefined }) => {
 
@@ -63,7 +63,7 @@ const PrivateHeader = ({ users, currentUser }: { users: UserInterface[], current
         <header id='private-header' className='col-lg-12'>
             <div className="col-lg-7 logo-menu">
                 <div className='logo-menu__logo col-lg-2'>
-                    <img src={Qiflix} width={'80%'} />
+                    <Link to={"/home-page"}><img src={Qiflix} width={'80%'} /></Link>
                 </div>
                 <div className="logo-menu__menu col-lg-5">
                     <div className="menu__menu-item">
@@ -107,6 +107,14 @@ const PrivateHeader = ({ users, currentUser }: { users: UserInterface[], current
                             </div>
                             <span className='user-name'>Manage Profiles</span>
                         </div>
+                        <Link className='link' to={'/manage-movies-page'}>
+                            <div className='user-item' onClick={() => handleNavigateManageProfile()}>
+                                <div className='avatar-user'>
+                                    <i style={{ fontSize: '36px' }} className="bx bx-camera-movie"></i>
+                                </div>
+                                <span className='user-name'>Manage Movies</span>
+                            </div>
+                        </Link>
                         <div className='user-item' onClick={() => handleSignOut()}>
                             <div className='avatar-user'>
                                 <i className='bx bx-log-out-circle'></i>

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import Dailymotion from 'react-dailymotion';
 import './view.scss'
 import $ from 'jquery'
+import { Link } from "react-router-dom";
 
 export interface MousePositionType {
     x: number,
@@ -335,7 +336,7 @@ const View = ({ url, title, name, numberOfEpisode, currentEpisode, setCurrentEpi
                 <div className="wrapper-video"></div>
                 <button onClick={() => setCurrentEpisode(p => p + 1)} className="btn-skip">Next Episode &gt;</button>
                 <div onMouseOver={() => handleMouseTop(true)} onMouseOut={() => handleMouseTop(false)} className="controls-top-video controls">
-                    <span>{title}</span><div className="box" /><span>{name}</span>
+                    <span style={{ display: 'flex' }}><Link className="link" style={{ color: 'white', marginRight: '20px', fontSize: '25px' }} to={'/home-page'}><i className='bx bx-arrow-back'></i></Link> {title}</span><div className="box" /><span>{name}</span>
                 </div>
                 <button onMouseOver={() => handleMouseBtnPlayPause(true)} onMouseOut={() => handleMouseBtnPlayPause(false)} onClick={() => handleChangePlay()} className="btn--play-pause">{play ? <i className='bx bx-pause' ></i> : <i className='bx bx-play'></i>}</button>
                 <div onMouseOver={() => handleMouseBottom(true)} onMouseOut={() => handleMouseBottom(false)} className="controls-bottom-video controls col-lg-12">
