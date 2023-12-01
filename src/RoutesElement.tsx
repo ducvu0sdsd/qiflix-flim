@@ -111,15 +111,15 @@ function RoutesElement() {
         useEffect(() => {
             const json = localStorage.getItem('currentUser')
             const username = json && JSON.parse(json)
-            if (username) {
+            if (username !== null) {
                 if (datas?.users) {
                     const arr = datas?.users?.filter(item => item.name === username)
                     if (arr.length > 0) {
-                        handles?.setCurrentUser(arr[0])
+                        if (handles) {
+                            handles.setCurrentUser(arr[0])
+                        }
                     }
                 }
-            } else {
-                navigate('/manage-profile-page')
             }
         }, [pathname]);
         return <></>
@@ -131,11 +131,11 @@ function RoutesElement() {
         { name: 'sign-up-page/:email', component: <SignUpPage /> }
     ]
     const routesUser: RoutesType[] = [
-        { name: 'manage-profile-page', component: <ManageProfilePage /> },
+        { name: ':url', component: <ManageProfilePage /> },
         { name: 'home-page', component: <HomePage /> },
-        // ...datas.map((data) => {
-        //     return { name: `film-viewing-page/${data.url}`, component: <FilmViewingPage data={data} /> }
-        // })
+        ...(datas?.movies ? datas.movies.map((movie) => {
+            return { name: movie.url, component: <FilmViewingPage data={movie} /> }
+        }) : []),
     ]
 
     return (

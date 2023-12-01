@@ -1,11 +1,11 @@
 
-import { DataType } from '../../../../data'
 import './information.scss'
 import React, { useEffect, useState } from 'react'
 import $ from 'jquery'
+import { MovieInterface } from '../../../../Components/Context/interfaces';
 
 export interface InformationsProps {
-    currentFilm: DataType,
+    currentFilm: MovieInterface,
     setCurrentEpisode: React.Dispatch<React.SetStateAction<number>>;
     currentEpisode: number
 }
@@ -48,7 +48,7 @@ const Informations = ({ currentFilm, setCurrentEpisode, currentEpisode }: Inform
                 <span className='title'>{currentFilm.title.split(' - ')[0]}</span>
                 <span className='title'>{currentFilm.title.split(' - ')[1]}</span>
                 <span className='title'>
-                    <span>{`E${currentFilm.videosURL.length}`}</span>
+                    <span>{`E${currentFilm.listEpisode?.episodes.length}`}</span>
                     <div className='box' />
                     <span>{currentFilm.country}</span>
                     <div className='box' />
@@ -58,7 +58,7 @@ const Informations = ({ currentFilm, setCurrentEpisode, currentEpisode }: Inform
                     <div className='box' />
                     <span>HD</span>
                 </span>
-                <span className='title'>{currentFilm.videosURL[currentEpisode - 1].name}</span>
+                <span className='title'>{currentFilm.listEpisode?.episodes[currentEpisode - 1].name}</span>
                 <span className='description'>{currentFilm.description}</span>
             </div>
             <div className='section-child-right section-child col-lg-4'>
@@ -67,14 +67,14 @@ const Informations = ({ currentFilm, setCurrentEpisode, currentEpisode }: Inform
                     <button className='btn-action btn-action-comments'><i className='bx bx-share' ></i>Share</button>
                 </div>
                 <div className="col-lg-12 actors info-item">
-                    <span>Category :</span> {currentFilm.categories.join(', ')}
+                    <span>Category :</span> {currentFilm.genres.join(', ')}
                 </div>
                 <div className="col-lg-12 actors info-item">
                     <span>Actor :</span> {currentFilm.actors.join(', ')}
                 </div>
             </div>
             <div className="col-lg-12 episode-list">
-                <span className='title col-lg-12'>Episode List <span>{currentFilm.videosURL.length}  episode</span></span>
+                <span className='title col-lg-12'>Episode List <span>{currentFilm.listEpisode?.episodes.length}  episode</span></span>
                 <div className="session-episode col-lg-12">
                     <span className='active'>01-30</span>
                     <span>31-60</span>
@@ -86,9 +86,9 @@ const Informations = ({ currentFilm, setCurrentEpisode, currentEpisode }: Inform
                     {handleReturnPosition() && <button onClick={() => handleChange('next')} className='btn-action-next btn-action'><i className='bx bxs-right-arrow' ></i></button>}
                     <div className='col-lg-12 episodes'>
                         <div className='wrapper-episode'>
-                            {currentFilm.videosURL.map((item, index) => {
+                            {currentFilm.listEpisode?.episodes.map((item, index) => {
                                 return (
-                                    <div onClick={() => setCurrentEpisode(item.num)} className="episode-item">
+                                    <div key={index} onClick={() => setCurrentEpisode(item.indexOfEpisode)} className="episode-item">
                                         <img src={currentFilm.thumbnail} width={'100%'} />
                                         <span className='episode-info'><span>{item.name} HD</span> <span className='duration'>1h 4m</span></span>
                                     </div>

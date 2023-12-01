@@ -2,14 +2,16 @@ import './filmitem.scss'
 import React, { useEffect, useRef, useState } from 'react'
 import Trailer from '../../resources/trailer.mp4'
 import $ from 'jquery'
+import { MovieInterface } from '../Context/interfaces'
+import { Link } from 'react-router-dom'
 
 export interface FilmItemProp {
     displayDetail?: boolean,
-    title: string
+    movie: MovieInterface
 }
 
-const FilmItem = ({ displayDetail = false, title }: FilmItemProp) => {
-    const titleCustom = title.split(' ').join('-')
+const FilmItem = ({ displayDetail = false, movie }: FilmItemProp) => {
+    const titleCustom = movie?.title.split(' ').join('-')
     const displayRef = useRef<NodeJS.Timeout | null>(null)
     const [widthDetail, setWidthDetail] = useState<number>(0)
 
@@ -17,7 +19,7 @@ const FilmItem = ({ displayDetail = false, title }: FilmItemProp) => {
         if (widthDetail === 0) {
             if (displayRef.current) {
                 clearTimeout(displayRef.current);
-                const detailElement = $(`.detail-film-mini-${titleCustom}`).get(0);
+                const detailElement = $(`.detail-film-mini-${movie?._id}`).get(0);
                 if (detailElement) {
                     detailElement.style.width = `${widthDetail}px`
                     detailElement.style.height = '0px'
@@ -28,7 +30,7 @@ const FilmItem = ({ displayDetail = false, title }: FilmItemProp) => {
         } else {
             if (displayDetail) {
                 displayRef.current = setTimeout(() => {
-                    const detailElement = $(`.detail-film-mini-${titleCustom}`).get(0);
+                    const detailElement = $(`.detail-film-mini-${movie?._id}`).get(0);
                     if (detailElement) {
                         detailElement.style.width = `${widthDetail}px`
                         detailElement.style.height = '100%'
@@ -41,27 +43,27 @@ const FilmItem = ({ displayDetail = false, title }: FilmItemProp) => {
     }, [widthDetail])
 
     return (
-        <div onMouseOver={() => setWidthDetail(370)} onMouseOut={() => setWidthDetail(0)} className="films__film-item">
-            <div className={`detail-film-mini detail-film-mini-${titleCustom}`}>
+        <div onMouseEnter={() => setWidthDetail(370)} onMouseLeave={() => setWidthDetail(0)} className="films__film-item">
+            <div className={`detail-film-mini detail-film-mini-${movie?._id}`}>
                 <div className='col-lg-12 video-film'>
                     <video
-                        className='col-lg-12'
+                        className='col-lg-12 film'
                         muted
                         loop
                         autoPlay
-                        src={Trailer}
+                        src={movie?.trailerUrl}
                     />
                     <div className="btns col-lg-12">
-                        <button className='btn-watch'><i className='bx bx-play' ></i> Watch</button>
-                        <button><i className='bx bx-info-circle' ></i></button>
+                        <Link className='link' to={`/${movie.url}`}><button className='btn-watch'><i className='bx bx-play' ></i> Watch</button></Link>
+                        <button className='btn-info'><i className='bx bx-info-circle' ></i></button>
                     </div>
                 </div>
                 <div className="info">
-                    <span>2023 | 13P | Korea | 1 Part | HD</span>
+                    <span>{movie?.yearRelease} | 13P | {movie?.country} | 1 Part | HD</span>
                     <button><i className='bx bx-plus'></i></button>
                 </div>
             </div>
-            <img className='themenail' src='https://www.hdwallpapers.in/download/x_men_days_of_future_past_banner-1920x1080.jpg' width={'100%'} />
+            <Link className='link' to={`/${movie.url}`}><img className='themenail' src={movie?.thumbnail} width={'100%'} /></Link>
         </div>
     )
 }

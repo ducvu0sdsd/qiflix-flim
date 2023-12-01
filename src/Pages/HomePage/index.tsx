@@ -11,12 +11,11 @@ import { UserInterface } from '../../Components/Context/interfaces'
 const HomePage = () => {
 
     const { datas, handles } = useContext(ThemeContext) || {}
-
     return (
         <>
             <PrivateHeader users={datas?.users || []} currentUser={datas?.currentUser} />
-            <TypicalSection />
-            <ListFilm />
+            <TypicalSection movies={datas?.movies || []} />
+            <ListFilm movies={datas?.movies || []} />
             <Footer />
         </>
     )

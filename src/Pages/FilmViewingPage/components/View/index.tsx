@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import Dailymotion from 'react-dailymotion';
 import './view.scss'
 import $ from 'jquery'
-import { DataType } from '../../../../data'
 
 export interface MousePositionType {
     x: number,

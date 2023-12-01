@@ -1,7 +1,7 @@
 
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import './manageprofilepage.scss'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Qiflix from '../../resources/qiflix.png'
 import $ from 'jquery'
 import axios from 'axios'
@@ -16,6 +16,7 @@ enum Screen {
 }
 
 const ManageProfilePage = () => {
+    const navigate = useNavigate()
     const fileRefCreate = useRef<HTMLInputElement | null>(null);
     const [screen, setScreen] = useState<Screen>(Screen.LIST_USERS);
     const [name, setName] = useState<string>('')
@@ -75,6 +76,11 @@ const ManageProfilePage = () => {
 
     const handleSetCurrentUser = (name: string) => {
         localStorage.setItem('currentUser', JSON.stringify(name))
+        const json = localStorage.getItem('currentUser')
+        const username = json && JSON.parse(json)
+        if (username) {
+            navigate('/home-page')
+        }
     }
 
     return (
@@ -86,11 +92,9 @@ const ManageProfilePage = () => {
                     <div className='profiles'>
                         {datas?.users?.map((user, index) => (
                             <div key={index} className='profile__parent'>
-                                <Link onClick={() => handleSetCurrentUser(user.name)} className='link' to={`/home-page`}>
-                                    <div className="profile__child">
-                                        <img src={user.avatar} width={'100%'} />
-                                    </div>
-                                </Link>
+                                <div onClick={() => handleSetCurrentUser(user.name)} className="profile__child">
+                                    <img src={user.avatar} width={'100%'} />
+                                </div>
                                 <div onClick={() => { setScreen(Screen.UPDATE_USER); setCurrentUser(user) }} className="update-profile">
                                     <i className='bx bx-pencil'></i>
                                 </div>

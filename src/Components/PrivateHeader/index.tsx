@@ -4,11 +4,16 @@ import './privateheader.scss'
 import Qiflix from '../../resources/qiflix.png'
 import $ from 'jquery'
 import { UserInterface } from '../Context/interfaces'
+import { useNavigate } from 'react-router-dom'
 
 const PrivateHeader = ({ users, currentUser }: { users: UserInterface[], currentUser: UserInterface | undefined }) => {
 
+    const navigate = useNavigate()
     const [hover, setHover] = useState<boolean>(false)
     const timeout = useRef<NodeJS.Timeout | null>(null);
+    if (!localStorage.getItem('currentUser')) {
+        navigate('/manage-profile-page')
+    }
 
     useEffect(() => {
         const optionUser = $('.options-user')
@@ -47,6 +52,11 @@ const PrivateHeader = ({ users, currentUser }: { users: UserInterface[], current
     const handleChangeUser = (name: string) => {
         localStorage.setItem('currentUser', JSON.stringify(name))
         window.location.reload()
+    }
+
+    const handleNavigateManageProfile = () => {
+        localStorage.removeItem('currentUser')
+        navigate('/manage-profile-page')
     }
 
     return (
@@ -91,6 +101,12 @@ const PrivateHeader = ({ users, currentUser }: { users: UserInterface[], current
                                 </div>
                             )
                         })}
+                        <div className='user-item' onClick={() => handleNavigateManageProfile()}>
+                            <div className='avatar-user'>
+                                <i style={{ fontSize: '30px' }} className="fa-regular fa-pen-to-square"></i>
+                            </div>
+                            <span className='user-name'>Manage Profiles</span>
+                        </div>
                         <div className='user-item' onClick={() => handleSignOut()}>
                             <div className='avatar-user'>
                                 <i className='bx bx-log-out-circle'></i>

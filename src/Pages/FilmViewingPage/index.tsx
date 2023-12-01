@@ -5,14 +5,12 @@ import Informations from './components/Infomations'
 import View from './components/View'
 import './filmviewingpage.scss'
 import React, { useEffect, useState } from 'react'
-import { DataType } from '../../data'
+import { MovieInterface } from '../../Components/Context/interfaces'
 interface FilmViewingPageProp {
-    data: DataType
+    data: MovieInterface
 }
 
 const FilmViewingPage = ({ data }: FilmViewingPageProp) => {
-
-    const currentFilm = data
     const [currentEpisode, setCurrentEpisode] = useState<number>(1)
 
     useEffect(() => {
@@ -24,8 +22,8 @@ const FilmViewingPage = ({ data }: FilmViewingPageProp) => {
 
     return (
         <>
-            <View currentEpisode={currentEpisode} numberOfEpisode={data.videosURL.length} setCurrentEpisode={setCurrentEpisode} title={currentFilm.title} url={currentFilm.videosURL[currentEpisode - 1].url} name={currentFilm.videosURL[currentEpisode - 1].name} />
-            <Informations currentEpisode={currentEpisode} currentFilm={currentFilm} setCurrentEpisode={setCurrentEpisode} />
+            <View currentEpisode={currentEpisode} numberOfEpisode={data.listEpisode?.numberOfEpisodes || 0} setCurrentEpisode={setCurrentEpisode} title={data.title} url={data.listEpisode?.episodes[currentEpisode - 1].url || ''} name={data.listEpisode?.episodes[currentEpisode - 1].name || '  '} />
+            <Informations currentEpisode={currentEpisode} currentFilm={data} setCurrentEpisode={setCurrentEpisode} />
             <Footer />
         </>
     )
