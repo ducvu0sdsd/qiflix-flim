@@ -1,16 +1,18 @@
 
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import './privateheader.scss'
 import Qiflix from '../../resources/qiflix.png'
 import $ from 'jquery'
 import { UserInterface } from '../Context/interfaces'
 import { Link, useNavigate } from 'react-router-dom'
+import { ThemeContext } from '../Context'
 
 const PrivateHeader = ({ users, currentUser }: { users: UserInterface[], currentUser: UserInterface | undefined }) => {
 
     const navigate = useNavigate()
     const [hover, setHover] = useState<boolean>(false)
     const timeout = useRef<NodeJS.Timeout | null>(null);
+    const { datas } = useContext(ThemeContext) || {}
     if (!localStorage.getItem('currentUser')) {
         navigate('/manage-profile-page')
     }
@@ -65,21 +67,23 @@ const PrivateHeader = ({ users, currentUser }: { users: UserInterface[], current
                 <div className='logo-menu__logo col-lg-2'>
                     <Link to={"/home-page"}><img src={Qiflix} width={'80%'} /></Link>
                 </div>
-                <div className="logo-menu__menu col-lg-5">
+                <div className="logo-menu__menu col-lg-8">
+                    <Link className='link' to={'/home-page'}>
+                        <div className="menu__menu-item">
+                            Home
+                        </div>
+                    </Link>
                     <div className="menu__menu-item">
-                        Home
+                        TV Shows
                     </div>
                     <div className="menu__menu-item">
-                        Home
+                        Movies
                     </div>
                     <div className="menu__menu-item">
-                        Home
+                        Contries
                     </div>
                     <div className="menu__menu-item">
-                        Home
-                    </div>
-                    <div className="menu__menu-item">
-                        Home
+                        My List
                     </div>
                 </div>
             </div>
@@ -107,14 +111,15 @@ const PrivateHeader = ({ users, currentUser }: { users: UserInterface[], current
                             </div>
                             <span className='user-name'>Manage Profiles</span>
                         </div>
-                        <Link className='link' to={'/manage-movies-page'}>
-                            <div className='user-item' onClick={() => handleNavigateManageProfile()}>
-                                <div className='avatar-user'>
-                                    <i style={{ fontSize: '36px' }} className="bx bx-camera-movie"></i>
+                        {datas?.account?.admin &&
+                            <Link className='link' to={'/manage-movies-page'}>
+                                <div className='user-item' onClick={() => handleNavigateManageProfile()}>
+                                    <div className='avatar-user'>
+                                        <i style={{ fontSize: '36px' }} className="bx bx-camera-movie"></i>
+                                    </div>
+                                    <span className='user-name'>Manage Movies</span>
                                 </div>
-                                <span className='user-name'>Manage Movies</span>
-                            </div>
-                        </Link>
+                            </Link>}
                         <div className='user-item' onClick={() => handleSignOut()}>
                             <div className='avatar-user'>
                                 <i className='bx bx-log-out-circle'></i>

@@ -11,14 +11,12 @@ export interface InformationsProps {
 }
 
 const Informations = ({ currentFilm, setCurrentEpisode, currentEpisode }: InformationsProps) => {
-
     const [marginLeft, setMarginLeft] = useState<number>(0)
 
     const handleChange = (type: string) => {
         const wrapperEpisode = $('.wrapper-episode')
         const episodeItem = $('.episode-item')
         if (wrapperEpisode.length > 0 && episodeItem.length > 0) {
-            console.log(parseInt(wrapperEpisode.css('width').replace('px', '')), window.innerWidth)
             if (type === 'next') {
                 setMarginLeft((p) => p + (parseInt(episodeItem.css('width').replace('px', '')) + 20))
                 wrapperEpisode.css('margin-left', `-${marginLeft + (parseInt(episodeItem.css('width').replace('px', '')) + 20)}px`)
@@ -54,7 +52,7 @@ const Informations = ({ currentFilm, setCurrentEpisode, currentEpisode }: Inform
                     <div className='box' />
                     <span>1 Part</span>
                     <div className='box' />
-                    <span>Present</span>
+                    <span>{currentFilm.yearRelease}</span>
                     <div className='box' />
                     <span>HD</span>
                 </span>
@@ -70,7 +68,10 @@ const Informations = ({ currentFilm, setCurrentEpisode, currentEpisode }: Inform
                     <span>Category :</span> {currentFilm.genres.join(', ')}
                 </div>
                 <div className="col-lg-12 actors info-item">
-                    <span>Actor :</span> {currentFilm.actors.join(', ')}
+                    <span>Directors :</span> {currentFilm.directors.join(', ')}
+                </div>
+                <div className="col-lg-12 actors info-item">
+                    <span>Actors :</span> {currentFilm.actors.join(', ')}
                 </div>
             </div>
             <div className="col-lg-12 episode-list">
@@ -88,9 +89,9 @@ const Informations = ({ currentFilm, setCurrentEpisode, currentEpisode }: Inform
                         <div className='wrapper-episode'>
                             {currentFilm.listEpisode?.episodes.map((item, index) => {
                                 return (
-                                    <div key={index} onClick={() => setCurrentEpisode(item.indexOfEpisode)} className="episode-item">
+                                    <div key={index} onClick={() => setCurrentEpisode(item.indexOfEpisode)} className={`episode-item ${index === currentEpisode - 1 && 'episode-item--active'}`}>
                                         <img src={currentFilm.thumbnail} width={'100%'} />
-                                        <span className='episode-info'><span>{item.name} HD</span> <span className='duration'>1h 4m</span></span>
+                                        <span className='episode-info'><span>{item.name}</span> <span className='duration'>HD</span></span>
                                     </div>
                                 )
                             })}

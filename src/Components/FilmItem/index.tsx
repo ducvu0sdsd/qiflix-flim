@@ -7,10 +7,11 @@ import { Link } from 'react-router-dom'
 
 export interface FilmItemProp {
     displayDetail?: boolean,
-    movie: MovieInterface
+    movie: MovieInterface,
+    title: string
 }
 
-const FilmItem = ({ displayDetail = false, movie }: FilmItemProp) => {
+const FilmItem = ({ title, displayDetail = false, movie }: FilmItemProp) => {
     const titleCustom = movie?.title.split(' ').join('-')
     const displayRef = useRef<NodeJS.Timeout | null>(null)
     const [widthDetail, setWidthDetail] = useState<number>(0)
@@ -19,7 +20,7 @@ const FilmItem = ({ displayDetail = false, movie }: FilmItemProp) => {
         if (widthDetail === 0) {
             if (displayRef.current) {
                 clearTimeout(displayRef.current);
-                const detailElement = $(`.detail-film-mini-${movie?._id}`).get(0);
+                const detailElement = $(`.detail-film-mini-${movie?._id}-${title.toLowerCase().split(' ').join('-')}`).get(0);
                 if (detailElement) {
                     detailElement.style.width = `${widthDetail}px`
                     detailElement.style.height = '0px'
@@ -30,7 +31,7 @@ const FilmItem = ({ displayDetail = false, movie }: FilmItemProp) => {
         } else {
             if (displayDetail) {
                 displayRef.current = setTimeout(() => {
-                    const detailElement = $(`.detail-film-mini-${movie?._id}`).get(0);
+                    const detailElement = $(`.detail-film-mini-${movie?._id}-${title.toLowerCase().split(' ').join('-')}`).get(0);
                     if (detailElement) {
                         detailElement.style.width = `${widthDetail}px`
                         detailElement.style.height = '100%'
@@ -44,7 +45,7 @@ const FilmItem = ({ displayDetail = false, movie }: FilmItemProp) => {
 
     return (
         <div onMouseEnter={() => setWidthDetail(370)} onMouseLeave={() => setWidthDetail(0)} className="films__film-item">
-            <div className={`detail-film-mini detail-film-mini-${movie?._id}`}>
+            <div className={`detail-film-mini detail-film-mini-${movie?._id}-${title.toLowerCase().split(' ').join('-')}`}>
                 <div className='col-lg-12 video-film'>
                     <video
                         className='col-lg-12 film'

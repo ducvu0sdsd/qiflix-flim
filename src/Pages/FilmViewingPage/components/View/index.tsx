@@ -102,6 +102,7 @@ const View = ({ currentTime, movie_id, user_id, url, title, name, numberOfEpisod
             indexOfEpisode: currentEpisode,
             currentTime: bufferTime
         }
+        console.log(bufferTime)
         if (processComplete && process.length > 0 && btnSkip.length > 0) {
             if (duration !== 0 && bufferTime !== 0) {
                 if (bufferTime / duration > 0.985) {

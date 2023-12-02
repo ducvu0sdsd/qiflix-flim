@@ -5,6 +5,12 @@ import SectionPublicPage from './components/Section'
 import Footer from '../../Components/Footer'
 
 const PublicPage = () => {
+
+    const titleElement = document.querySelector('head title');
+    if (titleElement) {
+        titleElement.textContent = "Qiflix";
+    }
+
     return (
         <div>
             <PublicHeader />

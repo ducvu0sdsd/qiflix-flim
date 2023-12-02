@@ -15,6 +15,11 @@ const FilmViewingPage = ({ data, currentUser }: FilmViewingPageProp) => {
     const [currentEpisode, setCurrentEpisode] = useState<number>(1)
     const [bufferTime, setBufferTime] = useState<number>(0)
 
+    const titleElement = document.querySelector('head title');
+    if (titleElement) {
+        titleElement.textContent = data.title;
+    }
+
     useEffect(() => {
         window.scrollTo({
             top: 0,
@@ -33,7 +38,7 @@ const FilmViewingPage = ({ data, currentUser }: FilmViewingPageProp) => {
 
     return (
         <>
-            <View currentTime={bufferTime} movie_id={data._id} user_id={currentUser?._id || ''} currentEpisode={currentEpisode} numberOfEpisode={data.listEpisode?.numberOfEpisodes || 0} setCurrentEpisode={setCurrentEpisode} title={data.title} url={data.listEpisode?.episodes[currentEpisode - 1].url || ''} name={data.listEpisode?.episodes[currentEpisode - 1].name || '  '} />
+            <View currentTime={bufferTime} movie_id={data._id} user_id={currentUser?._id || ''} currentEpisode={currentEpisode} numberOfEpisode={data.listEpisode?.numberOfEpisodes || 0} setCurrentEpisode={setCurrentEpisode} title={data.title} url={data.listEpisode?.episodes[currentEpisode - 1].url || ''} name={data.listEpisode?.episodes[currentEpisode - 1].name || ''} />
             <Informations currentEpisode={currentEpisode} currentFilm={data} setCurrentEpisode={setCurrentEpisode} />
             <Footer />
         </>

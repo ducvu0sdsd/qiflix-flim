@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { AccountInterface, MovieInterface, UserInterface } from "./interfaces";
+import { AccountInterface, MovieInterface, MovieWatchingByUserIdInterface, UserInterface } from "./interfaces";
 import { TypeHTTP, apiUser } from "../../Utils/api";
 
 export interface ThemeContextProviderProps {
@@ -7,10 +7,11 @@ export interface ThemeContextProviderProps {
 }
 
 export interface ThemeData {
-    users: UserInterface[] | undefined
+    users: UserInterface[]
     account: AccountInterface | undefined
     currentUser: UserInterface | undefined
-    movies: MovieInterface[] | undefined
+    movies: MovieInterface[]
+    moviesWatching: MovieWatchingByUserIdInterface[]
 }
 
 export interface ThemeHandles {
@@ -18,6 +19,7 @@ export interface ThemeHandles {
     setAccount: React.Dispatch<React.SetStateAction<AccountInterface | undefined>>
     setCurrentUser: React.Dispatch<React.SetStateAction<UserInterface | undefined>>
     setMovies: React.Dispatch<React.SetStateAction<MovieInterface[]>>
+    setMoviesWatching: React.Dispatch<React.SetStateAction<MovieWatchingByUserIdInterface[]>>
 }
 
 export const ThemeContext = createContext<{ datas: ThemeData; handles: ThemeHandles } | undefined>(undefined);
@@ -27,19 +29,22 @@ export const Provider: React.FC<ThemeContextProviderProps> = ({ children }) => {
     const [account, setAccount] = useState<AccountInterface>()
     const [currentUser, setCurrentUser] = useState<UserInterface>()
     const [movies, setMovies] = useState<MovieInterface[]>([])
+    const [moviesWatching, setMoviesWatching] = useState<MovieWatchingByUserIdInterface[]>([])
 
     const datas: ThemeData = {
         users,
         account,
         currentUser,
-        movies
+        movies,
+        moviesWatching
     };
 
     const handles: ThemeHandles = {
         setUsers,
         setAccount,
         setCurrentUser,
-        setMovies
+        setMovies,
+        setMoviesWatching
     };
 
     // Call API
@@ -65,6 +70,15 @@ export const Provider: React.FC<ThemeContextProviderProps> = ({ children }) => {
                 setMovies(result)
             })
     }, [])
+
+    useEffect(() => {
+        if (currentUser) {
+            apiUser({ path: `/movies/get-movies-watching-by-user/${currentUser._id}`, type: TypeHTTP.GET })
+                .then(result => {
+                    setMoviesWatching(result)
+                })
+        }
+    }, [currentUser])
 
     return (
         <ThemeContext.Provider value={{ datas, handles }}>

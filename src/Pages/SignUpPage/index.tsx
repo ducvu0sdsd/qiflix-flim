@@ -7,6 +7,10 @@ import { useParams } from 'react-router-dom'
 const SignUpPage = () => {
 
     const { email } = useParams()
+    const titleElement = document.querySelector('head title');
+    if (titleElement) {
+        titleElement.textContent = "Qiflix";
+    }
 
     return (
         <div>

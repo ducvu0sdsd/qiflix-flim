@@ -1,12 +1,14 @@
 
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './managemovies.scss'
 import { countries, movieGenres } from './datas'
-import { EpisodeInterface } from '../../../../Components/Context/interfaces'
+import { EpisodeInterface, MovieInterface } from '../../../../Components/Context/interfaces'
 import $ from "jquery"
 import { TypeHTTP, apiUser } from '../../../../Utils/api'
+import { ThemeContext } from '../../../../Components/Context'
 
 const ManageMovies = () => {
+    const [currentMovie, setCurrentMovie] = useState<MovieInterface>()
     const [title, setTitle] = useState<string>('')
     const [description, setDescription] = useState<string>('')
     const [url, setUrl] = useState<string>('')
@@ -18,14 +20,25 @@ const ManageMovies = () => {
     const [genres, setGenre] = useState<string[]>([])
     const [actors, setActors] = useState<string[]>([])
     const [directors, setDirectors] = useState<string[]>([])
+    const [belong, setBelong] = useState<string[]>([])
+    const { datas } = useContext(ThemeContext) || {}
 
     const handleInsert = () => {
         const listEpisode = { numberOfEpisodes: episode.length, episodes: episode }
-        const body = { title, description, url, thumbnail, trailerUrl, yearRelease, country, genres, actors, directors, listEpisode }
+        const body = { title, description, url, thumbnail, trailerUrl, yearRelease, country, genres, actors, directors, listEpisode, belong }
         apiUser({ path: '/movies', body: body, type: TypeHTTP.POST })
             .then(res => {
-                console.log(res)
+                alert('Insert success')
             })
+    }
+
+    const handleDelete = () => {
+        if (currentMovie) {
+            apiUser({ path: `/movies/${currentMovie._id}`, type: TypeHTTP.DELETE })
+                .then(res => {
+                    alert('Delete success')
+                })
+        }
     }
 
     return (
@@ -53,23 +66,38 @@ const ManageMovies = () => {
                         })}
                     </select>
                     <button onClick={() => setGenre(prev => [...prev, $('.txt-genre').val()])} type="button" className="btn btn-success">Create</button>
-                    <div className='col-lg-5 content'>{genres.join(', ')}</div>
+                    <div className='col-lg-5 content'>{genres.join(', ')}
+                        <button onClick={() => setGenre([])}>x</button>
+                    </div>
                 </div>
-                <div className='episode' style={{ display: 'flex' }}>
+                <div className='episode' style={{ display: 'flex', width: "30%" }}>
+                    <input type="text" placeholder='Belong' className="form-control col-lg-5 txt-belong" style={{ width: '45%' }} />
+                    <button onClick={() => setBelong(prev => [...prev, $('.txt-belong').val()])} type="button" className="btn btn-success">Create</button>
+                    <div className='col-lg-4 content'>{belong.join(', ')}
+                        <button onClick={() => setBelong([])}>x</button>
+                    </div>
+                </div>
+
+                <div className='episode' style={{ display: 'flex', width: "30%" }}>
                     <input type="text" placeholder='Actors' className="form-control col-lg-5 txt-actor" style={{ width: '45%' }} />
                     <button onClick={() => setActors(prev => [...prev, $('.txt-actor').val()])} type="button" className="btn btn-success">Create</button>
-                    <div className='col-lg-4 content'>{actors.join(', ')}</div>
+                    <div className='col-lg-4 content'>{actors.join(', ')}
+                        <button onClick={() => setActors([])}>x</button>
+                    </div>
                 </div>
-                <div className='episode' style={{ display: 'flex' }}>
+                <div className='episode' style={{ display: 'flex', width: "30%" }}>
                     <input type="text" placeholder='Directors' className="form-control col-lg-5 txt-director" style={{ width: '45%' }} />
                     <button type="button" onClick={() => setDirectors(prev => [...prev, $('.txt-director').val()])} className="btn btn-success">Create</button>
-                    <div className='col-lg-4 content'>{directors.join(', ')}</div>
+                    <div className='col-lg-4 content'>{directors.join(', ')}
+                        <button onClick={() => setDirectors([])}>x</button>
+                    </div>
                 </div>
                 <div className='episode'>
                     <input type="text" placeholder='Index Of Episode:' className="form-control 1" />
                     <input type="text" placeholder='Episode Name' className="form-control 2" />
                     <input type="text" placeholder='Episode URL' className="form-control 3" />
                     <button onClick={() => setEpisode(prev => [...prev, { indexOfEpisode: parseInt($('.1').val()), name: $('.2').val(), url: $('.3').val() }])} type="button" className="btn btn-success">Create</button>
+                    <button onClick={() => setEpisode(prev => prev.filter((item, index) => index !== prev.length - 1))}>x</button>
                 </div>
                 <div className='episode'>
                     <div style={{ height: '200px', overflowY: 'auto' }}>
@@ -98,7 +126,15 @@ const ManageMovies = () => {
                 <div className='col-lg-12' style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
                     <button onClick={() => handleInsert()} type="button" style={{ margin: '0 5px' }} className="btn btn-success">Insert</button>
                     <button type="button" style={{ margin: '0 5px' }} className="btn btn-primary">Update</button>
-                    <button type="button" style={{ margin: '0 5px' }} className="btn btn-danger">Delete</button>
+                    <button onClick={() => handleDelete()} type="button" style={{ margin: '0 5px' }} className="btn btn-danger">Delete</button>
+                    <select onChange={(e) => { e.target.value !== 'none' && setCurrentMovie(datas?.movies.filter(item => item._id === e.target.value)[0]) }} className="form-select">
+                        <option value={'none'}>None</option>
+                        {datas?.movies.map((movie, index) => {
+                            return (
+                                <option key={movie._id} value={movie._id}>{movie.title}</option>
+                            )
+                        })}
+                    </select>
                 </div>
             </div>
         </section>

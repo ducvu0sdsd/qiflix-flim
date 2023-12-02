@@ -25,9 +25,10 @@ const ManageProfilePage = () => {
     const { datas, handles } = useContext(ThemeContext) || {}
     const [currentUser, setCurrentUser] = useState<UserInterface>()
 
-    useEffect(() => {
-
-    }, [datas])
+    const titleElement = document.querySelector('head title');
+    if (titleElement) {
+        titleElement.textContent = "Manage Profile";
+    }
 
     const handleUpdateAvatarClick = (type: string) => {
         if (type === 'create') {

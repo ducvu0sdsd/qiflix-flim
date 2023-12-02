@@ -67,7 +67,14 @@ export interface MovieInterface {
     thumbnail: string
     trailerUrl: string
     directors: string[]
+    belong: string[]
     yearRelease: number
     _id: string
     listEpisode?: Episode
+}
+
+export interface MovieWatchingByUserIdInterface {
+    movie: MovieInterface
+    indexOfEpisode: number
+    currentTime: number
 }

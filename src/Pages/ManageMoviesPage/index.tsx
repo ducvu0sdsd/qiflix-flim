@@ -8,6 +8,10 @@ import ManageMovies from './components/ManageMovies'
 const ManageMoviesPage = () => {
 
     const { datas, handles } = useContext(ThemeContext) || {}
+    const titleElement = document.querySelector('head title');
+    if (titleElement) {
+        titleElement.textContent = "Manage Movies";
+    }
 
     return (
         <>
