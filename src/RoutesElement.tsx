@@ -136,7 +136,7 @@ function RoutesElement() {
         { name: 'home-page', component: <HomePage /> },
         { name: 'manage-movies-page', component: <ManageMoviesPage /> },
         ...(datas?.movies ? datas.movies.map((movie) => {
-            return { name: movie.url, component: <FilmViewingPage data={movie} /> }
+            return { name: movie.url, component: <FilmViewingPage data={movie} currentUser={datas.currentUser || undefined} /> }
         }) : []),
     ]
 

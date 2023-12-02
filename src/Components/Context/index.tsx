@@ -62,7 +62,6 @@ export const Provider: React.FC<ThemeContextProviderProps> = ({ children }) => {
     useEffect(() => {
         apiUser({ path: '/movies', type: TypeHTTP.GET })
             .then(result => {
-                console.log(result)
                 setMovies(result)
             })
     }, [])

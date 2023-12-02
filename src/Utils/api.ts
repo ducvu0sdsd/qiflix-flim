@@ -85,6 +85,27 @@ export const apiUser: ({ body, type, path }: APIUserProps) => Promise<any> = ({ 
                                 })
                         })
                     break
+                case TypeHTTP.PUT:
+                    axios.put(path, body, { headers: { Authorization: 'Access ' + accessToken } })
+                        .then(res => {
+                            rejects(res.data)
+                        })
+                        .catch(() => {
+                            refreshToken()
+                                .then(res => {
+                                    if (res) {
+                                        const accessTokenString = localStorage.getItem('accessToken');
+                                        if (accessTokenString) {
+                                            const accessToken = JSON.parse(accessTokenString);
+                                            axios.put(path, body, { headers: { Authorization: 'Access ' + accessToken } })
+                                                .then(res => {
+                                                    rejects(res.data)
+                                                })
+                                        }
+                                    }
+                                })
+                        })
+                    break
                 default:
                     return undefined
             }

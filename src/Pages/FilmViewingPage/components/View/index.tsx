@@ -3,6 +3,8 @@ import Dailymotion from 'react-dailymotion';
 import './view.scss'
 import $ from 'jquery'
 import { Link } from "react-router-dom";
+import { TypeHTTP, apiUser } from "../../../../Utils/api";
+import { WatchingInterface } from "../../../../Components/Context/interfaces";
 
 export interface MousePositionType {
     x: number,
@@ -15,18 +17,22 @@ export interface ViewProps {
     name: string,
     setCurrentEpisode: React.Dispatch<React.SetStateAction<number>>;
     numberOfEpisode: number,
-    currentEpisode: number
+    currentEpisode: number,
+    movie_id: string,
+    user_id: string,
+    currentTime: number
 }
 
-const View = ({ url, title, name, numberOfEpisode, currentEpisode, setCurrentEpisode }: ViewProps) => {
+const View = ({ currentTime, movie_id, user_id, url, title, name, numberOfEpisode, currentEpisode, setCurrentEpisode }: ViewProps) => {
 
     //state
+    const [waitingUpdate, setWaitingUpdate] = useState<number>(120)
     const [currentQuality, setCurrentQuality] = useState<string>('')
     const [fullscreen, setFullScreen] = useState<boolean>(false)
     const [volume, setVolume] = useState<boolean>(true)
     const [mouseDownStick, setMouseDownStick] = useState<boolean>(false)
     const [duration, setDuration] = useState<number>(0)
-    const [bufferTime, setBufferTime] = useState<number>(100)
+    const [bufferTime, setBufferTime] = useState<number>(currentTime)
     const [controls, setControls] = useState<boolean>(true)
     const [play, setPlay] = useState<boolean>(true)
     const [mousePosition, setMousePosition] = useState<MousePositionType>({ x: 0, y: 0 })
@@ -91,6 +97,11 @@ const View = ({ url, title, name, numberOfEpisode, currentEpisode, setCurrentEpi
         const process = $('.process')
         const btnSkip = $('#view .btn-skip')
         const processComplete = $('.process__complete').get(0)
+        const watching = {
+            movie_id: movie_id,
+            indexOfEpisode: currentEpisode,
+            currentTime: bufferTime
+        }
         if (processComplete && process.length > 0 && btnSkip.length > 0) {
             if (duration !== 0 && bufferTime !== 0) {
                 if (bufferTime / duration > 0.985) {
@@ -102,6 +113,12 @@ const View = ({ url, title, name, numberOfEpisode, currentEpisode, setCurrentEpi
                 }
             } else {
                 btnSkip.css('display', 'none')
+            }
+            if (waitingUpdate === 0) {
+                setWaitingUpdate(120)
+                apiUser({ path: `/users/update-watching/${user_id}`, body: watching, type: TypeHTTP.PUT })
+            } else {
+                setWaitingUpdate(prev => prev - 1)
             }
             let positionTime: number = (bufferTime / duration)
             const widthProcess: number = parseInt(process.css('width').replace('px', ''))
@@ -152,10 +169,15 @@ const View = ({ url, title, name, numberOfEpisode, currentEpisode, setCurrentEpi
     }
 
     const handleReadyVideo = (e: any) => {
+        const processComplete = $('.process__complete')
+        const process = $('.process')
         const intervalReady = setInterval(() => {
             if (e.target.video && e.target.quality) {
                 const video = $('#view .video').get(0)
                 if (video) {
+                    let positionTime: number = (currentTime / e.target.video.duration)
+                    const widthProcess: number = parseInt(process.css('width').replace('px', ''))
+                    processComplete.css('width', `${positionTime * widthProcess}px`)
                     setDuration(e.target.video.duration)
                     setCurrentQuality(e.target.quality)
                 }
@@ -165,10 +187,10 @@ const View = ({ url, title, name, numberOfEpisode, currentEpisode, setCurrentEpi
     }
 
     const handleStartVideo = (e: any) => {
-        console.log(e)
         const video = $('#view .video').get(0)
         if (video) {
-            setBufferTime(0)
+            setBufferTime(currentTime)
+            video.seek(currentTime)
             interval.current = setInterval(() => {
                 setBufferTime((p) => p + 1)
             }, 1000)
@@ -198,11 +220,9 @@ const View = ({ url, title, name, numberOfEpisode, currentEpisode, setCurrentEpi
                 setPlay(false)
             } else {
                 video.play()
-                if (interval.current != null) {
-                    interval.current = setInterval(() => {
-                        setBufferTime((p) => p + 1)
-                    }, 1000)
-                }
+                interval.current = setInterval(() => {
+                    setBufferTime((p) => p + 1)
+                }, 1000)
                 setPlay(true)
             }
         }
