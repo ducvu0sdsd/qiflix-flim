@@ -1,6 +1,7 @@
 .films__film-item {
     width: 250px;
     margin-right: 13px;
+    margin-bottom: 10px;
     box-sizing: border-box;
     cursor: pointer;
     position: relative;
@@ -46,6 +47,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+
 
 
             & button {

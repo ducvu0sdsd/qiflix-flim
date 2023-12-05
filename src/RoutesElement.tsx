@@ -10,6 +10,9 @@ import FilmViewingPage from './Pages/FilmViewingPage';
 import axios from 'axios';
 import { ThemeContext } from './Components/Context';
 import ManageMoviesPage from './Pages/ManageMoviesPage';
+import MyListPage from './Pages/MyListPage';
+import TVShowPage from './Pages/TVShowPage';
+import MoviesPage from './Pages/MoviesPage';
 
 export interface RoutesType {
     name: string,
@@ -122,7 +125,7 @@ function RoutesElement() {
                     }
                 }
             }
-        }, [pathname]);
+        }, []);
         return <></>
     }
 
@@ -135,6 +138,9 @@ function RoutesElement() {
         { name: ':url', component: <ManageProfilePage /> },
         { name: 'home-page', component: <HomePage /> },
         { name: 'manage-movies-page', component: <ManageMoviesPage /> },
+        { name: 'my-list-page', component: <MyListPage /> },
+        { name: 'tvshow-page', component: <TVShowPage /> },
+        { name: 'movies-page', component: <MoviesPage /> },
         ...(datas?.movies ? datas.movies.map((movie) => {
             return { name: movie.url, component: <FilmViewingPage data={movie} currentUser={datas.currentUser || undefined} /> }
         }) : []),

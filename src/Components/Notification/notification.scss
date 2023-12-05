@@ -1,0 +1,47 @@
+#notification {
+    position: fixed;
+    top: 70px;
+    right: 10px;
+    max-height: 135px;
+    max-width: 300px;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.459);
+    z-index: 5;
+    padding: 15px;
+    transition: 0.5s;
+    opacity: 0;
+    display: none;
+
+    & .head {
+        display: flex;
+        align-items: center;
+
+        & .status-color {
+            height: 27px;
+            width: 27px;
+            background-color: green;
+            border-radius: 5px;
+        }
+
+        & .status-name {
+            margin: 0 10px;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    }
+
+    & .message {
+        color: white;
+        margin: 10px 0;
+    }
+
+    & .btn-exit {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: white;
+        font-size: 25px;
+        cursor: pointer;
+    }
+}

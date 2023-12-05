@@ -56,8 +56,6 @@ const ManageProfilePage = () => {
         if (gender === '') {
             return
         }
-        console.log(datas?.account)
-        console.log({ name, gender, avatar: avatarCreate, account_id: datas?.account?._id })
         apiUser({ type: TypeHTTP.POST, body: { name, gender, avatar: avatarCreate, account_id: datas?.account?._id }, path: '/users' })
             .then((result) => {
                 handles?.setUsers(prev => [...prev, result])

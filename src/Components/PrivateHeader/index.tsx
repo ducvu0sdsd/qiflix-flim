@@ -73,18 +73,24 @@ const PrivateHeader = ({ users, currentUser }: { users: UserInterface[], current
                             Home
                         </div>
                     </Link>
+                    <Link className='link' to={"/tvshow-page"}>
+                        <div className="menu__menu-item">
+                            TV Shows
+                        </div>
+                    </Link>
+                    <Link className='link' to={"/movies-page"}>
+                        <div className="menu__menu-item">
+                            Movies
+                        </div>
+                    </Link>
                     <div className="menu__menu-item">
-                        TV Shows
+                        Countries
                     </div>
-                    <div className="menu__menu-item">
-                        Movies
-                    </div>
-                    <div className="menu__menu-item">
-                        Contries
-                    </div>
-                    <div className="menu__menu-item">
-                        My List
-                    </div>
+                    <Link className='link' to={"/my-list-page"}>
+                        <div className="menu__menu-item">
+                            My List
+                        </div>
+                    </Link>
                 </div>
             </div>
             <div className="col-lg-2 user-notify-search">

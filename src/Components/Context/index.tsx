@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { AccountInterface, MovieInterface, MovieWatchingByUserIdInterface, UserInterface } from "./interfaces";
 import { TypeHTTP, apiUser } from "../../Utils/api";
+import Notification, { NotificationStatus } from "../Notification";
 
 export interface ThemeContextProviderProps {
     children: React.ReactNode;
@@ -20,6 +21,7 @@ export interface ThemeHandles {
     setCurrentUser: React.Dispatch<React.SetStateAction<UserInterface | undefined>>
     setMovies: React.Dispatch<React.SetStateAction<MovieInterface[]>>
     setMoviesWatching: React.Dispatch<React.SetStateAction<MovieWatchingByUserIdInterface[]>>
+    handleSetNotification: ({ type, message }: { type: NotificationStatus; message: string; }) => void
 }
 
 export const ThemeContext = createContext<{ datas: ThemeData; handles: ThemeHandles } | undefined>(undefined);
@@ -30,6 +32,14 @@ export const Provider: React.FC<ThemeContextProviderProps> = ({ children }) => {
     const [currentUser, setCurrentUser] = useState<UserInterface>()
     const [movies, setMovies] = useState<MovieInterface[]>([])
     const [moviesWatching, setMoviesWatching] = useState<MovieWatchingByUserIdInterface[]>([])
+    const [notificationStatus, setNotificationStatus] = useState<{ type: NotificationStatus, message: string }>({ type: NotificationStatus.NONE, message: '' })
+
+    const handleSetNotification = ({ type, message }: { type: NotificationStatus, message: string }) => {
+        setNotificationStatus({ type, message })
+        setTimeout(() => {
+            setNotificationStatus({ type: NotificationStatus.NONE, message: '' })
+        }, 2500)
+    }
 
     const datas: ThemeData = {
         users,
@@ -44,7 +54,8 @@ export const Provider: React.FC<ThemeContextProviderProps> = ({ children }) => {
         setAccount,
         setCurrentUser,
         setMovies,
-        setMoviesWatching
+        setMoviesWatching,
+        handleSetNotification
     };
 
     // Call API
@@ -80,8 +91,10 @@ export const Provider: React.FC<ThemeContextProviderProps> = ({ children }) => {
         }
     }, [currentUser])
 
+
     return (
         <ThemeContext.Provider value={{ datas, handles }}>
+            <Notification statusProp={notificationStatus.type} message={notificationStatus.message} />
             {children}
         </ThemeContext.Provider>
     );
