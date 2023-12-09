@@ -4,6 +4,13 @@
         height: 100%;
         position: relative;
 
+        & .logo {
+            position: absolute;
+            right: 30px;
+            top: 30px;
+            width: 130px;
+        }
+
         & .btn-skip {
             position: absolute;
             bottom: 80px;

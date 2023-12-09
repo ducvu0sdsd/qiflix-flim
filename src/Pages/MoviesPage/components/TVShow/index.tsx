@@ -9,21 +9,22 @@ import { Link } from 'react-router-dom'
 const Movies = () => {
 
     const { datas } = useContext(ThemeContext) || {}
-    const [moviesLiked, setMoviesLiked] = useState<MovieInterface[]>([])
+    const [movies, setMovies] = useState<MovieInterface[]>([])
     useEffect(() => {
-        if (datas?.currentUser) {
-            apiUser({ path: `/movies/get-movies-liked-by-user/${datas?.currentUser?._id}`, type: TypeHTTP.GET })
-                .then(result => {
-                    setMoviesLiked(result)
-                })
-        }
-    }, [datas?.currentUser])
+        datas?.movies.forEach(item => {
+            if (item.listEpisode?.episodes) {
+                if (item.listEpisode?.episodes.length == 1) {
+                    setMovies(p => [...p, item])
+                }
+            }
+        })
+    }, [datas?.movies])
 
     return (
         <section className='list-movie-page' style={{ height: `${window.innerHeight}px` }}>
             <h4>Movies</h4>
             <div className='col-lg-12 my-list-movie' >
-                {moviesLiked.map((movie, index) => {
+                {movies.map((movie, index) => {
                     return (
                         <div key={index} className="film">
                             <Link className='link' to={`/${movie.url}`}>

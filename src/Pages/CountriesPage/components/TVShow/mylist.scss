@@ -1,0 +1,42 @@
+.list-movie-page {
+    padding: 80px 0;
+
+    & .title {
+        display: flex;
+        height: 40px;
+        margin: 25px 5px;
+
+        & h4 {
+            color: white;
+            font-weight: bold;
+            padding-left: 40px;
+            height: 100%;
+            padding-top: 5px;
+            font-family: 'Noto Sans Tai Viet', sans-serif;
+        }
+
+        & select {
+            width: 200px;
+            height: 100%;
+            margin: 0 30px;
+        }
+    }
+
+    .my-list-movie {
+        padding: 0 40px;
+        display: flex;
+        align-items: start;
+        flex-wrap: wrap;
+
+        & .film {
+            width: 260px;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 5px 10px;
+
+            & img {
+                cursor: pointer;
+            }
+        }
+    }
+}

@@ -13,6 +13,7 @@ import ManageMoviesPage from './Pages/ManageMoviesPage';
 import MyListPage from './Pages/MyListPage';
 import TVShowPage from './Pages/TVShowPage';
 import MoviesPage from './Pages/MoviesPage';
+import CountriesPage from './Pages/CountriesPage';
 
 export interface RoutesType {
     name: string,
@@ -141,6 +142,7 @@ function RoutesElement() {
         { name: 'my-list-page', component: <MyListPage /> },
         { name: 'tvshow-page', component: <TVShowPage /> },
         { name: 'movies-page', component: <MoviesPage /> },
+        { name: 'countries-page', component: <CountriesPage /> },
         ...(datas?.movies ? datas.movies.map((movie) => {
             return { name: movie.url, component: <FilmViewingPage data={movie} currentUser={datas.currentUser || undefined} /> }
         }) : []),

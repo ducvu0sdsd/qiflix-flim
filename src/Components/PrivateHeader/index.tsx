@@ -83,9 +83,11 @@ const PrivateHeader = ({ users, currentUser }: { users: UserInterface[], current
                             Movies
                         </div>
                     </Link>
-                    <div className="menu__menu-item">
-                        Countries
-                    </div>
+                    <Link className='link' to={"/countries-page"}>
+                        <div className="menu__menu-item">
+                            Countries
+                        </div>
+                    </Link>
                     <Link className='link' to={"/my-list-page"}>
                         <div className="menu__menu-item">
                             My List
@@ -102,14 +104,15 @@ const PrivateHeader = ({ users, currentUser }: { users: UserInterface[], current
                     </div>
                     <div className='options-user'>
                         {users.map((user, index) => {
-                            return (
-                                <div onClick={() => handleChangeUser(user.name)} key={index} className='user-item'>
-                                    <div className='avatar-user'>
-                                        <img width={'100%'} src={user.avatar} className='avatar-user-img' />
+                            if (user._id !== datas?.currentUser?._id)
+                                return (
+                                    <div onClick={() => handleChangeUser(user.name)} key={index} className='user-item'>
+                                        <div className='avatar-user'>
+                                            <img width={'100%'} src={user.avatar} className='avatar-user-img' />
+                                        </div>
+                                        <span className='user-name'>{user.name}</span>
                                     </div>
-                                    <span className='user-name'>{user.name}</span>
-                                </div>
-                            )
+                                )
                         })}
                         <div className='user-item' onClick={() => handleNavigateManageProfile()}>
                             <div className='avatar-user'>

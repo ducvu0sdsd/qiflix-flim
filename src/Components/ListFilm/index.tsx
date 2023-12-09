@@ -7,10 +7,11 @@ import $ from 'jquery'
 
 interface ListFilmProp {
     movies: MovieInterface[],
-    title: string
+    title: string,
+    paddingLeft?: number
 }
 
-const ListFilm = ({ movies, title }: ListFilmProp) => {
+const ListFilm = ({ movies, title, paddingLeft }: ListFilmProp) => {
     const [load, setLoad] = useState(false)
     const [marginLeft, setMarginLeft] = useState<number>(0)
 
@@ -44,7 +45,7 @@ const ListFilm = ({ movies, title }: ListFilmProp) => {
     }
 
     return (
-        <section className='col-lg-12 list-film'>
+        <section className='col-lg-12 list-film' style={{ paddingLeft: paddingLeft + 'px' }}>
             <h3>{title}</h3>
             <div className="wrapper-film col-lg-12">
                 <div className='col-lg-12 films'>

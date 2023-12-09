@@ -5,6 +5,7 @@ import $ from 'jquery'
 import { Link } from "react-router-dom";
 import { TypeHTTP, apiUser } from "../../../../Utils/api";
 import { WatchingInterface } from "../../../../Components/Context/interfaces";
+import Qiflix from '../../../../resources/qiflix.png'
 
 export interface MousePositionType {
     x: number,
@@ -102,7 +103,6 @@ const View = ({ currentTime, movie_id, user_id, url, title, name, numberOfEpisod
             indexOfEpisode: currentEpisode,
             currentTime: bufferTime
         }
-        console.log(bufferTime)
         if (processComplete && process.length > 0 && btnSkip.length > 0) {
             if (duration !== 0 && bufferTime !== 0) {
                 if (bufferTime / duration > 0.985) {
@@ -269,6 +269,7 @@ const View = ({ currentTime, movie_id, user_id, url, title, name, numberOfEpisod
             const bottom = $('.controls-bottom-video')
             const top = $('.controls-top-video')
             const bottomad = $('.wrapper-bottom-video')
+            const logo = $('#view .logo')
             const elem: HTMLElement | null = document.documentElement as HTMLElement;
             if (wrapperVideo.length > 0 && btnPlayPause.length > 0 && bottom.length > 0 && top.length > 0 && bottomad.length > 0) {
                 if (start) {
@@ -277,8 +278,10 @@ const View = ({ currentTime, movie_id, user_id, url, title, name, numberOfEpisod
                     bottom.css('display', 'none')
                     top.css('display', 'none')
                     bottomad.css('display', 'block')
+                    logo.css('display', 'none')
                     clearInterval(interval.current!)
                 } else {
+                    logo.css('display', 'block')
                     wrapperVideo.css('display', 'block')
                     btnPlayPause.css('display', 'flex')
                     bottom.css('display', 'flex')
@@ -353,6 +356,9 @@ const View = ({ currentTime, movie_id, user_id, url, title, name, numberOfEpisod
                     onTimeUpdate={(e: any) => handleChange(e)}
                     onApiReady={(e: any) => handleReadyVideo(e)}
                 />
+                <div className="logo">
+                    <img width={'100%'} src={Qiflix} />
+                </div>
                 <div className="wrapper-bottom-video"></div>
                 <div className="wrapper-video"></div>
                 <button onClick={() => setCurrentEpisode(p => p + 1)} className="btn-skip">Next Episode &gt;</button>

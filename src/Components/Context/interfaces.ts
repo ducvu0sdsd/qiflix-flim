@@ -78,3 +78,15 @@ export interface MovieWatchingByUserIdInterface {
     indexOfEpisode: number
     currentTime: number
 }
+
+export interface CommentInterface {
+    _id: string
+    movie_id: string
+    content: string
+    updatedAt: Date
+    user: {
+        _id: string
+        name: string
+        avatar: string
+    }
+}
