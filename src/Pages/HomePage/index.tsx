@@ -46,8 +46,8 @@ const HomePage = () => {
             <TypicalSection movies={datas?.movies || []} />
             <ListFilm title={'Newly Released'} movies={newlyReleased || []} />
             {(moviesWatching && moviesWatching.length > 0) && <ListFilm title={'Continue Watching'} movies={moviesWatching} />}
-            <ListFilm title={'For Christmas'} movies={newlyReleased || []} />
-            <ListFilm title={'Korea Flims'} movies={christmasFilms || []} />
+            <ListFilm title={'For Christmas'} movies={christmasFilms || []} />
+            <ListFilm title={'Korea Flims'} movies={newlyReleased || []} />
             <ListFilm title={'Anime'} movies={animes || []} />
             <Footer />
         </>
