@@ -47,7 +47,7 @@ const HomePage = () => {
             <ListFilm title={'Newly Released'} movies={newlyReleased || []} />
             {(moviesWatching && moviesWatching.length > 0) && <ListFilm title={'Continue Watching'} movies={moviesWatching} />}
             <ListFilm title={'For Christmas'} movies={christmasFilms || []} />
-            <ListFilm title={'Korea Flims'} movies={newlyReleased || []} />
+            <ListFilm title={'Korea Flims'} movies={koreaFilms || []} />
             <ListFilm title={'Anime'} movies={animes || []} />
             <Footer />
         </>
