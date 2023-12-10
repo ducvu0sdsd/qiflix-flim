@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import Dailymotion from 'react-dailymotion';
 import './view.scss'
 import $ from 'jquery'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { TypeHTTP, apiUser } from "../../../../Utils/api";
 import { SubtitleInterface, WatchingInterface } from "../../../../Components/Context/interfaces";
 import Qiflix from '../../../../resources/qiflix.png'
@@ -26,6 +26,8 @@ export interface ViewProps {
 }
 
 const View = ({ currentSubtitles, currentTime, movie_id, user_id, url, title, name, numberOfEpisode, currentEpisode, setCurrentEpisode }: ViewProps) => {
+
+    const navigate = useNavigate()
 
     //state
     const [waitingUpdate, setWaitingUpdate] = useState<number>(120)
@@ -394,6 +396,14 @@ const View = ({ currentSubtitles, currentTime, movie_id, user_id, url, title, na
         }
     }
 
+    const handleOutView = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'auto'
+        });
+        setTimeout(() => { navigate('/home-page') }, 200)
+    }
+
     return (
         <section
             id='view'
@@ -429,7 +439,7 @@ const View = ({ currentSubtitles, currentTime, movie_id, user_id, url, title, na
                 <div className="wrapper-video"></div>
                 <button onClick={() => setCurrentEpisode(p => p + 1)} className="btn-skip">Next Episode &gt;</button>
                 <div onMouseOver={() => handleMouseTop(true)} onMouseOut={() => handleMouseTop(false)} className="controls-top-video controls">
-                    <span style={{ display: 'flex' }}><Link className="link" style={{ color: 'white', marginRight: '20px', fontSize: '25px' }} to={'/home-page'}><i className='bx bx-arrow-back'></i></Link> {title}</span><div className="box" /><span>{name}</span>
+                    <span style={{ display: 'flex' }}><i onClick={() => handleOutView()} className='bx bx-arrow-back'></i> {title}</span><div className="box" /><span>{name}</span>
                 </div>
                 <button onMouseOver={() => handleMouseBtnPlayPause(true)} onMouseOut={() => handleMouseBtnPlayPause(false)} onClick={() => handleChangePlay()} className="btn--play-pause">{play ? <i className='bx bx-pause' ></i> : <i className='bx bx-play'></i>}</button>
                 <div onMouseOver={() => handleMouseBottom(true)} onMouseOut={() => handleMouseBottom(false)} className="controls-bottom-video controls col-lg-12">
