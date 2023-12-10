@@ -36,13 +36,18 @@ const HomePage = () => {
         return item.belong.includes("Anime")
     })
 
+    const christmasFilms: MovieInterface[] | undefined = datas?.movies.filter(item => {
+        return item.belong.includes("For Christmas")
+    })
+
     return (
         <>
             <PrivateHeader users={datas?.users || []} currentUser={datas?.currentUser} />
             <TypicalSection movies={datas?.movies || []} />
             <ListFilm title={'Newly Released'} movies={newlyReleased || []} />
             {(moviesWatching && moviesWatching.length > 0) && <ListFilm title={'Continue Watching'} movies={moviesWatching} />}
-            <ListFilm title={'Korea Flims'} movies={koreaFilms || []} />
+            <ListFilm title={'For Christmas'} movies={newlyReleased || []} />
+            <ListFilm title={'Korea Flims'} movies={christmasFilms || []} />
             <ListFilm title={'Anime'} movies={animes || []} />
             <Footer />
         </>
