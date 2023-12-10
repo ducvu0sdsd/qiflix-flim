@@ -83,11 +83,6 @@ const PrivateHeader = ({ users, currentUser }: { users: UserInterface[], current
                             Movies
                         </div>
                     </Link>
-                    <Link className='link' to={"/countries-page"}>
-                        <div className="menu__menu-item">
-                            Countries
-                        </div>
-                    </Link>
                     <Link className='link' to={"/my-list-page"}>
                         <div className="menu__menu-item">
                             My List
@@ -96,7 +91,9 @@ const PrivateHeader = ({ users, currentUser }: { users: UserInterface[], current
                 </div>
             </div>
             <div className="col-lg-2 user-notify-search">
-                <i className='bx bx-search' ></i>
+                <Link className='link' to={"/countries-page"}>
+                    <i className='bx bx-search' ></i>
+                </Link>
                 <i className='bx bx-bell' ></i>
                 <div className='avatar-wrapper'>
                     <div className="avatar">
