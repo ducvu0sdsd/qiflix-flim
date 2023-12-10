@@ -25,8 +25,6 @@ const FilmViewingPage = ({ data, currentUser }: FilmViewingPageProp) => {
         titleElement.textContent = data.title;
     }
 
-    useEffect(() => console.log(currentSubtitles), [currentSubtitles])
-
 
     useEffect(() => {
         window.scrollTo({

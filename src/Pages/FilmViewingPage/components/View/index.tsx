@@ -47,7 +47,6 @@ const View = ({ currentSubtitles, currentTime, movie_id, user_id, url, title, na
 
     useEffect(() => {
         if (currentSubtitles.length > 0) {
-            console.log(numberOfEpisode, currentEpisode)
             if (numberOfEpisode == 1) {
                 // phim le
                 currentSubtitles.forEach(item => {
