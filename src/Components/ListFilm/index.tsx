@@ -53,7 +53,7 @@ const ListFilm = ({ movies, title, paddingLeft }: ListFilmProp) => {
                         {movies.map((movie, index) => {
                             return (
                                 <div key={index} className="film">
-                                    <FilmItem title={title} displayDetail={true} movie={movie} />
+                                    <FilmItem title={title} displayDetail={index < 4 ? true : false} movie={movie} />
                                 </div>
                             )
                         })}
