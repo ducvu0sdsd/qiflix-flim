@@ -36,4 +36,21 @@
             }
         }
     }
+
+    & .form-subtitle {
+        padding: 20px;
+        display: flex;
+        border: 1px solid #999;
+        border-radius: 10px;
+        margin: 20px 0;
+        color: white;
+        font-weight: bold;
+        align-items: center;
+
+        & select,
+        & input {
+            width: 300px;
+            margin: 0 10px;
+        }
+    }
 }

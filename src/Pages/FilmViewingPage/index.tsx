@@ -5,9 +5,10 @@ import Informations from './components/Infomations'
 import View from './components/View'
 import './filmviewingpage.scss'
 import React, { useEffect, useState } from 'react'
-import { MovieInterface, UserInterface, WatchingInterface } from '../../Components/Context/interfaces'
+import { MovieInterface, SubtitleInterface, UserInterface, WatchingInterface } from '../../Components/Context/interfaces'
 import Comments from './components/Comments'
 import { useLocation } from 'react-router-dom'
+import { TypeHTTP, apiUser } from '../../Utils/api'
 interface FilmViewingPageProp {
     data: MovieInterface,
     currentUser: UserInterface | undefined
@@ -16,12 +17,15 @@ interface FilmViewingPageProp {
 const FilmViewingPage = ({ data, currentUser }: FilmViewingPageProp) => {
     const [currentEpisode, setCurrentEpisode] = useState<number>(1)
     const [bufferTime, setBufferTime] = useState<number>(0)
+    const [currentSubtitles, setCurrentSubtitles] = useState<SubtitleInterface[]>([])
     const { pathname } = useLocation()
 
     const titleElement = document.querySelector('head title');
     if (titleElement) {
         titleElement.textContent = data.title;
     }
+
+    useEffect(() => console.log(currentSubtitles), [currentSubtitles])
 
 
     useEffect(() => {
@@ -39,10 +43,17 @@ const FilmViewingPage = ({ data, currentUser }: FilmViewingPageProp) => {
         }
     }, [])
 
+    useEffect(() => {
+        apiUser({ path: `/subtitles/${data._id}`, type: TypeHTTP.GET })
+            .then(res => {
+                setCurrentSubtitles(res)
+            })
+    }, [])
+
 
     return (
         <>
-            <View currentTime={bufferTime} movie_id={data._id} user_id={currentUser?._id || ''} currentEpisode={currentEpisode} numberOfEpisode={data.listEpisode?.numberOfEpisodes || 0} setCurrentEpisode={setCurrentEpisode} title={data.title} url={data.listEpisode?.episodes[currentEpisode - 1].url || ''} name={data.listEpisode?.episodes[currentEpisode - 1].name || ''} />
+            <View currentSubtitles={currentSubtitles} currentTime={bufferTime} movie_id={data._id} user_id={currentUser?._id || ''} currentEpisode={currentEpisode} numberOfEpisode={data.listEpisode?.numberOfEpisodes || 0} setCurrentEpisode={setCurrentEpisode} title={data.title} url={data.listEpisode?.episodes[currentEpisode - 1].url || ''} name={data.listEpisode?.episodes[currentEpisode - 1].name || ''} />
             <Informations currentEpisode={currentEpisode} currentFilm={data} currentUser={currentUser || undefined} setCurrentEpisode={setCurrentEpisode} />
             <Comments movie_id={data._id} user_id={currentUser?._id || ''} user_avatar={currentUser?.avatar || ''} />
             <Footer />

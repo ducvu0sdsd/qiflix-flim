@@ -4,7 +4,7 @@ import './view.scss'
 import $ from 'jquery'
 import { Link } from "react-router-dom";
 import { TypeHTTP, apiUser } from "../../../../Utils/api";
-import { WatchingInterface } from "../../../../Components/Context/interfaces";
+import { SubtitleInterface, WatchingInterface } from "../../../../Components/Context/interfaces";
 import Qiflix from '../../../../resources/qiflix.png'
 
 export interface MousePositionType {
@@ -21,10 +21,11 @@ export interface ViewProps {
     currentEpisode: number,
     movie_id: string,
     user_id: string,
-    currentTime: number
+    currentTime: number,
+    currentSubtitles: SubtitleInterface[]
 }
 
-const View = ({ currentTime, movie_id, user_id, url, title, name, numberOfEpisode, currentEpisode, setCurrentEpisode }: ViewProps) => {
+const View = ({ currentSubtitles, currentTime, movie_id, user_id, url, title, name, numberOfEpisode, currentEpisode, setCurrentEpisode }: ViewProps) => {
 
     //state
     const [waitingUpdate, setWaitingUpdate] = useState<number>(120)
@@ -36,11 +37,37 @@ const View = ({ currentTime, movie_id, user_id, url, title, name, numberOfEpisod
     const [bufferTime, setBufferTime] = useState<number>(currentTime)
     const [controls, setControls] = useState<boolean>(true)
     const [play, setPlay] = useState<boolean>(true)
+    const [sub, setSub] = useState<boolean>(currentSubtitles.length > 0)
     const [mousePosition, setMousePosition] = useState<MousePositionType>({ x: 0, y: 0 })
+    const [subContent, setSubContent] = useState<SubtitleInterface[]>([])
 
     //ref
     const timeout = useRef<NodeJS.Timeout | null>(null);
     const interval = useRef<NodeJS.Timeout | null>(null);
+
+    useEffect(() => {
+        if (currentSubtitles.length > 0) {
+            console.log(numberOfEpisode, currentEpisode)
+            if (numberOfEpisode == 1) {
+                // phim le
+                currentSubtitles.forEach(item => {
+                    if (item.episode == 0) {
+                        setSubContent(p => [...p, item])
+                    }
+                })
+            } else {
+                // phim bo
+                currentSubtitles.forEach(item => {
+                    if (item.episode == currentEpisode) {
+                        setSubContent(p => [...p, item])
+                    }
+                })
+            }
+            setSub(true)
+        } else {
+            setSub(false)
+        }
+    }, [currentSubtitles])
 
     useEffect(() => {
         const processStick = $('#view .process__stick').get(0)
@@ -98,10 +125,23 @@ const View = ({ currentTime, movie_id, user_id, url, title, name, numberOfEpisod
         const process = $('.process')
         const btnSkip = $('#view .btn-skip')
         const processComplete = $('.process__complete').get(0)
+        const subtitle = $('#view .subtitle')
         const watching = {
             movie_id: movie_id,
             indexOfEpisode: currentEpisode,
             currentTime: bufferTime
+        }
+        if (currentSubtitles.length > 0) {
+            let have = false
+            subContent[0].subtitles.forEach(item => {
+                if (bufferTime >= item.firstTime && bufferTime < item.lastTime) {
+                    subtitle.html(item.content)
+                    have = true
+                }
+            })
+            if (!have) {
+                subtitle.html('')
+            }
         }
         if (processComplete && process.length > 0 && btnSkip.length > 0) {
             if (duration !== 0 && bufferTime !== 0) {
@@ -270,6 +310,7 @@ const View = ({ currentTime, movie_id, user_id, url, title, name, numberOfEpisod
             const top = $('.controls-top-video')
             const bottomad = $('.wrapper-bottom-video')
             const logo = $('#view .logo')
+            const subtitle = $('#view .subtitle')
             const elem: HTMLElement | null = document.documentElement as HTMLElement;
             if (wrapperVideo.length > 0 && btnPlayPause.length > 0 && bottom.length > 0 && top.length > 0 && bottomad.length > 0) {
                 if (start) {
@@ -279,6 +320,7 @@ const View = ({ currentTime, movie_id, user_id, url, title, name, numberOfEpisod
                     top.css('display', 'none')
                     bottomad.css('display', 'block')
                     logo.css('display', 'none')
+                    subtitle.css('display', 'none')
                     clearInterval(interval.current!)
                 } else {
                     logo.css('display', 'block')
@@ -287,6 +329,7 @@ const View = ({ currentTime, movie_id, user_id, url, title, name, numberOfEpisod
                     bottom.css('display', 'flex')
                     top.css('display', 'flex')
                     bottomad.css('display', 'none')
+                    subtitle.css('display', 'flex')
                     interval.current = setInterval(() => {
                         setBufferTime(e.target.currentTime)
                     }, 1000)
@@ -311,9 +354,15 @@ const View = ({ currentTime, movie_id, user_id, url, title, name, numberOfEpisod
         const elem: HTMLElement | null = document.documentElement as HTMLElement;
         if (!document.fullscreenElement) {
             if (elem?.requestFullscreen) {
-                elem.requestFullscreen()
-                document.body.style.overflow = 'hidden'
-                setFullScreen(true)
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'auto'
+                });
+                setTimeout(() => {
+                    elem.requestFullscreen()
+                    document.body.style.overflow = 'hidden'
+                    setFullScreen(true)
+                }, 400)
             }
         } else {
             if (document.exitFullscreen) {
@@ -329,6 +378,21 @@ const View = ({ currentTime, movie_id, user_id, url, title, name, numberOfEpisod
         interval.current = setInterval(() => {
             setBufferTime(e.target.currentTime)
         }, 1000)
+    }
+
+    const handleChangeSubtitle = (e: any) => {
+        if (currentSubtitles.length > 0) {
+            const subtitle = $('#view .subtitle')
+            if (sub) {
+                subtitle.css('display', 'none')
+                e.target.style.color = '#999'
+                setSub(false)
+            } else {
+                subtitle.css('display', 'flex')
+                e.target.style.color = 'white'
+                setSub(true)
+            }
+        }
     }
 
     return (
@@ -356,6 +420,9 @@ const View = ({ currentTime, movie_id, user_id, url, title, name, numberOfEpisod
                     onTimeUpdate={(e: any) => handleChange(e)}
                     onApiReady={(e: any) => handleReadyVideo(e)}
                 />
+                <div className="subtitle">
+
+                </div>
                 <div className="logo">
                     <img width={'100%'} src={Qiflix} />
                 </div>
@@ -375,6 +442,9 @@ const View = ({ currentTime, movie_id, user_id, url, title, name, numberOfEpisod
                         <div className="qualities">
                             {currentQuality !== '' && currentQuality + 'p'}
                         </div>
+                        <button onClick={handleChangeSubtitle} className="btn-subtitle">
+                            <i style={{ color: sub ? 'white' : '#999' }} className='bx bx-captions'></i>
+                        </button>
                         <button onClick={() => handleChangVolume()} className="btn-volume">
                             {volume ? <i className='bx bx-volume-full'></i> : <i className='bx bx-volume-mute' ></i>}
                         </button>

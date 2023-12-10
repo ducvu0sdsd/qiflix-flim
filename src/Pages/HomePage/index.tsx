@@ -21,8 +21,11 @@ const HomePage = () => {
         return item.movie
     })
 
-    const newlyReleased: MovieInterface[] | undefined = datas?.movies.filter(item => {
-        return item.belong.includes("Newly Released")
+    const newlyReleased: MovieInterface[] = []
+    datas?.movies.forEach((item, index) => {
+        if (index < 20) {
+            newlyReleased.unshift(item)
+        }
     })
 
     const koreaFilms: MovieInterface[] | undefined = datas?.movies.filter(item => {

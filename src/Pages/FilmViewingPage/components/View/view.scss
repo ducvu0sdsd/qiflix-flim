@@ -4,10 +4,28 @@
         height: 100%;
         position: relative;
 
+        & .subtitle {
+            position: absolute;
+            bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            height: 80px;
+            left: 50%;
+            line-height: 40px;
+            transform: translateX(-50%);
+            width: 60%;
+            font-size: 30px;
+            color: white;
+            // font-weight: bold;
+            // background: 0;
+        }
+
         & .logo {
             position: absolute;
-            right: 30px;
-            top: 30px;
+            right: 40px;
+            top: 50px;
             width: 130px;
         }
 
@@ -39,7 +57,7 @@
             bottom: 0;
             left: 0;
             z-index: 2;
-            box-shadow: inset 0px -50px 20px 0px rgb(0, 0, 0);
+            box-shadow: inset 0px -70px 20px 0px rgb(0, 0, 0);
             display: none;
         }
 
@@ -125,13 +143,14 @@
                     }
 
                     & .btn-volume,
+                    & .btn-subtitle,
                     & .btn-fullscreen {
                         background: 0;
                         border: 0;
                         display: flex;
                         justify-content: center;
                         align-items: center;
-                        margin-right: 5px;
+                        margin-right: 3px;
 
                         & i {
                             font-size: 30px;
@@ -143,7 +162,7 @@
 
                 & .process {
                     height: 3px;
-                    width: 83%;
+                    width: 80%;
                     background-color: rgb(137, 137, 137);
                     margin: 0 40px;
                     margin-top: 10px;

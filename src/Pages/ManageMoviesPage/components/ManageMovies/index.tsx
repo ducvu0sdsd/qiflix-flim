@@ -9,6 +9,9 @@ import { ThemeContext } from '../../../../Components/Context'
 
 const ManageMovies = () => {
     const [currentMovie, setCurrentMovie] = useState<MovieInterface>()
+    const [currentMovieSub, setCurrentMovieSub] = useState<MovieInterface>()
+    const [countrySub, setCountrySub] = useState<string>('')
+    const [selectedFile, setSelectedFile] = useState(null);
     const [title, setTitle] = useState<string>('')
     const [description, setDescription] = useState<string>('')
     const [url, setUrl] = useState<string>('')
@@ -41,8 +44,32 @@ const ManageMovies = () => {
         }
     }
 
+    const handleCreateSubtitle = () => {
+        const formData = new FormData()
+        if (selectedFile) {
+            formData.append('srtFile', selectedFile);
+        } else {
+            console.error('selectedFile is null or invalid');
+        }
+        const movieId = currentMovieSub?._id;
+        if (movieId) {
+            formData.append('movie_id', movieId);
+        } else {
+            console.error('currentMovieSub?._id is null or invalid');
+        }
+        const epi = $('#view .txt-episode').val()
+        if (/[0-9]{1,}/.test(epi)) {
+            formData.append('episode', epi)
+        }
+        formData.append('country', countrySub);
+        apiUser({ path: '/subtitles', type: TypeHTTP.POST, body: formData })
+            .then(res => {
+                alert('Create success')
+            })
+    }
+
     return (
-        <section style={{ height: `${window.innerHeight}px` }} className='col-lg-12 manage-movies'>
+        <section className='col-lg-12 manage-movies'>
             <div className='parent-form'>
                 <input onChange={(e) => setTitle(e.target.value)} type="text" placeholder='Title' className="form-control" />
                 <input onChange={(e) => setDescription(e.target.value)} type="text" placeholder='Description' className="form-control" />
@@ -136,6 +163,28 @@ const ManageMovies = () => {
                         })}
                     </select>
                 </div>
+            </div>
+            <div className='form-subtitle col-lg-12'>
+                SRT
+                <select onChange={(e) => { e.target.value !== 'none' && setCurrentMovieSub(datas?.movies.filter(item => item._id === e.target.value)[0]) }} className="form-select-subtitle form-select">
+                    <option value={'none'}>None</option>
+                    {datas?.movies.map((movie, index) => {
+                        return (
+                            <option key={movie._id} value={movie._id}>{movie.title}</option>
+                        )
+                    })}
+                </select>
+
+                <select onChange={(e) => setCountrySub(e.target.value)} className="form-select">
+                    {countries.map((country, index) => {
+                        return (
+                            <option key={index}>{country}</option>
+                        )
+                    })}
+                </select>
+                <input type="text" placeholder='Episode' className="form-control txt-espisode" />
+                <input type='file' accept='.srt' onChange={(e: any) => setSelectedFile(e.target.files[0])} />
+                <button onClick={handleCreateSubtitle} type="button" style={{ margin: '0 5px' }} className="btn btn-primary">Create</button>
             </div>
         </section>
     )

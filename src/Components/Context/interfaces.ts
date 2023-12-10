@@ -90,3 +90,17 @@ export interface CommentInterface {
         avatar: string
     }
 }
+
+export interface SubtitleItemInterface {
+    id: number,
+    firstTime: number,
+    lastTime: number,
+    content: string
+}
+
+export interface SubtitleInterface {
+    country: string
+    movie_id: string
+    subtitles: SubtitleItemInterface[]
+    episode?: number
+}
