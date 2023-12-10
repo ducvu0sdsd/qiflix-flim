@@ -47,22 +47,24 @@ const View = ({ currentSubtitles, currentTime, movie_id, user_id, url, title, na
 
     useEffect(() => {
         if (currentSubtitles.length > 0) {
+            const arr: SubtitleInterface[] = []
             if (numberOfEpisode == 1) {
                 // phim le
                 currentSubtitles.forEach(item => {
                     if (item.episode == 0) {
-                        setSubContent(p => [...p, item])
+                        arr.push(item)
                     }
                 })
             } else {
                 // phim bo
                 currentSubtitles.forEach(item => {
                     if (item.episode == currentEpisode) {
-                        setSubContent(p => [...p, item])
+                        arr.push(item)
                     }
                 })
             }
             setSub(true)
+            setSubContent(arr)
         } else {
             setSub(false)
         }
