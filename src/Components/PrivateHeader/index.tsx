@@ -91,7 +91,7 @@ const PrivateHeader = ({ users, currentUser }: { users: UserInterface[], current
                 </div>
             </div>
             <div className="col-lg-2 user-notify-search">
-                <Link className='link' to={"/countries-page"}>
+                <Link className='link' style={{ marginTop: '5px' }} to={"/countries-page"}>
                     <i className='bx bx-search' ></i>
                 </Link>
                 <i className='bx bx-bell' ></i>
