@@ -67,6 +67,7 @@ const View = ({ currentSubtitles, currentTime, movie_id, user_id, url, title, na
             setSubContent(arr)
         } else {
             setSub(false)
+            setSubContent([])
         }
     }, [currentSubtitles])
 
