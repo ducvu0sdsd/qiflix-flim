@@ -50,8 +50,10 @@ const View = ({ currentSubtitles, currentTime, movie_id, user_id, url, title, na
     const { datas, handles } = useContext(ThemeContext) || {}
 
     useEffect(() => {
-        if (currentTime) {
+        const video = $('#view .video').get(0)
+        if (currentTime && video) {
             setBufferTime(currentTime)
+            video.seek(currentTime)
         }
     }, [currentTime])
 
@@ -228,6 +230,7 @@ const View = ({ currentSubtitles, currentTime, movie_id, user_id, url, title, na
                     processComplete.css('width', `${positionTime * widthProcess}px`)
                     setDuration(e.target.video.duration)
                     setCurrentQuality(e.target.quality)
+                    setBufferTime(currentTime)
                 }
                 clearInterval(intervalReady)
             }
@@ -409,25 +412,24 @@ const View = ({ currentSubtitles, currentTime, movie_id, user_id, url, title, na
             style={{ height: `${window.innerHeight}px` }}
         >
             <div onMouseOver={() => handleHoverVideo()} className="daily-wrapper col-lg-12">
-                {currentTime &&
-                    <Dailymotion
-                        className='video'
-                        video={url}
-                        showEndScreen={false}
-                        controls={false}
-                        mute={!volume}
-                        autoplay={true}
-                        width='100%'
-                        height='100%'
-                        onWaiting={(e: any) => handleWaiting(e)}
-                        onPause={() => setPlay(false)}
-                        onAdStart={(e: any) => handleStartAD(true, e)}
-                        onAdEnd={(e: any) => handleStartAD(false, e)}
-                        onVideoStart={(e: any) => handleStartVideo(e)}
-                        onVideoEnd={(e: any) => handleEndVideo(e)}
-                        onTimeUpdate={(e: any) => handleChange(e)}
-                        onApiReady={(e: any) => handleReadyVideo(e)}
-                    />}
+                <Dailymotion
+                    className='video'
+                    video={url}
+                    showEndScreen={false}
+                    controls={false}
+                    mute={!volume}
+                    autoplay={true}
+                    width='100%'
+                    height='100%'
+                    onWaiting={(e: any) => handleWaiting(e)}
+                    onPause={() => setPlay(false)}
+                    onAdStart={(e: any) => handleStartAD(true, e)}
+                    onAdEnd={(e: any) => handleStartAD(false, e)}
+                    onVideoStart={(e: any) => handleStartVideo(e)}
+                    onVideoEnd={(e: any) => handleEndVideo(e)}
+                    onTimeUpdate={(e: any) => handleChange(e)}
+                    onApiReady={(e: any) => handleReadyVideo(e)}
+                />
                 <div className="subtitle">
 
                 </div>
