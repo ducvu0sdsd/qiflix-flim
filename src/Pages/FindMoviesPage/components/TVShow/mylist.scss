@@ -23,16 +23,17 @@
     }
 
     .my-list-movie {
-        padding: 0 40px;
+        padding: 0 85px;
         display: flex;
         align-items: start;
         flex-wrap: wrap;
 
         & .film {
             width: 260px;
+            height: calc(260px * 9 / 16);
             border-radius: 5px;
             overflow: hidden;
-            margin: 5px 10px;
+            margin: 5px;
 
             & img {
                 cursor: pointer;

@@ -3,6 +3,7 @@ export interface WatchingInterface {
     movie_id: string
     indexOfEpisode: number
     currentTime: number
+    process: number
 }
 
 export interface Genre {
@@ -77,6 +78,7 @@ export interface MovieWatchingByUserIdInterface {
     movie: MovieInterface
     indexOfEpisode: number
     currentTime: number
+    process: number
 }
 
 export interface CommentInterface {

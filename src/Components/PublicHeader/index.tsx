@@ -1,27 +1,34 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import './publicheader.scss'
 import Qiflix from '../../resources/qiflix.png'
 import Banner from '../../resources/banner.png'
 import { Link, useNavigate } from 'react-router-dom'
 import $ from 'jquery'
 import axios from 'axios'
+import { ThemeContext } from '../Context'
+import { NotificationStatus } from '../Notification'
 
 const PublicHeader = () => {
 
   const navigate = useNavigate()
   const [focus, setFocus] = useState<boolean>(false)
-
+  const [loadingSignUp, setLoadingSignUp] = useState<boolean>(false)
+  const { datas, handles } = useContext(ThemeContext) || {}
 
 
   const handleCreateVerifyCode = () => {
     const emailSignUp = $('.txt-email-sign-up').val()
     if (/^[a-zA-Z0-9._%+-]+(@gmail.com)$/.test(emailSignUp)) {
+      setLoadingSignUp(true)
       axios.get(`/auths/create-verify-code/${emailSignUp}`)
         .then(res => {
           if (res.data === true) {
             navigate(`/sign-up-page/${emailSignUp}`)
+            setLoadingSignUp(false)
           }
         })
+    } else {
+      handles?.handleSetNotification({ type: NotificationStatus.WARNING, message: 'Please, enter valid email' })
     }
   }
 
@@ -47,10 +54,10 @@ const PublicHeader = () => {
           <span className='message--1'>Join today. Cancel anytime.</span><br />
           <div className="sign-up-now">
             <div className='input-email'>
-              <span className={`lbl-email-address ${(focus) ? 'lbl-email-address-focused' : ''}`}>Email address</span>
+              <span onClick={() => setFocus(true)} className={`lbl-email-address ${(focus) ? 'lbl-email-address-focused' : ''}`}>Email address</span>
               <input onFocus={() => setFocus(true)} onBlur={(e) => { e.target.value === '' && setFocus(false) }} type='email' className='txt-email-sign-up' />
             </div>
-            <button onClick={() => handleCreateVerifyCode()}>Sign Up Now &gt;</button>
+            <button onClick={() => handleCreateVerifyCode()}>{loadingSignUp ? <div className="spinner-border text-light" role="status" /> : <>Sign Up Now &gt;</>}</button>
           </div>
         </div>
       </div>

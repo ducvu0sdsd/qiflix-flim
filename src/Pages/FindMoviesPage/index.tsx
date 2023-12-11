@@ -4,7 +4,7 @@ import Footer from '../../Components/Footer'
 import { ThemeContext } from '../../Components/Context'
 import Movies from './components/TVShow'
 
-const CountriesPage = () => {
+const FindMoviesPage = () => {
 
     const { datas, handles } = useContext(ThemeContext) || {}
 
@@ -22,4 +22,4 @@ const CountriesPage = () => {
     )
 }
 
-export default CountriesPage
+export default FindMoviesPage

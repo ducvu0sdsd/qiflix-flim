@@ -13,7 +13,7 @@ import ManageMoviesPage from './Pages/ManageMoviesPage';
 import MyListPage from './Pages/MyListPage';
 import TVShowPage from './Pages/TVShowPage';
 import MoviesPage from './Pages/MoviesPage';
-import CountriesPage from './Pages/CountriesPage';
+import FindMoviesPage from './Pages/FindMoviesPage';
 
 export interface RoutesType {
     name: string,
@@ -114,14 +114,16 @@ function RoutesElement() {
     const CheckCurrentUser = () => {
         const { pathname } = useLocation();
         useEffect(() => {
-            const json = localStorage.getItem('currentUser')
-            const username = json && JSON.parse(json)
-            if (username !== null) {
-                if (datas?.users) {
-                    const arr = datas?.users?.filter(item => item.name === username)
-                    if (arr.length > 0) {
-                        if (handles) {
-                            handles.setCurrentUser(arr[0])
+            if (!datas?.currentUser) {
+                const json = localStorage.getItem('currentUser')
+                const username = json && JSON.parse(json)
+                if (username !== null) {
+                    if (datas?.users) {
+                        const arr = datas?.users?.filter(item => item.name === username)
+                        if (arr.length > 0) {
+                            if (handles) {
+                                handles.setCurrentUser(arr[0])
+                            }
                         }
                     }
                 }
@@ -142,11 +144,12 @@ function RoutesElement() {
         { name: 'my-list-page', component: <MyListPage /> },
         { name: 'tvshow-page', component: <TVShowPage /> },
         { name: 'movies-page', component: <MoviesPage /> },
-        { name: 'countries-page', component: <CountriesPage /> },
+        { name: 'find-movies-page', component: <FindMoviesPage /> },
         ...(datas?.movies ? datas.movies.map((movie) => {
             return { name: movie.url, component: <FilmViewingPage data={movie} currentUser={datas.currentUser || undefined} /> }
         }) : []),
     ]
+
 
     return (
         <Routes>

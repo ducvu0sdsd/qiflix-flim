@@ -24,6 +24,7 @@ const ManageProfilePage = () => {
     const [avatarCreate, setAvatarCreate] = useState<string>('https://t4.ftcdn.net/jpg/05/49/98/39/360_F_549983970_bRCkYfk0P6PP5fKbMhZMIb07mCJ6esXL.jpg')
     const { datas, handles } = useContext(ThemeContext) || {}
     const [currentUser, setCurrentUser] = useState<UserInterface>()
+    const [loadingComplete, setLoadingComplete] = useState<boolean>(false)
 
     const titleElement = document.querySelector('head title');
     if (titleElement) {
@@ -50,17 +51,20 @@ const ManageProfilePage = () => {
     }
 
     const handleSubmitCreate = () => {
-        if (!/(^[A-ZÀ-Ỹ]{1}[a-zà-ỹ]+)(\s[A-ZÀ-Ỹ][a-zà-ỹ]+){0,}$/.test(name)) {
-            return
+        if (!loadingComplete) {
+            if (!/(^[A-ZÀ-Ỹ]{1}[a-zà-ỹ]+)(\s[A-ZÀ-Ỹ][a-zà-ỹ]+){0,}$/.test(name)) {
+                return
+            }
+            if (gender === '') {
+                return
+            }
+            apiUser({ type: TypeHTTP.POST, body: { name, gender, avatar: avatarCreate, account_id: datas?.account?._id }, path: '/users' })
+                .then((result) => {
+                    handles?.setUsers(prev => [...prev, result])
+                    setScreen(Screen.LIST_USERS)
+                })
         }
-        if (gender === '') {
-            return
-        }
-        apiUser({ type: TypeHTTP.POST, body: { name, gender, avatar: avatarCreate, account_id: datas?.account?._id }, path: '/users' })
-            .then((result) => {
-                handles?.setUsers(prev => [...prev, result])
-                setScreen(Screen.LIST_USERS)
-            })
+
     }
 
     const handleDeleteUser = () => {
@@ -140,7 +144,7 @@ const ManageProfilePage = () => {
                     </div>
                     <div className='btns col-lg-5'>
                         <button onClick={() => setScreen(Screen.LIST_USERS)} >Cancel</button>
-                        <button onClick={handleSubmitCreate} style={{ backgroundColor: 'white', color: 'black' }}>Complete</button>
+                        <button onClick={handleSubmitCreate} style={{ backgroundColor: 'white', color: 'black' }}>{loadingComplete ? <div className="spinner-border text-light" role="status" /> : <>Complete</>}</button>
                     </div>
                 </>
             ) : (

@@ -11,11 +11,12 @@ import ListFilm from '../../../../Components/ListFilm';
 export interface InformationsProps {
     currentFilm: MovieInterface,
     setCurrentEpisode: React.Dispatch<React.SetStateAction<number>>;
+    setBufferTime: React.Dispatch<React.SetStateAction<number | undefined>>;
     currentEpisode: number,
     currentUser: UserInterface | undefined
 }
 
-const Informations = ({ currentFilm, setCurrentEpisode, currentEpisode, currentUser }: InformationsProps) => {
+const Informations = ({ currentFilm, setCurrentEpisode, currentEpisode, currentUser, setBufferTime }: InformationsProps) => {
     const [marginLeft, setMarginLeft] = useState<number>(0)
     const { datas, handles } = useContext(ThemeContext) || {}
 
@@ -128,7 +129,7 @@ const Informations = ({ currentFilm, setCurrentEpisode, currentEpisode, currentU
                         <div className='wrapper-episode'>
                             {currentFilm.listEpisode?.episodes.map((item, index) => {
                                 return (
-                                    <div key={index} onClick={() => setCurrentEpisode(item.indexOfEpisode)} className={`episode-item ${index === currentEpisode - 1 && 'episode-item--active'}`}>
+                                    <div key={index} onClick={() => { setCurrentEpisode(item.indexOfEpisode); setBufferTime(0) }} className={`episode-item ${index === currentEpisode - 1 && 'episode-item--active'}`}>
                                         <img src={currentFilm.thumbnail} width={'100%'} />
                                         <span className='episode-info'><span>{item.name}</span> <span className='duration'>HD</span></span>
                                     </div>

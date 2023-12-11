@@ -8,12 +8,17 @@ import $ from 'jquery'
 interface ListFilmProp {
     movies: MovieInterface[],
     title: string,
-    paddingLeft?: number
+    paddingLeft?: number,
+    processes?: number[] | undefined
 }
 
-const ListFilm = ({ movies, title, paddingLeft }: ListFilmProp) => {
+const ListFilm = ({ movies, title, paddingLeft, processes }: ListFilmProp) => {
     const [load, setLoad] = useState(false)
     const [marginLeft, setMarginLeft] = useState<number>(0)
+
+    if (title === 'Continue Watching') {
+        console.log(movies)
+    }
 
     useEffect(() => { setLoad(!load) }, [movies])
 
@@ -53,7 +58,7 @@ const ListFilm = ({ movies, title, paddingLeft }: ListFilmProp) => {
                         {movies.map((movie, index) => {
                             return (
                                 <div key={index} className="film">
-                                    <FilmItem title={title} displayDetail={index < 4 ? true : false} movie={movie} />
+                                    <FilmItem title={title} displayDetail={true} movie={movie} process={processes ? processes[index] : 0} />
                                 </div>
                             )
                         })}

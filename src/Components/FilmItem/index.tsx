@@ -12,10 +12,11 @@ import { NotificationStatus } from '../Notification'
 export interface FilmItemProp {
     displayDetail?: boolean,
     movie: MovieInterface,
-    title: string
+    title: string,
+    process: number
 }
 
-const FilmItem = ({ title, displayDetail = false, movie }: FilmItemProp) => {
+const FilmItem = ({ title, displayDetail = false, movie, process }: FilmItemProp) => {
     const titleCustom = movie?.title.split(' ').join('-')
     const displayRef = useRef<NodeJS.Timeout | null>(null)
     const [widthDetail, setWidthDetail] = useState<number>(0)
@@ -39,6 +40,9 @@ const FilmItem = ({ title, displayDetail = false, movie }: FilmItemProp) => {
                     detailElement.style.left = '50%'
                     detailElement.style.top = '50%'
                     info.css('display', 'none')
+                    setTimeout(() => {
+                        detailElement.style.display = 'none'
+                    }, 200)
                 }
             }
         } else {
@@ -47,11 +51,14 @@ const FilmItem = ({ title, displayDetail = false, movie }: FilmItemProp) => {
                     const detailElement = $(`.detail-film-mini-${movie?._id}-${title.toLowerCase().split(' ').join('-')}`).get(0);
                     const info = $(`.detail-film-mini-${movie?._id}-${title.toLowerCase().split(' ').join('-')} .info`)
                     if (detailElement) {
-                        detailElement.style.width = `${widthDetail}px`
-                        detailElement.style.height = '100%'
-                        detailElement.style.left = '0'
-                        detailElement.style.top = '0'
-                        info.css('display', 'flex')
+                        detailElement.style.display = 'flex'
+                        setTimeout(() => {
+                            detailElement.style.width = `${widthDetail}px`
+                            detailElement.style.height = '100%'
+                            detailElement.style.left = '0'
+                            detailElement.style.top = '0'
+                            info.css('display', 'flex')
+                        }, 200)
                     }
                 }, 500);
             }
@@ -109,6 +116,9 @@ const FilmItem = ({ title, displayDetail = false, movie }: FilmItemProp) => {
                 </div>
             </div>
             <Link className='link' to={`/${movie.url}`}><img className='themenail' src={movie?.thumbnail} width={'100%'} /></Link>
+            {title === 'Continue Watching' && <div className='process'>
+                <div className='complete' style={{ width: `${$('.films__film-item').width() * process}px` }}></div>
+            </div>}
         </div >
     )
 }

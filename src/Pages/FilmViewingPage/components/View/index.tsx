@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import Dailymotion from 'react-dailymotion';
 import './view.scss'
 import $ from 'jquery'
@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { TypeHTTP, apiUser } from "../../../../Utils/api";
 import { SubtitleInterface, WatchingInterface } from "../../../../Components/Context/interfaces";
 import Qiflix from '../../../../resources/qiflix.png'
+import { ThemeContext } from "../../../../Components/Context";
 
 export interface MousePositionType {
     x: number,
@@ -28,7 +29,7 @@ export interface ViewProps {
 const View = ({ currentSubtitles, currentTime, movie_id, user_id, url, title, name, numberOfEpisode, currentEpisode, setCurrentEpisode }: ViewProps) => {
 
     //state
-    const [waitingUpdate, setWaitingUpdate] = useState<number>(120)
+    const [waitingUpdate, setWaitingUpdate] = useState<number>(30)
     const [currentQuality, setCurrentQuality] = useState<string>('')
     const [fullscreen, setFullScreen] = useState<boolean>(false)
     const [volume, setVolume] = useState<boolean>(true)
@@ -44,6 +45,9 @@ const View = ({ currentSubtitles, currentTime, movie_id, user_id, url, title, na
     //ref
     const timeout = useRef<NodeJS.Timeout | null>(null);
     const interval = useRef<NodeJS.Timeout | null>(null);
+
+    // context
+    const { datas, handles } = useContext(ThemeContext) || {}
 
     useEffect(() => {
         if (currentSubtitles.length > 0) {
@@ -87,23 +91,6 @@ const View = ({ currentSubtitles, currentTime, movie_id, user_id, url, title, na
             setMousePosition({ x: event.clientX, y: event.clientY })
             setMouseDownStick(false)
         });
-        // btnPlayPause?.addEventListener('mousemove', function (event: any) {
-        //     setMousePosition({ x: event.clientX, y: event.clientY })
-        //     setMouseDownStick(false)
-        // });
-        // bottom?.addEventListener('mousemove', function (event: any) {
-        //     setMousePosition({ x: event.clientX, y: event.clientY })
-        //     setMouseDownStick(false)
-        // });
-        // top?.addEventListener('mousemove', function (event: any) {
-        //     setMousePosition({ x: event.clientX, y: event.clientY })
-        //     setMouseDownStick(false)
-        // });
-        window.addEventListener('mousemove', (e: any) => {
-            // setMouseDownStick(false)
-        })
-        // video?.addEventListener('mouseover', () => {
-        // })
     }, [])
 
     useEffect(() => {
@@ -131,7 +118,8 @@ const View = ({ currentSubtitles, currentTime, movie_id, user_id, url, title, na
         const watching = {
             movie_id: movie_id,
             indexOfEpisode: currentEpisode,
-            currentTime: bufferTime
+            currentTime: bufferTime,
+            process: bufferTime / duration
         }
         if (currentSubtitles.length > 0) {
             let have = false
@@ -158,8 +146,19 @@ const View = ({ currentSubtitles, currentTime, movie_id, user_id, url, title, na
                 btnSkip.css('display', 'none')
             }
             if (waitingUpdate === 0) {
-                setWaitingUpdate(120)
-                apiUser({ path: `/users/update-watching/${user_id}`, body: watching, type: TypeHTTP.PUT })
+                if (bufferTime / duration > 0.95 && currentEpisode === numberOfEpisode) {
+                    setWaitingUpdate(30)
+                    apiUser({ path: `/users/delete-watching/${user_id}`, body: watching, type: TypeHTTP.PUT })
+                        .then(res => {
+                            handles?.setCurrentUser(res)
+                        })
+                } else {
+                    setWaitingUpdate(30)
+                    apiUser({ path: `/users/update-watching/${user_id}`, body: watching, type: TypeHTTP.PUT })
+                        .then(res => {
+                            handles?.setCurrentUser(res)
+                        })
+                }
             } else {
                 setWaitingUpdate(prev => prev - 1)
             }
@@ -425,9 +424,9 @@ const View = ({ currentSubtitles, currentTime, movie_id, user_id, url, title, na
                 <div className="subtitle">
 
                 </div>
-                <div className="logo">
+                {/* <div className="logo">
                     <img width={'100%'} src={Qiflix} />
-                </div>
+                </div> */}
                 <div className="wrapper-bottom-video"></div>
                 <div className="wrapper-video"></div>
                 <button onClick={() => setCurrentEpisode(p => p + 1)} className="btn-skip">Next Episode &gt;</button>

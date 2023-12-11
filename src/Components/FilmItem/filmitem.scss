@@ -1,14 +1,31 @@
 .films__film-item {
     width: 250px;
+    max-height: calc(250px * 9 / 16);
     margin-right: 13px;
     margin-bottom: 10px;
     box-sizing: border-box;
     cursor: pointer;
+    border-radius: 5px;
     position: relative;
 
     & .themenail {
         z-index: 1;
+        max-height: calc(250px * 9 / 16);
         border-radius: 5px;
+    }
+
+    & .process {
+        height: 4px;
+        background-color: rgb(67, 67, 67);
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+
+        & .complete {
+            height: 100%;
+            background-color: red;
+        }
     }
 
     & .detail-film-mini {
@@ -17,9 +34,9 @@
         // overflow: hidden;
         transition: 0.5s;
         position: absolute;
-        display: flex;
         justify-content: start;
         flex-direction: column;
+        display: none;
         top: 50%;
         left: 50%;
         z-index: 1;

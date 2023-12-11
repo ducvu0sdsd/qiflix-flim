@@ -40,7 +40,7 @@ const Movies = () => {
     }
 
     return (
-        <section className='list-movie-page' style={{ height: `${window.innerHeight}px` }}>
+        <section className='list-movie-page' style={{ minHeight: `${window.innerHeight}px` }}>
             <div className='title'>
                 <h4>{title}</h4>
                 <select className="form-select option-countries" onChange={handleChangeMovies}>

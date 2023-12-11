@@ -23,16 +23,20 @@ const Notification = ({ statusProp, message }: NotificationProp) => {
 
     useEffect(() => {
         const notification = $('#notification')
+        const statusName = $('#notification .status-name')
         if (status !== NotificationStatus.NONE && notification) {
             const statusColor = $('.status-color')
             switch (status) {
                 case NotificationStatus.SUCCESS:
+                    statusName.html("Success")
                     statusColor.css('background-color', 'green')
                     break;
                 case NotificationStatus.FAIL:
+                    statusName.html("Fail")
                     statusColor.css('background-color', 'red')
                     break;
                 case NotificationStatus.WARNING:
+                    statusName.html("Warning")
                     statusColor.css('background-color', 'yellow')
                     break;
                 default:
@@ -59,7 +63,7 @@ const Notification = ({ statusProp, message }: NotificationProp) => {
         <div id='notification' className='col-lg-12'>
             <div className='col-lg-12 head'>
                 <div className='status-color'></div>
-                <span className='status-name'>Success</span>
+                <span className='status-name'></span>
             </div>
             <div className='message'>
                 {message}

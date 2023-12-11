@@ -7,25 +7,38 @@ import { Link, useNavigate } from 'react-router-dom'
 import $ from 'jquery'
 import axios from 'axios'
 import { ThemeContext } from '../Context'
+import { NotificationStatus } from '../Notification'
 
 const SignInHeader = () => {
     const [focuses, setFocuses] = useState<{ focusAddress: boolean, focusPassword: boolean }>({ focusAddress: false, focusPassword: false })
+    const [loadingSignIn, setLoadingSignIn] = useState<boolean>(false)
+    const { datas, handles } = useContext(ThemeContext) || {}
 
     const handleSignIn = () => {
         // navigate('/manage-profile-page')
         const email = $('#sign-in-header .txt-email').val()
         const password = $('#sign-in-header .txt-password').val()
         if (!/^[a-zA-Z0-9._%+-]+(@gmail.com)$/.test(email)) {
+            handles?.handleSetNotification({ type: NotificationStatus.WARNING, message: 'Please, enter valid email' })
             return
         }
         if (!/.{6,20}/.test(password)) {
+            handles?.handleSetNotification({ type: NotificationStatus.WARNING, message: 'Please, enter valid password' })
             return
         }
+        setLoadingSignIn(true)
         axios.post('/auths/sign-in', { email, password })
             .then(res => {
                 localStorage.setItem('accessToken', JSON.stringify(res.data.accessToken))
                 localStorage.setItem('refreshToken', JSON.stringify(res.data.refreshToken))
                 window.location.reload()
+                setLoadingSignIn(false)
+            })
+            .catch(res => {
+                let message: string = res.response.data.message
+                message = message.split(":")[1]
+                handles?.handleSetNotification({ type: NotificationStatus.FAIL, message })
+                setLoadingSignIn(false)
             })
     }
 
@@ -43,16 +56,16 @@ const SignInHeader = () => {
                     <h5>HELLO! WELCOME TO THE FAMILY.</h5>
                     <span className='message'>Help us get to know you better. You know, because family stays close.</span>
                     <div className='input-email'>
-                        <span className={`lbl-email-address ${(focuses.focusAddress) ? 'lbl-email-address-focused' : ''}`}>Email address</span>
+                        <span onClick={() => setFocuses({ focusAddress: true, focusPassword: focuses.focusPassword })} className={`lbl-email-address ${(focuses.focusAddress) ? 'lbl-email-address-focused' : ''}`}>Email address</span>
                         <input onFocus={() => setFocuses({ focusAddress: true, focusPassword: focuses.focusPassword })} onBlur={(e) => { e.target.value === '' && setFocuses({ focusAddress: false, focusPassword: focuses.focusPassword }) }} type='email' className='txt-email txt ' />
                     </div>
                     <div className='input-email'>
-                        <span className={`lbl-email-address ${(focuses.focusPassword) ? 'lbl-email-address-focused' : ''}`}>Password</span>
+                        <span onClick={() => setFocuses({ focusAddress: focuses.focusAddress, focusPassword: true })} className={`lbl-email-address ${(focuses.focusPassword) ? 'lbl-email-address-focused' : ''}`}>Password</span>
                         <input onFocus={() => setFocuses({ focusAddress: focuses.focusAddress, focusPassword: true })} onBlur={(e) => { e.target.value === '' && setFocuses({ focusAddress: focuses.focusAddress, focusPassword: false }) }} type='password' className='txt-password txt ' />
                     </div>
-                    <button onClick={() => handleSignIn()} className='btn-sign-in'>Sign in</button>
+                    <button onClick={() => handleSignIn()} className='btn-sign-in'>{loadingSignIn ? <div className="spinner-border text-light" role="status" /> : <>Sign in</>}</button>
                     <span className='option'>Forgot Password ?</span>
-                    <span className='option'>Don't have an account? <b><Link to={'/sign-up-page'}>Sign Up</Link></b></span>
+                    <span className='option'>Don't have an account? <b><Link className='link' style={{ color: 'white', textDecoration: 'underline' }} to={'/'}>Sign Up</Link></b></span>
                 </div>
             </div>
         </header>
