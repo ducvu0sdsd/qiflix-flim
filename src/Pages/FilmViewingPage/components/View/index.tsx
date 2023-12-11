@@ -50,6 +50,12 @@ const View = ({ currentSubtitles, currentTime, movie_id, user_id, url, title, na
     const { datas, handles } = useContext(ThemeContext) || {}
 
     useEffect(() => {
+        if (currentTime) {
+            setBufferTime(currentTime)
+        }
+    }, [currentTime])
+
+    useEffect(() => {
         if (currentSubtitles.length > 0) {
             const arr: SubtitleInterface[] = []
             if (numberOfEpisode == 1) {
