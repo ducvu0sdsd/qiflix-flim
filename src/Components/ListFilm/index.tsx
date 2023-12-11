@@ -16,10 +16,6 @@ const ListFilm = ({ movies, title, paddingLeft, processes }: ListFilmProp) => {
     const [load, setLoad] = useState(false)
     const [marginLeft, setMarginLeft] = useState<number>(0)
 
-    if (title === 'Continue Watching') {
-        console.log(movies)
-    }
-
     useEffect(() => { setLoad(!load) }, [movies])
 
     const handleChange = (type: string) => {

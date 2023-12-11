@@ -22,7 +22,7 @@ export interface ViewProps {
     currentEpisode: number,
     movie_id: string,
     user_id: string,
-    currentTime: number,
+    currentTime: number | undefined,
     currentSubtitles: SubtitleInterface[]
 }
 
@@ -35,7 +35,7 @@ const View = ({ currentSubtitles, currentTime, movie_id, user_id, url, title, na
     const [volume, setVolume] = useState<boolean>(true)
     const [mouseDownStick, setMouseDownStick] = useState<boolean>(false)
     const [duration, setDuration] = useState<number>(0)
-    const [bufferTime, setBufferTime] = useState<number>(currentTime)
+    const [bufferTime, setBufferTime] = useState<number>(currentTime || 0)
     const [controls, setControls] = useState<boolean>(true)
     const [play, setPlay] = useState<boolean>(true)
     const [sub, setSub] = useState<boolean>(currentSubtitles.length > 0)
@@ -216,7 +216,7 @@ const View = ({ currentSubtitles, currentTime, movie_id, user_id, url, title, na
         const intervalReady = setInterval(() => {
             if (e.target.video && e.target.quality) {
                 const video = $('#view .video').get(0)
-                if (video) {
+                if (video && currentTime) {
                     let positionTime: number = (currentTime / e.target.video.duration)
                     const widthProcess: number = parseInt(process.css('width').replace('px', ''))
                     processComplete.css('width', `${positionTime * widthProcess}px`)
@@ -230,7 +230,7 @@ const View = ({ currentSubtitles, currentTime, movie_id, user_id, url, title, na
 
     const handleStartVideo = (e: any) => {
         const video = $('#view .video').get(0)
-        if (video) {
+        if (video && currentTime) {
             setBufferTime(currentTime)
             video.seek(currentTime)
             interval.current = setInterval(() => {
@@ -403,24 +403,25 @@ const View = ({ currentSubtitles, currentTime, movie_id, user_id, url, title, na
             style={{ height: `${window.innerHeight}px` }}
         >
             <div onMouseOver={() => handleHoverVideo()} className="daily-wrapper col-lg-12">
-                <Dailymotion
-                    className='video'
-                    video={url}
-                    showEndScreen={false}
-                    controls={false}
-                    mute={!volume}
-                    autoplay={true}
-                    width='100%'
-                    height='100%'
-                    onWaiting={(e: any) => handleWaiting(e)}
-                    onPause={() => setPlay(false)}
-                    onAdStart={(e: any) => handleStartAD(true, e)}
-                    onAdEnd={(e: any) => handleStartAD(false, e)}
-                    onVideoStart={(e: any) => handleStartVideo(e)}
-                    onVideoEnd={(e: any) => handleEndVideo(e)}
-                    onTimeUpdate={(e: any) => handleChange(e)}
-                    onApiReady={(e: any) => handleReadyVideo(e)}
-                />
+                {currentTime &&
+                    <Dailymotion
+                        className='video'
+                        video={url}
+                        showEndScreen={false}
+                        controls={false}
+                        mute={!volume}
+                        autoplay={true}
+                        width='100%'
+                        height='100%'
+                        onWaiting={(e: any) => handleWaiting(e)}
+                        onPause={() => setPlay(false)}
+                        onAdStart={(e: any) => handleStartAD(true, e)}
+                        onAdEnd={(e: any) => handleStartAD(false, e)}
+                        onVideoStart={(e: any) => handleStartVideo(e)}
+                        onVideoEnd={(e: any) => handleEndVideo(e)}
+                        onTimeUpdate={(e: any) => handleChange(e)}
+                        onApiReady={(e: any) => handleReadyVideo(e)}
+                    />}
                 <div className="subtitle">
 
                 </div>
