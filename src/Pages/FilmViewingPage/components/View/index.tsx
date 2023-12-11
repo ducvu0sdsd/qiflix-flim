@@ -50,10 +50,8 @@ const View = ({ currentSubtitles, currentTime, movie_id, user_id, url, title, na
     const { datas, handles } = useContext(ThemeContext) || {}
 
     useEffect(() => {
-        const video = $('#view .video').get(0)
-        if (currentTime && video) {
+        if (currentTime) {
             setBufferTime(currentTime)
-            video.seek(currentTime)
         }
     }, [currentTime])
 
@@ -231,6 +229,7 @@ const View = ({ currentSubtitles, currentTime, movie_id, user_id, url, title, na
                     setDuration(e.target.video.duration)
                     setCurrentQuality(e.target.quality)
                     setBufferTime(currentTime)
+                    e.target.seek(currentTime)
                 }
                 clearInterval(intervalReady)
             }
