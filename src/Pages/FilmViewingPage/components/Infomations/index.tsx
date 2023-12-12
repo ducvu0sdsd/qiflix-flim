@@ -2,7 +2,7 @@
 import './information.scss'
 import React, { useContext, useEffect, useState } from 'react'
 import $ from 'jquery'
-import { MovieInterface, UserInterface } from '../../../../Components/Context/interfaces';
+import { EpisodeInterface, MovieInterface, UserInterface } from '../../../../Components/Context/interfaces';
 import { TypeHTTP, apiUser } from '../../../../Utils/api';
 import { ThemeContext } from '../../../../Components/Context';
 import { NotificationStatus } from '../../../../Components/Notification';
@@ -10,7 +10,7 @@ import ListFilm from '../../../../Components/ListFilm';
 
 export interface InformationsProps {
     currentFilm: MovieInterface,
-    setCurrentEpisode: React.Dispatch<React.SetStateAction<number>>;
+    setCurrentEpisode: React.Dispatch<React.SetStateAction<number | undefined>>;
     setBufferTime: React.Dispatch<React.SetStateAction<number | undefined>>;
     currentEpisode: number,
     currentUser: UserInterface | undefined
@@ -71,6 +71,21 @@ const Informations = ({ currentFilm, setCurrentEpisode, currentEpisode, currentU
             })
     }
 
+    const handleChangeEpisode = (item: EpisodeInterface) => {
+        const watching = {
+            movie_id: currentFilm._id,
+            indexOfEpisode: item.indexOfEpisode,
+            currentTime: 0,
+            process: 0
+        }
+        if (currentUser) {
+            apiUser({ path: `/users/update-watching/${currentUser._id}`, body: watching, type: TypeHTTP.PUT })
+                .then(res => {
+                    window.location.reload()
+                })
+        }
+    }
+
     return (
         <section id='informations' className='col-lg-12'>
             <div className='section-child-left section-child col-lg-8'>
@@ -129,7 +144,7 @@ const Informations = ({ currentFilm, setCurrentEpisode, currentEpisode, currentU
                         <div className='wrapper-episode'>
                             {currentFilm.listEpisode?.episodes.map((item, index) => {
                                 return (
-                                    <div key={index} onClick={() => { setCurrentEpisode(item.indexOfEpisode); setBufferTime(0) }} className={`episode-item ${index === currentEpisode - 1 && 'episode-item--active'}`}>
+                                    <div key={index} onClick={() => handleChangeEpisode(item)} className={`episode-item ${index === currentEpisode - 1 && 'episode-item--active'}`}>
                                         <img src={currentFilm.thumbnail} width={'100%'} />
                                         <span className='episode-info'><span>{item.name}</span> <span className='duration'>HD</span></span>
                                     </div>

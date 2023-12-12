@@ -1,5 +1,5 @@
 
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PublicPage from './Pages/PublicPage';
 import SignInPage from './Pages/SignInPage';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
@@ -14,6 +14,8 @@ import MyListPage from './Pages/MyListPage';
 import TVShowPage from './Pages/TVShowPage';
 import MoviesPage from './Pages/MoviesPage';
 import FindMoviesPage from './Pages/FindMoviesPage';
+import { AnimatePresence } from 'framer-motion';
+import QiflixPage from './Pages/QiflixPage';
 
 export interface RoutesType {
     name: string,
@@ -21,46 +23,50 @@ export interface RoutesType {
 }
 
 function RoutesElement() {
-
+    const location = useLocation()
     const navigate = useNavigate()
     const { datas, handles } = useContext(ThemeContext) || {}
 
+
     const CheckSignOut = () => {
         const { pathname } = useLocation();
-
         useEffect(() => {
-            const accessTokenString = localStorage.getItem('accessToken');
-            const refreshTokenString = localStorage.getItem('refreshToken');
+            try {
+                const accessTokenString = localStorage.getItem('accessToken');
+                const refreshTokenString = localStorage.getItem('refreshToken');
 
-            if (accessTokenString && refreshTokenString) {
-                const accessToken = JSON.parse(accessTokenString);
-                const refreshToken = JSON.parse(refreshTokenString);
-                axios.get('/auths/check-access-token', {
-                    headers: {
-                        Authorization: 'Access ' + accessToken
-                    }
-                })
-                    .catch(() => {
-                        axios.post('/auths/refresh-token', {}, {
-                            headers: {
-                                Authorization: 'Refresh ' + refreshToken
-                            }
-                        })
-                            .then(res => {
-                                localStorage.setItem('accessToken', JSON.stringify(res.data.accessToken))
-                                localStorage.setItem('refreshToken', JSON.stringify(res.data.refreshToken))
-                            })
-                            .catch(() => {
-                                localStorage.removeItem('accessToken')
-                                localStorage.removeItem('refreshToken')
-                                navigate('/')
-                            })
+                if (accessTokenString && refreshTokenString) {
+                    const accessToken = JSON.parse(accessTokenString);
+                    const refreshToken = JSON.parse(refreshTokenString);
+                    axios.get('/auths/check-access-token', {
+                        headers: {
+                            Authorization: 'Access ' + accessToken
+                        }
                     })
-            }
-            else {
-                if (pathname !== '/' && pathname !== '/sign-in-page' && !pathname.includes('/sign-up-page')) {
-                    navigate('/');
+                        .catch(() => {
+                            axios.post('/auths/refresh-token', {}, {
+                                headers: {
+                                    Authorization: 'Refresh ' + refreshToken
+                                }
+                            })
+                                .then(res => {
+                                    localStorage.setItem('accessToken', JSON.stringify(res.data.accessToken))
+                                    localStorage.setItem('refreshToken', JSON.stringify(res.data.refreshToken))
+                                })
+                                .catch(() => {
+                                    localStorage.removeItem('accessToken')
+                                    localStorage.removeItem('refreshToken')
+                                    navigate('/')
+                                })
+                        })
                 }
+                else {
+                    if (pathname !== '/' && pathname !== '/sign-in-page' && !pathname.includes('/sign-up-page')) {
+                        navigate('/');
+                    }
+                }
+            } catch (error) {
+                window.location.reload()
             }
         }, [pathname]);
 
@@ -71,40 +77,44 @@ function RoutesElement() {
     const CheckSignIn = () => {
         const { pathname } = useLocation();
         useEffect(() => {
-            const accessTokenString = localStorage.getItem('accessToken');
-            const refreshTokenString = localStorage.getItem('refreshToken');
-            if (accessTokenString && refreshTokenString) {
-                const accessToken = JSON.parse(accessTokenString);
-                const refreshToken = JSON.parse(refreshTokenString);
-                axios.get('/auths/check-access-token', {
-                    headers: {
-                        Authorization: 'Access ' + accessToken
-                    }
-                })
-                    .then(res => {
-                        if (pathname === '/' || pathname === '/sign-in-page' || pathname.includes('/sign-up-page')) {
-                            navigate('/manage-profile-page')
+            try {
+                const accessTokenString = localStorage.getItem('accessToken');
+                const refreshTokenString = localStorage.getItem('refreshToken');
+                if (accessTokenString && refreshTokenString) {
+                    const accessToken = JSON.parse(accessTokenString);
+                    const refreshToken = JSON.parse(refreshTokenString);
+                    axios.get('/auths/check-access-token', {
+                        headers: {
+                            Authorization: 'Access ' + accessToken
                         }
                     })
-                    .catch(() => {
-                        axios.post('/auths/refresh-token', {}, {
-                            headers: {
-                                Authorization: 'Refresh ' + refreshToken
+                        .then(res => {
+                            if (pathname === '/' || pathname === '/sign-in-page' || pathname.includes('/sign-up-page')) {
+                                navigate('/manage-profile-page')
                             }
                         })
-                            .then(res => {
-                                localStorage.setItem('accessToken', JSON.stringify(res.data.accessToken))
-                                localStorage.setItem('refreshToken', JSON.stringify(res.data.refreshToken))
-                                if (pathname === '/' || pathname === '/sign-in-page' || pathname.includes('/sign-up-page')) {
-                                    navigate('/manage-profile-page')
+                        .catch(() => {
+                            axios.post('/auths/refresh-token', {}, {
+                                headers: {
+                                    Authorization: 'Refresh ' + refreshToken
                                 }
                             })
-                            .catch(() => {
-                                localStorage.removeItem('accessToken')
-                                localStorage.removeItem('refreshToken')
-                                navigate('/')
-                            })
-                    })
+                                .then(res => {
+                                    localStorage.setItem('accessToken', JSON.stringify(res.data.accessToken))
+                                    localStorage.setItem('refreshToken', JSON.stringify(res.data.refreshToken))
+                                    if (pathname === '/' || pathname === '/sign-in-page' || pathname.includes('/sign-up-page')) {
+                                        navigate('/manage-profile-page')
+                                    }
+                                })
+                                .catch(() => {
+                                    localStorage.removeItem('accessToken')
+                                    localStorage.removeItem('refreshToken')
+                                    navigate('/')
+                                })
+                        })
+                }
+            } catch (error) {
+                window.location.reload()
             }
         }, [pathname]);
 
@@ -128,7 +138,7 @@ function RoutesElement() {
                     }
                 }
             }
-        }, []);
+        }, [pathname]);
         return <></>
     }
 
@@ -152,18 +162,21 @@ function RoutesElement() {
 
 
     return (
-        <Routes>
-            {routes.map((route, index) => {
-                return (
-                    <Route key={index} path={`/${route.name}`} element={<><CheckSignIn />{route.component}</>} />
-                )
-            })}
-            {routesUser.map((route, index) => {
-                return (
-                    <Route key={index} path={`/${route.name}`} element={<><CheckSignOut /><CheckCurrentUser />{route.component}</>} />
-                )
-            })}
-        </Routes>
+        <AnimatePresence>
+            <Routes location={location} key={location.pathname}>
+                {routes.map((route, index) => {
+                    return (
+                        <Route key={index} path={`/${route.name}`} element={<><CheckSignIn />{route.component}</>} />
+                    )
+                })}
+                {routesUser.map((route, index) => {
+                    return (
+                        <Route key={index} path={`/${route.name}`} element={<><CheckSignOut /><CheckCurrentUser />{route.component}</>} />
+                    )
+                })}
+
+            </Routes>
+        </AnimatePresence>
     );
 }
 

@@ -3,6 +3,7 @@ import PrivateHeader from '../../Components/PrivateHeader'
 import Footer from '../../Components/Footer'
 import { ThemeContext } from '../../Components/Context'
 import MyList from './components/MyList'
+import { motion } from 'framer-motion'
 
 const MyListPage = () => {
 
@@ -14,11 +15,16 @@ const MyListPage = () => {
     });
 
     return (
-        <>
+        <motion.div
+            initial={{ x: window.innerWidth * -1 }}
+            animate={{ x: 0 }}
+            exit={{ x: window.innerWidth, transition: { duration: 0.2 } }}
+        >
             <PrivateHeader users={datas?.users || []} currentUser={datas?.currentUser} />
             <MyList />
             <Footer />
-        </>
+
+        </motion.div>
     )
 }
 

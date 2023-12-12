@@ -3,7 +3,7 @@ import PrivateHeader from '../../Components/PrivateHeader'
 import Footer from '../../Components/Footer'
 import { ThemeContext } from '../../Components/Context'
 import TVShow from './components/TVShow'
-
+import { motion } from 'framer-motion'
 const TVShowPage = () => {
 
     const { datas, handles } = useContext(ThemeContext) || {}
@@ -14,11 +14,15 @@ const TVShowPage = () => {
     });
 
     return (
-        <>
+        <motion.div
+            initial={{ x: window.innerWidth * -1 }}
+            animate={{ x: 0 }}
+            exit={{ x: window.innerWidth, transition: { duration: 0.2 } }}
+        >
             <PrivateHeader users={datas?.users || []} currentUser={datas?.currentUser} />
             <TVShow />
             <Footer />
-        </>
+        </motion.div>
     )
 }
 

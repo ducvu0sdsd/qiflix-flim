@@ -7,6 +7,7 @@ import $ from 'jquery'
 import axios from 'axios'
 import { ThemeContext } from '../Context'
 import { NotificationStatus } from '../Notification'
+import { delay, motion } from 'framer-motion'
 
 const PublicHeader = () => {
 
@@ -48,7 +49,12 @@ const PublicHeader = () => {
           <div className='wapper--banner'></div>
           <img alt='The Banner of the public header' src={Banner} width={'100%'} />
         </div>
-        <div className="greeting">
+        <motion.div
+          initial={{ opacity: 0, transform: 'translateY(-70%) translateX(-50%)' }}
+          animate={{ opacity: 1, transform: 'translateY(-50%) translateX(-50%)' }}
+          transition={{ duration: 1.5, delay: 0.2 }}
+          className="greeting">
+
           <span className='message--1'>Welcome to your family !!!</span><br />
           <span className='message--2'>The biggest domestic and international hits. Everything here is free.</span><br />
           <span className='message--1'>Join today. Cancel anytime.</span><br />
@@ -57,9 +63,9 @@ const PublicHeader = () => {
               <span onClick={() => setFocus(true)} className={`lbl-email-address ${(focus) ? 'lbl-email-address-focused' : ''}`}>Email address</span>
               <input onFocus={() => setFocus(true)} onBlur={(e) => { e.target.value === '' && setFocus(false) }} type='email' className='txt-email-sign-up' />
             </div>
-            <button onClick={() => handleCreateVerifyCode()}>{loadingSignUp ? <div className="spinner-border text-light" role="status" /> : <>Sign Up Now &gt;</>}</button>
+            <motion.button whileHover={{ scale: 1.05, boxShadow: '0px 0px 8px rgb(255,255,255)' }} onClick={() => handleCreateVerifyCode()}>{loadingSignUp ? <div className="spinner-border text-light" role="status" /> : <>Sign Up Now &gt;</>}</motion.button>
           </div>
-        </div>
+        </motion.div>
       </div>
     </header>
   )

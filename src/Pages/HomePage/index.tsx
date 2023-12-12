@@ -7,6 +7,8 @@ import Footer from '../../Components/Footer'
 import { ThemeContext, ThemeData, ThemeHandles } from '../../Components/Context'
 import { useParams } from 'react-router-dom'
 import { MovieInterface, MovieWatchingByUserIdInterface, UserInterface } from '../../Components/Context/interfaces'
+import { TypeHTTP, apiUser } from '../../Utils/api'
+import { motion } from 'framer-motion'
 
 export interface MoviesWatching {
     movies: MovieInterface
@@ -16,6 +18,27 @@ export interface MoviesWatching {
 const HomePage = () => {
 
     const { datas, handles } = useContext(ThemeContext) || {}
+
+
+    useEffect(() => {
+        if (datas?.account) {
+            apiUser({ path: `/users/${datas.account?._id}`, type: TypeHTTP.GET })
+                .then(result => {
+                    const res: UserInterface[] = result
+                    handles?.setUsers(res)
+                    const json = localStorage.getItem('currentUser')
+                    const username = json && JSON.parse(json)
+                    if (username !== null) {
+                        const arr = res.filter(item => item.name === username)
+                        if (arr.length > 0) {
+                            if (handles) {
+                                handles.setCurrentUser(arr[0])
+                            }
+                        }
+                    }
+                })
+        }
+    }, [datas?.account])
 
     const titleElement = document.querySelector('head title');
     if (titleElement) {
@@ -50,7 +73,11 @@ const HomePage = () => {
     })
 
     return (
-        <>
+        <motion.div
+            initial={{ x: window.innerWidth * -1 }}
+            animate={{ x: 0 }}
+            exit={{ x: window.innerWidth, transition: { duration: 0.2 } }}
+        >
             <PrivateHeader users={datas?.users || []} currentUser={datas?.currentUser} />
             <TypicalSection movies={datas?.movies || []} />
             <ListFilm title={'Newly Released'} movies={newlyReleased || []} />
@@ -59,7 +86,7 @@ const HomePage = () => {
             <ListFilm title={'Korea Flims'} movies={koreaFilms || []} />
             <ListFilm title={'Anime'} movies={animes || []} />
             <Footer />
-        </>
+        </motion.div>
     )
 }
 

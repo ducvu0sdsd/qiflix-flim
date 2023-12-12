@@ -12,6 +12,11 @@
     color: rgb(38, 38, 38);
 }
 
+body {
+    overflow-x: hidden;
+    /* Ẩn thanh cuộn ngang cho toàn bộ trang */
+}
+
 ::-webkit-scrollbar {
     width: 8px;
 

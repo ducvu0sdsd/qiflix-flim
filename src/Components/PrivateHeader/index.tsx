@@ -56,11 +56,6 @@ const PrivateHeader = ({ users, currentUser }: { users: UserInterface[], current
         window.location.reload()
     }
 
-    const handleNavigateManageProfile = () => {
-        localStorage.removeItem('currentUser')
-        navigate('/manage-profile-page')
-    }
-
     return (
         <header id='private-header' className='col-lg-12'>
             <div className="col-lg-7 logo-menu">
@@ -111,15 +106,17 @@ const PrivateHeader = ({ users, currentUser }: { users: UserInterface[], current
                                     </div>
                                 )
                         })}
-                        <div className='user-item' onClick={() => handleNavigateManageProfile()}>
-                            <div className='avatar-user'>
-                                <i style={{ fontSize: '30px' }} className="fa-regular fa-pen-to-square"></i>
+                        <a href='/manage-profile-page'>
+                            <div className='user-item'>
+                                <div className='avatar-user'>
+                                    <i style={{ fontSize: '30px' }} className="fa-regular fa-pen-to-square"></i>
+                                </div>
+                                <span className='user-name'>Manage Profiles</span>
                             </div>
-                            <span className='user-name'>Manage Profiles</span>
-                        </div>
+                        </a>
                         {datas?.account?.admin &&
                             <Link className='link' to={'/manage-movies-page'}>
-                                <div className='user-item' onClick={() => handleNavigateManageProfile()}>
+                                <div className='user-item'>
                                     <div className='avatar-user'>
                                         <i style={{ fontSize: '36px' }} className="bx bx-camera-movie"></i>
                                     </div>

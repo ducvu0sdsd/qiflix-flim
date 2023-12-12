@@ -8,6 +8,7 @@ import axios from 'axios'
 import { TypeHTTP, apiUser } from '../../Utils/api'
 import { ThemeContext } from '../../Components/Context'
 import { UserInterface } from '../../Components/Context/interfaces'
+import { motion } from 'framer-motion'
 
 enum Screen {
     LIST_USERS = 'list_user',
@@ -25,6 +26,10 @@ const ManageProfilePage = () => {
     const { datas, handles } = useContext(ThemeContext) || {}
     const [currentUser, setCurrentUser] = useState<UserInterface>()
     const [loadingComplete, setLoadingComplete] = useState<boolean>(false)
+
+    useEffect(() => {
+        handles?.setLoaded(!datas?.loaded)
+    }, [])
 
     const titleElement = document.querySelector('head title');
     if (titleElement) {
@@ -87,7 +92,11 @@ const ManageProfilePage = () => {
     }
 
     return (
-        <section id='manage-profile-page' className='col-lg-12' style={{ height: `${window.innerHeight}px` }}>
+        <motion.section
+            initial={{ x: window.innerWidth * -1 }}
+            animate={{ x: 0 }}
+            exit={{ x: window.innerWidth, transition: { duration: 0.2 } }}
+            id='manage-profile-page' className='col-lg-12' style={{ height: `${window.innerHeight}px` }}>
             <img className='logo' src={Qiflix} width={'150px'} />
             {screen === Screen.LIST_USERS ? (
                 <>
@@ -195,7 +204,7 @@ const ManageProfilePage = () => {
                     </div>
                 </>
             )}
-        </section>
+        </motion.section>
     )
 }
 

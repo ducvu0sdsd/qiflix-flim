@@ -13,6 +13,7 @@ const SignInHeader = () => {
     const [focuses, setFocuses] = useState<{ focusAddress: boolean, focusPassword: boolean }>({ focusAddress: false, focusPassword: false })
     const [loadingSignIn, setLoadingSignIn] = useState<boolean>(false)
     const { datas, handles } = useContext(ThemeContext) || {}
+    const navigate = useNavigate()
 
     const handleSignIn = () => {
         // navigate('/manage-profile-page')
@@ -31,7 +32,7 @@ const SignInHeader = () => {
             .then(res => {
                 localStorage.setItem('accessToken', JSON.stringify(res.data.accessToken))
                 localStorage.setItem('refreshToken', JSON.stringify(res.data.refreshToken))
-                window.location.reload()
+                navigate('/manage-profile-page')
                 setLoadingSignIn(false)
             })
             .catch(res => {

@@ -2,6 +2,7 @@
 import React from 'react'
 import SignInHeader from '../../Components/SignInHeader'
 import Footer from '../../Components/Footer'
+import { motion } from 'framer-motion'
 
 const SignInPage = () => {
 
@@ -11,10 +12,14 @@ const SignInPage = () => {
     }
 
     return (
-        <>
+        <motion.div
+            initial={{ x: window.innerWidth * -1 }}
+            animate={{ x: 0 }}
+            exit={{ x: window.innerWidth, transition: { duration: 0.2 } }}
+        >
             <SignInHeader />
             <Footer />
-        </>
+        </motion.div>
     )
 }
 

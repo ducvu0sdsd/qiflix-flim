@@ -11,6 +11,7 @@ export interface ThemeData {
     users: UserInterface[]
     account: AccountInterface | undefined
     currentUser: UserInterface | undefined
+    loaded: boolean
     movies: MovieInterface[]
     moviesWatching: MovieWatchingByUserIdInterface[]
 }
@@ -19,6 +20,7 @@ export interface ThemeHandles {
     setUsers: React.Dispatch<React.SetStateAction<UserInterface[]>>
     setAccount: React.Dispatch<React.SetStateAction<AccountInterface | undefined>>
     setCurrentUser: React.Dispatch<React.SetStateAction<UserInterface | undefined>>
+    setLoaded: React.Dispatch<React.SetStateAction<boolean>>
     setMovies: React.Dispatch<React.SetStateAction<MovieInterface[]>>
     setMoviesWatching: React.Dispatch<React.SetStateAction<MovieWatchingByUserIdInterface[]>>
     handleSetNotification: ({ type, message }: { type: NotificationStatus; message: string; }) => void
@@ -33,6 +35,7 @@ export const Provider: React.FC<ThemeContextProviderProps> = ({ children }) => {
     const [movies, setMovies] = useState<MovieInterface[]>([])
     const [moviesWatching, setMoviesWatching] = useState<MovieWatchingByUserIdInterface[]>([])
     const [notificationStatus, setNotificationStatus] = useState<{ type: NotificationStatus, message: string }>({ type: NotificationStatus.NONE, message: '' })
+    const [loaded, setLoaded] = useState<boolean>(false)
 
     const handleSetNotification = ({ type, message }: { type: NotificationStatus, message: string }) => {
         setNotificationStatus({ type, message })
@@ -46,7 +49,8 @@ export const Provider: React.FC<ThemeContextProviderProps> = ({ children }) => {
         account,
         currentUser,
         movies,
-        moviesWatching
+        moviesWatching,
+        loaded
     };
 
     const handles: ThemeHandles = {
@@ -55,7 +59,8 @@ export const Provider: React.FC<ThemeContextProviderProps> = ({ children }) => {
         setCurrentUser,
         setMovies,
         setMoviesWatching,
-        handleSetNotification
+        handleSetNotification,
+        setLoaded
     };
 
     // Call API
@@ -64,7 +69,7 @@ export const Provider: React.FC<ThemeContextProviderProps> = ({ children }) => {
             .then(result => {
                 setAccount(result)
             })
-    }, [])
+    }, [loaded])
 
     useEffect(() => {
         if (account) {
@@ -80,7 +85,7 @@ export const Provider: React.FC<ThemeContextProviderProps> = ({ children }) => {
             .then(result => {
                 setMovies(result)
             })
-    }, [])
+    }, [loaded])
 
     useEffect(() => {
         if (currentUser) {

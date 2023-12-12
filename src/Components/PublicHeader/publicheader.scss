@@ -71,6 +71,7 @@
         & .greeting {
             z-index: 1;
             position: absolute;
+            overflow: hidden;
             top: 40%;
             left: 50%;
             transform: translateY(-50%) translateX(-50%);
