@@ -103,7 +103,7 @@ const FilmItem = ({ title, displayDetail = false, movie, process }: FilmItemProp
                         src={movie?.trailerUrl}
                     />
                     <div className="btns col-lg-12">
-                        <Link className='link' to={`/${movie.url}`}><button className='btn-watch'><i className='bx bx-play' ></i> Watch</button></Link>
+                        <a className='link' href={`/${movie.url}`}><button className='btn-watch'><i className='bx bx-play' ></i> Watch</button></a>
                         <button className='btn-info'><i className='bx bx-info-circle' ></i></button>
                     </div>
                 </div>
@@ -115,7 +115,7 @@ const FilmItem = ({ title, displayDetail = false, movie, process }: FilmItemProp
                         <button onClick={() => handleFavoriteFlim(movie._id)}><i className='bx bx-plus'></i></button>}
                 </div>
             </div>
-            <Link className='link' to={`/${movie.url}`}><img className='themenail' src={movie?.thumbnail} width={'100%'} /></Link>
+            <a className='link' href={`/${movie.url}`}><img className='themenail' src={movie?.thumbnail} width={'100%'} /></a>
             {title === 'Continue Watching' && <div className='process'>
                 <div className='complete' style={{ width: `${$('.films__film-item').width() * process}px` }}></div>
             </div>}
