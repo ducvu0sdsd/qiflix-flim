@@ -176,48 +176,50 @@ const Bottom = ({ currentUser, displayNextEpisode, currentSubtitles, openSubtitl
                 style={{ display: `${displayNextEpisode ? 'block' : 'none'}` }} className='btn-next-episode'>
                 Next Episode
             </button>
-            <div className='process-layout'>
-                <div onClick={handleClickProcess} className='process'>
-                    <div className='played'>
-                        <div
-                            className='stick'
-                            onMouseDown={() => handleMouseDown()}
-                            onMouseUp={() => handleMouseUp()}
-                            onMouseMove={handleMouseMove}
-                        />
+            <div className='control'>
+                <div className='process-layout'>
+                    <div onClick={handleClickProcess} className='process'>
+                        <div className='played'>
+                            <div
+                                className='stick'
+                                onMouseDown={() => handleMouseDown()}
+                                onMouseUp={() => handleMouseUp()}
+                                onMouseMove={handleMouseMove}
+                            />
+                        </div>
+                    </div>
+                    <div className='time'>
+                        {duration !== 0 && secondsToTime(duration - played)}
                     </div>
                 </div>
-                <div className='time'>
-                    {duration !== 0 && secondsToTime(duration - played)}
-                </div>
-            </div>
 
-            <div className='actions-layout'>
-                <div className='item-left item'>
-                    <i onClick={handlePlayOrPause} style={{ width: '23px' }} className={`fa-solid ${playing ? 'fa-pause' : 'fa-play'}`}></i>
-                    <i onClick={() => handleChangeTime(-10)} className="fa-solid fa-arrow-rotate-left"></i>
-                    <i onClick={() => handleChangeTime(10)} className="fa-solid fa-arrow-rotate-right"></i>
-                    <i
-                        onClick={handleMutedOrNot}
-                        style={{ fontSize: '26px', position: 'relative', transform: 'translateY(0px)', width: '30px' }} className={`fa-solid ${muted ? 'fa-volume-xmark' : 'fa-volume-high'}`}>
-                        {/* <div className='control-volume'>
+                <div className='actions-layout'>
+                    <div className='item-left item'>
+                        <i onClick={handlePlayOrPause} style={{ width: '23px' }} className={`fa-solid ${playing ? 'fa-pause' : 'fa-play'}`}></i>
+                        <i onClick={() => handleChangeTime(-10)} className="fa-solid fa-arrow-rotate-left"></i>
+                        <i onClick={() => handleChangeTime(10)} className="fa-solid fa-arrow-rotate-right"></i>
+                        <i
+                            onClick={handleMutedOrNot}
+                            style={{ fontSize: '26px', position: 'relative', transform: 'translateY(0px)', width: '30px' }} className={`fa-solid ${muted ? 'fa-volume-xmark' : 'fa-volume-high'}`}>
+                            {/* <div className='control-volume'>
                             <div className='volumed'>
                                 <div className='stick-volume'>
 
                                 </div>
                             </div>
                         </div> */}
-                    </i>
-                </div>
-                <div className='title-movie'>
-                    {currentMovie.title}
-                    <span style={{ height: '20px', margin: '0 10px', width: '2px', borderRadius: '10px', backgroundColor: 'white' }} />
-                    {currentMovie.listEpisode?.episodes[currentEpisode - 1]?.name}
-                </div>
-                <div className='item-right item' style={{ justifyContent: 'end' }}>
-                    <i style={{ fontSize: '24px' }} className="fa-solid fa-gauge"></i>
-                    <i onClick={handleOpenSubtitleOrNot} style={{ color: `${openSubtitle ? 'white' : '#999'}` }} className='bx bx-captions' ></i>
-                    <i onClick={handleChangeFullScreen} className={`bx ${fullScreen ? 'bx-exit-fullscreen' : 'bx bx-fullscreen'}`} ></i>
+                        </i>
+                    </div>
+                    <div className='title-movie'>
+                        {currentMovie.title}
+                        <span style={{ height: '20px', margin: '0 10px', width: '2px', borderRadius: '10px', backgroundColor: 'white' }} />
+                        {currentMovie.listEpisode?.episodes[currentEpisode - 1]?.name}
+                    </div>
+                    <div className='item-right item' style={{ justifyContent: 'end' }}>
+                        <i style={{ fontSize: '24px' }} className="fa-solid fa-gauge"></i>
+                        <i onClick={handleOpenSubtitleOrNot} style={{ color: `${openSubtitle ? 'white' : '#999'}` }} className='bx bx-captions' ></i>
+                        <i onClick={handleChangeFullScreen} className={`bx ${fullScreen ? 'bx-exit-fullscreen' : 'bx bx-fullscreen'}`} ></i>
+                    </div>
                 </div>
             </div>
         </div>

@@ -34,7 +34,6 @@
 
     & .bottom {
         width: 100%;
-        box-shadow: 10px 50px -50px rgba(0, 0, 0, 0.5);
         position: absolute;
         bottom: 0;
         left: 0;
@@ -43,6 +42,7 @@
         flex-direction: column;
         justify-content: space-between;
         z-index: 2;
+        box-shadow: inset 0px -60px 30px rgba(0, 0, 0, 0.689);
 
         & .btn-next-episode {
             height: 60px;
@@ -84,114 +84,118 @@
             }
         }
 
-        & .actions-layout {
-            height: 60px;
-            width: 100%;
-            // background-color: rgb(255, 0, 0);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+        & .control {
+            // background-color: aqua;
 
-            & .title-movie {
-                color: white;
-                font-size: 19px;
+            & .actions-layout {
+                height: 55px;
+                width: 100%;
+                background: 0;
                 display: flex;
                 align-items: center;
+                justify-content: space-between;
+
+                & .title-movie {
+                    color: white;
+                    font-size: 19px;
+                    display: flex;
+                    align-items: center;
+                }
+
+                & .item {
+                    padding: 0 20px;
+                    width: 25%;
+                    display: flex;
+                    align-items: center;
+
+
+                    & .control-volume {
+                        position: absolute;
+                        right: 115px;
+                        width: 100px;
+                        opacity: 0;
+                        display: none;
+                        transition: 0.5s;
+                        height: 4px;
+                        background-color: #909090;
+                        top: 50%;
+                        transform: translateY(-50%);
+
+                        & .volumed {
+                            background-color: red;
+                            width: 100%;
+                            height: 100%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: end;
+
+                            & .stick-volume {
+                                height: 17px;
+                                width: 17px;
+                                background-color: red;
+                                border-radius: 50%;
+                                cursor: grab;
+                            }
+                        }
+                    }
+
+                    & i {
+                        cursor: pointer;
+                        font-size: 33px;
+                        color: white;
+                        margin: 0 7px;
+                    }
+
+                    &-left {
+
+                        & i {
+                            cursor: pointer;
+                            font-size: 27px;
+                            color: white;
+                            margin: 0 10px;
+                        }
+                    }
+                }
             }
 
-            & .item {
-                padding: 0 20px;
-                width: 25%;
+            & .process-layout {
+                height: 30px;
+                // background-color: green;
+                width: 100%;
                 display: flex;
+                padding: 0 20px;
                 align-items: center;
 
-
-                & .control-volume {
-                    position: absolute;
-                    right: 115px;
-                    width: 100px;
-                    opacity: 0;
-                    display: none;
-                    transition: 0.5s;
+                & .process {
                     height: 4px;
                     background-color: #909090;
-                    top: 50%;
-                    transform: translateY(-50%);
+                    width: 94%;
+                    border-radius: 8px;
+                    cursor: pointer;
 
-                    & .volumed {
-                        background-color: red;
-                        width: 100%;
+                    & .played {
                         height: 100%;
+                        min-width: 17px;
+                        background-color: red;
                         display: flex;
                         align-items: center;
                         justify-content: end;
 
-                        & .stick-volume {
+                        & .stick {
+                            border-radius: 50%;
                             height: 17px;
                             width: 17px;
                             background-color: red;
-                            border-radius: 50%;
                             cursor: grab;
+                            transition: 0.5s;
                         }
                     }
                 }
 
-                & i {
-                    cursor: pointer;
-                    font-size: 33px;
+                & .time {
+                    padding-left: 20px;
                     color: white;
-                    margin: 0 7px;
                 }
-
-                &-left {
-
-                    & i {
-                        cursor: pointer;
-                        font-size: 27px;
-                        color: white;
-                        margin: 0 10px;
-                    }
-                }
-            }
-        }
-
-        & .process-layout {
-            height: 30px;
-            // background-color: green;
-            width: 100%;
-            display: flex;
-            padding: 0 20px;
-            align-items: center;
-
-            & .process {
-                height: 4px;
-                background-color: #909090;
-                width: 94%;
-                border-radius: 8px;
-                cursor: pointer;
-
-                & .played {
-                    height: 100%;
-                    min-width: 17px;
-                    background-color: red;
-                    display: flex;
-                    align-items: center;
-                    justify-content: end;
-
-                    & .stick {
-                        border-radius: 50%;
-                        height: 17px;
-                        width: 17px;
-                        background-color: red;
-                        cursor: grab;
-                        transition: 0.5s;
-                    }
-                }
-            }
-
-            & .time {
-                padding-left: 20px;
-                color: white;
             }
         }
     }
