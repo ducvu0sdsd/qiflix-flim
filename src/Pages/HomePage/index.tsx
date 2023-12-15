@@ -96,6 +96,7 @@ const HomePage = () => {
                 <title>Home Page</title>
                 <meta property="og:title" content="Qiflix" />
                 <meta property="og:image" content={QiflixMeta} />
+                <meta property="og:url" content="https://qiflix.vercel.app/" />
             </Helmet>
             {movieDetail.display && <MovieDetail movieDetail={movieDetail} setMovieDetail={setMovieDetail} />}
             <PrivateHeader users={datas?.users || []} currentUser={datas?.currentUser} />
