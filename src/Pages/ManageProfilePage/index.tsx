@@ -155,6 +155,7 @@ const ManageProfilePage = () => {
                                 <div onClick={() => { setScreen(Screen.UPDATE_USER); setCurrentUser(user) }} className="update-profile">
                                     <i className='bx bx-pencil'></i>
                                 </div>
+                                <p>{user.name}</p>
                             </div>
                         ))}
                         <div onClick={() => setScreen(Screen.CREATE_USER)} className="profile__child">
