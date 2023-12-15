@@ -10,9 +10,16 @@ interface ListFilmProp {
     title: string,
     paddingLeft?: number,
     processes?: number[] | undefined
+    movieDetail: MovieDetail
+    setMovieDetail: React.Dispatch<React.SetStateAction<MovieDetail>>
 }
 
-const ListFilm = ({ movies, title, paddingLeft, processes }: ListFilmProp) => {
+
+export interface MovieDetail {
+    display: boolean
+    movie: MovieInterface | undefined
+}
+const ListFilm = ({ movies, title, paddingLeft, processes, setMovieDetail, movieDetail }: ListFilmProp) => {
     const [load, setLoad] = useState(false)
     const [marginLeft, setMarginLeft] = useState<number>(0)
 
@@ -54,7 +61,7 @@ const ListFilm = ({ movies, title, paddingLeft, processes }: ListFilmProp) => {
                         {movies.map((movie, index) => {
                             return (
                                 <div key={index} className="film">
-                                    <FilmItem title={title} displayDetail={true} movie={movie} process={processes ? processes[index] : 0} />
+                                    <FilmItem movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={title} displayDetail={true} movie={movie} process={processes ? processes[index] : 0} />
                                 </div>
                             )
                         })}

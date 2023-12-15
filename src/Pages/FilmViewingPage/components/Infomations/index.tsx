@@ -154,7 +154,6 @@ const Informations = ({ currentFilm, setCurrentEpisode, currentEpisode, currentU
                     </div>
                 </div>
             </div>
-            <ListFilm paddingLeft={20} title='Other Movies' movies={datas?.movies.filter(item => item._id !== currentFilm._id) || []} />
         </section >
     )
 }

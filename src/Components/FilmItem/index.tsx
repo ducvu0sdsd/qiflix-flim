@@ -8,15 +8,23 @@ import { TypeHTTP, apiUser } from '../../Utils/api'
 import { type } from 'os'
 import { ThemeContext } from '../Context'
 import { NotificationStatus } from '../Notification'
+import { motion } from 'framer-motion'
 
 export interface FilmItemProp {
     displayDetail?: boolean,
     movie: MovieInterface,
     title: string,
     process: number
+    movieDetail?: MovieDetail
+    setMovieDetail: React.Dispatch<React.SetStateAction<MovieDetail>>
 }
 
-const FilmItem = ({ title, displayDetail = false, movie, process }: FilmItemProp) => {
+export interface MovieDetail {
+    display: boolean
+    movie: MovieInterface | undefined
+}
+
+const FilmItem = ({ title, displayDetail = false, movie, process, setMovieDetail, movieDetail }: FilmItemProp) => {
     const titleCustom = movie?.title.split(' ').join('-')
     const displayRef = useRef<NodeJS.Timeout | null>(null)
     const [widthDetail, setWidthDetail] = useState<number>(0)
@@ -91,7 +99,11 @@ const FilmItem = ({ title, displayDetail = false, movie, process }: FilmItemProp
 
 
     return (
-        <div onMouseEnter={() => setWidthDetail(370)} onMouseLeave={() => setWidthDetail(0)} className="films__film-item">
+        <motion.div
+            initial={{ x: window.innerWidth * -1 }}
+            animate={{ x: 0 }}
+            exit={{ x: window.innerWidth * -1, transition: { duration: 0.2 } }}
+            onMouseEnter={() => setWidthDetail(370)} onMouseLeave={() => setWidthDetail(0)} className="films__film-item">
             <div className={`detail-film-mini detail-film-mini-${movie?._id}-${title.toLowerCase().split(' ').join('-')}`}>
                 <div className='col-lg-12 video-film'>
                     <video
@@ -104,7 +116,7 @@ const FilmItem = ({ title, displayDetail = false, movie, process }: FilmItemProp
                     />
                     <div className="btns col-lg-12">
                         <a className='link' href={`/${movie.url}`}><button className='btn-watch'><i className='bx bx-play' ></i> Watch</button></a>
-                        <button className='btn-info'><i className='bx bx-info-circle' ></i></button>
+                        <button onClick={() => setMovieDetail({ display: true, movie: movie })} className='btn-info'><i className='bx bx-info-circle' ></i></button>
                     </div>
                 </div>
                 <div className="info">
@@ -119,7 +131,7 @@ const FilmItem = ({ title, displayDetail = false, movie, process }: FilmItemProp
             {title === 'Continue Watching' && <div className='process'>
                 <div className='complete' style={{ width: `${$('.films__film-item').width() * process}px` }}></div>
             </div>}
-        </div >
+        </motion.div >
     )
 }
 

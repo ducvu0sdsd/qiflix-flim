@@ -93,7 +93,7 @@ const Comments = ({ movie_id, user_id, user_avatar }: CommentsProps) => {
                                         {item.content}
                                     </div>
                                 </div>
-                                <div className="col-lg-2 datetime">
+                                <div className="col-lg-3 datetime">
                                     {handleFormatDate(new Date(item.updatedAt))}
                                 </div>
                             </div>

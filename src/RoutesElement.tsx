@@ -16,6 +16,7 @@ import MoviesPage from './Pages/MoviesPage';
 import FindMoviesPage from './Pages/FindMoviesPage';
 import { AnimatePresence } from 'framer-motion';
 import QiflixPage from './Pages/QiflixPage';
+import MyAccountPage from './Pages/MyAccountPage';
 
 export interface RoutesType {
     name: string,
@@ -155,6 +156,8 @@ function RoutesElement() {
         { name: 'tvshow-page', component: <TVShowPage /> },
         { name: 'movies-page', component: <MoviesPage /> },
         { name: 'find-movies-page', component: <FindMoviesPage /> },
+        { name: 'my-account-page', component: <MyAccountPage /> },
+        { name: 'manage-profile-page', component: <ManageProfilePage /> },
         ...(datas?.movies ? datas.movies.map((movie) => {
             return { name: movie.url, component: <FilmViewingPage data={movie} currentUser={datas.currentUser || undefined} /> }
         }) : []),

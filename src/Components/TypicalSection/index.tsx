@@ -7,9 +7,16 @@ import { MovieInterface } from '../Context/interfaces'
 
 interface TypicalSectionProps {
     movies: MovieInterface[]
+    movieDetail: MovieDetail
+    setMovieDetail: React.Dispatch<React.SetStateAction<MovieDetail>>
 }
 
-const TypicalSection = ({ movies }: TypicalSectionProps) => {
+export interface MovieDetail {
+    display: boolean
+    movie: MovieInterface | undefined
+}
+
+const TypicalSection = ({ movies, setMovieDetail, movieDetail }: TypicalSectionProps) => {
 
     const FilterText: (value: string, max: number) => string = (str, max) => {
         let origin = str.split(' ')
@@ -40,7 +47,7 @@ const TypicalSection = ({ movies }: TypicalSectionProps) => {
                                 <div className='description'>{FilterText(movie.description, 120)}</div>
                                 <div className="btns">
                                     <Link className='link' to={`/${movie.url}`}><button className='btn-parent btn-watch'><i className='bx bx-play'></i> Watch Now</button></Link>
-                                    <button className='btn-parent btn-detail'><i className='bx bx-info-circle' ></i> Detail</button>
+                                    <button onClick={() => setMovieDetail({ display: true, movie: movies[0] })} className='btn-parent btn-detail'><i className='bx bx-info-circle' ></i> Detail</button>
                                 </div>
                             </div>
                         </div>

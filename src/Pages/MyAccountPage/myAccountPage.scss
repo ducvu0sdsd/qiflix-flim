@@ -1,0 +1,56 @@
+#my-account-page {
+    padding: 80px 40px;
+    padding-bottom: 30px;
+
+    & .section__header {
+        & h1 {
+            font-size: 26px;
+            color: white;
+            font-weight: bold;
+        }
+    }
+
+    & .section__body {
+        color: white;
+        margin: 10px 0;
+        padding: 20px 70px;
+        display: flex;
+
+        & h2 {
+            font-size: 19px;
+            line-height: 20px;
+            margin-bottom: 20px;
+        }
+
+        & .card-profile-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px 0;
+
+            & p {
+                line-height: 12px;
+                font-size: 14px;
+            }
+
+            & button {
+                border: 0;
+                background: 0;
+                color: rgb(182, 0, 0);
+                font-weight: bold;
+                font-size: 14px;
+            }
+
+            & .imgs {
+                display: flex;
+                flex-wrap: wrap;
+
+                & .image-user {
+                    width: 80px;
+                    border-radius: 50%;
+                    overflow: hidden;
+                    margin: 6px;
+                }
+            }
+        }
+    }
+}

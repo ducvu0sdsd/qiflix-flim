@@ -5,10 +5,11 @@ import TypicalSection from '../../Components/TypicalSection'
 import ListFilm from '../../Components/ListFilm'
 import Footer from '../../Components/Footer'
 import { ThemeContext, ThemeData, ThemeHandles } from '../../Components/Context'
-import { useParams } from 'react-router-dom'
+import $ from 'jquery'
 import { MovieInterface, MovieWatchingByUserIdInterface, UserInterface } from '../../Components/Context/interfaces'
 import { TypeHTTP, apiUser } from '../../Utils/api'
 import { motion } from 'framer-motion'
+import MovieDetail from '../../Components/MovieDetail'
 
 export interface MoviesWatching {
     movies: MovieInterface
@@ -18,7 +19,18 @@ export interface MoviesWatching {
 const HomePage = () => {
 
     const { datas, handles } = useContext(ThemeContext) || {}
+    const [movieDetail, setMovieDetail] = useState<{ display: boolean, movie: MovieInterface | undefined }>({
+        display: false,
+        movie: undefined
+    })
 
+    useEffect(() => {
+        if (movieDetail.display === true) {
+            $('body').css('overflow', 'hidden')
+        } else {
+            $('body').css('overflow', 'visible')
+        }
+    }, [movieDetail.display])
 
     useEffect(() => {
         if (datas?.account) {
@@ -78,13 +90,14 @@ const HomePage = () => {
             animate={{ x: 0 }}
             exit={{ x: window.innerWidth, transition: { duration: 0.2 } }}
         >
+            {movieDetail.display && <MovieDetail movieDetail={movieDetail} setMovieDetail={setMovieDetail} />}
             <PrivateHeader users={datas?.users || []} currentUser={datas?.currentUser} />
-            <TypicalSection movies={datas?.movies || []} />
-            <ListFilm title={'Newly Released'} movies={newlyReleased || []} />
-            {(moviesWatching && moviesWatching.length > 0) && <ListFilm title={'Continue Watching'} movies={moviesWatching.map(item => item.movies)} processes={moviesWatching.map(item => item.process)} />}
-            <ListFilm title={'For Christmas'} movies={christmasFilms || []} />
-            <ListFilm title={'Korea Flims'} movies={koreaFilms || []} />
-            <ListFilm title={'Anime'} movies={animes || []} />
+            <TypicalSection movieDetail={movieDetail} setMovieDetail={setMovieDetail} movies={datas?.movies || []} />
+            <ListFilm movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'Newly Released'} movies={newlyReleased || []} />
+            {(moviesWatching && moviesWatching.length > 0) && <ListFilm movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'Continue Watching'} movies={moviesWatching.map(item => item.movies)} processes={moviesWatching.map(item => item.process)} />}
+            <ListFilm movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'For Christmas'} movies={christmasFilms || []} />
+            <ListFilm movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'Korea Flims'} movies={koreaFilms || []} />
+            <ListFilm movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'Anime'} movies={animes || []} />
             <Footer />
         </motion.div>
     )

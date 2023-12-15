@@ -9,6 +9,7 @@ import { TypeHTTP, apiUser } from '../../Utils/api'
 import { ThemeContext } from '../../Components/Context'
 import { UserInterface } from '../../Components/Context/interfaces'
 import { motion } from 'framer-motion'
+import { NotificationStatus } from '../../Components/Notification'
 
 enum Screen {
     LIST_USERS = 'list_user',
@@ -19,10 +20,12 @@ enum Screen {
 const ManageProfilePage = () => {
     const navigate = useNavigate()
     const fileRefCreate = useRef<HTMLInputElement | null>(null);
+    const fileRefUpdate = useRef<HTMLInputElement | null>(null);
     const [screen, setScreen] = useState<Screen>(Screen.LIST_USERS);
     const [name, setName] = useState<string>('')
     const [gender, setGender] = useState('');
     const [avatarCreate, setAvatarCreate] = useState<string>('https://t4.ftcdn.net/jpg/05/49/98/39/360_F_549983970_bRCkYfk0P6PP5fKbMhZMIb07mCJ6esXL.jpg')
+    const [avatarUpdate, setAvatarUpdate] = useState<string>('https://t4.ftcdn.net/jpg/05/49/98/39/360_F_549983970_bRCkYfk0P6PP5fKbMhZMIb07mCJ6esXL.jpg')
     const { datas, handles } = useContext(ThemeContext) || {}
     const [currentUser, setCurrentUser] = useState<UserInterface>()
     const [loadingComplete, setLoadingComplete] = useState<boolean>(false)
@@ -30,6 +33,13 @@ const ManageProfilePage = () => {
     useEffect(() => {
         handles?.setLoaded(!datas?.loaded)
     }, [])
+
+    useEffect(() => {
+        $('.txt-profile-name-update').val(currentUser?.name)
+        setGender(currentUser?.gender || '')
+        setName(currentUser?.name || '')
+        setAvatarUpdate(currentUser?.avatar || '')
+    }, [currentUser])
 
     const titleElement = document.querySelector('head title');
     if (titleElement) {
@@ -39,6 +49,9 @@ const ManageProfilePage = () => {
     const handleUpdateAvatarClick = (type: string) => {
         if (type === 'create') {
             fileRefCreate.current?.click()
+        }
+        else {
+            fileRefUpdate.current?.click()
         }
     }
 
@@ -55,18 +68,32 @@ const ManageProfilePage = () => {
         }
     }
 
+    const handleChangeImageUpdate = (e: any) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = function () {
+                if (reader.result) {
+                    setAvatarUpdate(reader.result.toString());
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
     const handleSubmitCreate = () => {
         if (!loadingComplete) {
             if (!/(^[A-ZÀ-Ỹ]{1}[a-zà-ỹ]+)(\s[A-ZÀ-Ỹ][a-zà-ỹ]+){0,}$/.test(name)) {
+                handles?.handleSetNotification({ type: NotificationStatus.WARNING, message: 'The name must be as Vu Tien Duc' })
                 return
             }
             if (gender === '') {
+                handles?.handleSetNotification({ type: NotificationStatus.WARNING, message: 'Please choose gender' })
                 return
             }
             apiUser({ type: TypeHTTP.POST, body: { name, gender, avatar: avatarCreate, account_id: datas?.account?._id }, path: '/users' })
                 .then((result) => {
-                    handles?.setUsers(prev => [...prev, result])
-                    setScreen(Screen.LIST_USERS)
+                    window.location.reload()
                 })
         }
 
@@ -91,16 +118,34 @@ const ManageProfilePage = () => {
         }
     }
 
+    const handleSubmitUpdate = () => {
+        if (!loadingComplete) {
+            if (!/(^[A-ZÀ-Ỹ]{1}[a-zà-ỹ]+)(\s[A-ZÀ-Ỹ][a-zà-ỹ]+){0,}$/.test(name)) {
+                handles?.handleSetNotification({ type: NotificationStatus.WARNING, message: 'The name must be as Vu Tien Duc' })
+                return
+            }
+            if (gender === '') {
+                handles?.handleSetNotification({ type: NotificationStatus.WARNING, message: 'Please choose gender' })
+                return
+            }
+            apiUser({ type: TypeHTTP.PUT, body: { name, gender, avatar: avatarUpdate, account_id: datas?.account?._id }, path: `/users/${currentUser?._id}` })
+                .then((result) => {
+                    window.location.reload()
+                })
+        }
+    }
+
+
     return (
         <motion.section
             initial={{ x: window.innerWidth * -1 }}
             animate={{ x: 0 }}
             exit={{ x: window.innerWidth, transition: { duration: 0.2 } }}
-            id='manage-profile-page' className='col-lg-12' style={{ height: `${window.innerHeight}px` }}>
+            id='manage-profile-page' className='col-lg-12' style={{ minHeight: `${window.innerHeight}px` }}>
             <img className='logo' src={Qiflix} width={'150px'} />
             {screen === Screen.LIST_USERS ? (
                 <>
-                    <h2>Manage Profiles</h2>
+                    <h3>Manage Profiles</h3>
                     <div className='profiles'>
                         {datas?.users?.map((user, index) => (
                             <div key={index} className='profile__parent'>
@@ -119,8 +164,8 @@ const ManageProfilePage = () => {
                 </>
             ) : screen === Screen.CREATE_USER ? (
                 <>
-                    <h2>Create Profile</h2>
-                    <div className='create-form col-lg-5'>
+                    <h3>Create Profile</h3>
+                    <div className='create-form col-lg-4'>
                         <div className='create-form__avatar col-lg-5'>
                             <div className='avatar col-lg-10'>
                                 <img width={'100%'} src={avatarCreate} />
@@ -151,35 +196,35 @@ const ManageProfilePage = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='btns col-lg-5'>
+                    <div className='btns col-lg-4'>
                         <button onClick={() => setScreen(Screen.LIST_USERS)} >Cancel</button>
                         <button onClick={handleSubmitCreate} style={{ backgroundColor: 'white', color: 'black' }}>{loadingComplete ? <div className="spinner-border text-light" role="status" /> : <>Complete</>}</button>
                     </div>
                 </>
             ) : (
                 <>
-                    <h2>Update Profile</h2>
-                    <div className='create-form col-lg-5'>
+                    <h3>Update Profile</h3>
+                    <div className='create-form col-lg-4'>
                         <div className='create-form__avatar col-lg-5'>
                             <div className='avatar col-lg-10'>
-                                <img width={'100%'} src={currentUser?.avatar} />
+                                <img width={'100%'} src={avatarUpdate} />
                             </div>
-                            <div className="update-avatar">
+                            <div onClick={() => handleUpdateAvatarClick('update')} className="update-avatar">
                                 <i className='bx bx-pencil'></i>
                             </div>
-                            <input onChange={handleChangeImage} accept=".png, .jpg, .jpeg" className='file' type='file' ref={fileRefCreate} />
+                            <input onChange={handleChangeImageUpdate} accept=".png, .jpg, .jpeg" className='file' type='file' ref={fileRefUpdate} />
                         </div>
                         <div className='create-form__inputs col-lg-7'>
                             <div className="form-input col-lg-12">
                                 <label>Profile Name *</label>
-                                <input type='text' className='txt-profile-name col-lg-10' />
+                                <input type='text' onChange={(e) => setName(e.target.value.toString())} className='txt-profile-name-update col-lg-10' />
                             </div>
                             <div className="form-input col-lg-12">
                                 <label>Gender *</label>
                                 <div className='radios'>
-                                    <div className='radio-item'><input checked={currentUser?.gender === 'male'} onChange={(e) => setGender(e.target.value)} type='radio' name='gender' value='male' /> Male</div>
-                                    <div className='radio-item'><input checked={currentUser?.gender === 'female'} onChange={(e) => setGender(e.target.value)} type='radio' name='gender' value='female' /> Female</div>
-                                    <div className='radio-item'><input checked={currentUser?.gender === 'other'} onChange={(e) => setGender(e.target.value)} type='radio' name='gender' value='other' /> Other</div>
+                                    <div className='radio-item'><input checked={gender === 'male'} onChange={(e) => setGender(e.target.value)} type='radio' name='gender' value='male' /> Male</div>
+                                    <div className='radio-item'><input checked={gender === 'female'} onChange={(e) => setGender(e.target.value)} type='radio' name='gender' value='female' /> Female</div>
+                                    <div className='radio-item'><input checked={gender === 'other'} onChange={(e) => setGender(e.target.value)} type='radio' name='gender' value='other' /> Other</div>
                                 </div>
                             </div>
                         </div>
@@ -194,13 +239,13 @@ const ManageProfilePage = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='col-lg-5 delete-user'>
+                    <div className='col-lg-4 delete-user'>
                         <span>Delete User</span>
                         <button onClick={() => handleDeleteUser()}>Delete</button>
                     </div>
-                    <div className='btns col-lg-5'>
+                    <div className='btns col-lg-4'>
                         <button onClick={() => setScreen(Screen.LIST_USERS)}>Cancel</button>
-                        <button style={{ backgroundColor: 'white', color: 'black' }}>Complete</button>
+                        <button onClick={handleSubmitUpdate} style={{ backgroundColor: 'white', color: 'black' }}>Complete</button>
                     </div>
                 </>
             )}

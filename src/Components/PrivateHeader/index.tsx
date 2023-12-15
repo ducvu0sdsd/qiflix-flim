@@ -106,7 +106,7 @@ const PrivateHeader = ({ users, currentUser }: { users: UserInterface[], current
                                     </div>
                                 )
                         })}
-                        <a href='/manage-profile-page'>
+                        <a className='link' href='/manage-profile-page'>
                             <div className='user-item'>
                                 <div className='avatar-user'>
                                     <i style={{ fontSize: '30px' }} className="fa-regular fa-pen-to-square"></i>
@@ -123,6 +123,14 @@ const PrivateHeader = ({ users, currentUser }: { users: UserInterface[], current
                                     <span className='user-name'>Manage Movies</span>
                                 </div>
                             </Link>}
+                        <Link className='link' to={'/my-account-page'}>
+                            <div className='user-item'>
+                                <div className='avatar-user'>
+                                    <i style={{ fontSize: '30px' }} className="fa-regular fa-user"></i>
+                                </div>
+                                <span className='user-name'>My Account</span>
+                            </div>
+                        </Link>
                         <div className='user-item' onClick={() => handleSignOut()}>
                             <div className='avatar-user'>
                                 <i className='bx bx-log-out-circle'></i>
