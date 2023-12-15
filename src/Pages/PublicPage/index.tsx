@@ -4,6 +4,8 @@ import PublicHeader from '../../Components/PublicHeader'
 import SectionPublicPage from './components/Section'
 import Footer from '../../Components/Footer'
 import { motion } from 'framer-motion'
+import QiflixMeta from '../../resources/qiflix-meta.png'
+import { Helmet } from 'react-helmet'
 
 const PublicPage = () => {
 
@@ -18,6 +20,11 @@ const PublicPage = () => {
             animate={{ x: 0 }}
             exit={{ x: window.innerWidth, transition: { duration: 0.2 } }}
         >
+            <Helmet>
+                <title>Qiflix</title>
+                <meta property="og:title" content="Qiflix" />
+                <meta property="og:image" content={QiflixMeta} />
+            </Helmet>
             <PublicHeader />
             <SectionPublicPage indexImage={1} reverse={false} header='Enjoy on your TV' message='Watch on Smart TVs, Playstation, Xbox, Chromecast, Apple TV, Blu-ray players, and more.' />
             <SectionPublicPage indexImage={2} reverse={true} header='Download your shows to watch offline' message='Save your favorites easily and always have something to watch.' />
