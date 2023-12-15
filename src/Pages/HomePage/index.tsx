@@ -10,6 +10,8 @@ import { MovieInterface, MovieWatchingByUserIdInterface, UserInterface } from '.
 import { TypeHTTP, apiUser } from '../../Utils/api'
 import { motion } from 'framer-motion'
 import MovieDetail from '../../Components/MovieDetail'
+import { Helmet } from 'react-helmet';
+import QiflixMeta from '../../resources/qiflix-meta.png'
 
 export interface MoviesWatching {
     movies: MovieInterface
@@ -90,6 +92,11 @@ const HomePage = () => {
             animate={{ x: 0 }}
             exit={{ x: window.innerWidth, transition: { duration: 0.2 } }}
         >
+            <Helmet>
+                <title>Home Page</title>
+                <meta property="og:title" content="Qiflix" />
+                <meta property="og:image" content={QiflixMeta} />
+            </Helmet>
             {movieDetail.display && <MovieDetail movieDetail={movieDetail} setMovieDetail={setMovieDetail} />}
             <PrivateHeader users={datas?.users || []} currentUser={datas?.currentUser} />
             <TypicalSection movieDetail={movieDetail} setMovieDetail={setMovieDetail} movies={datas?.movies || []} />
