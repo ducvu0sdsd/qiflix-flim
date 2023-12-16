@@ -23,7 +23,8 @@ export interface BottomProps {
     setFullScreen: React.Dispatch<React.SetStateAction<boolean>>,
     setMuted: React.Dispatch<React.SetStateAction<boolean>>
     setDisplayAction: React.Dispatch<React.SetStateAction<boolean>>
-    currentUser: UserInterface | undefined
+    currentUser: UserInterface | undefined,
+    handleChangeEpisode: () => void
 }
 
 export interface MousePosition {
@@ -31,7 +32,7 @@ export interface MousePosition {
     y: number
 }
 
-const Bottom = ({ currentUser, displayNextEpisode, currentSubtitles, openSubtitle, setOpenSubtitle, currentMovie, currentEpisode, fullScreen, setDisplayAction, setFullScreen, duration, playing, played, video, setPlaying, muted, setMuted, subtitle }: BottomProps) => {
+const Bottom = ({ handleChangeEpisode, currentUser, displayNextEpisode, currentSubtitles, openSubtitle, setOpenSubtitle, currentMovie, currentEpisode, fullScreen, setDisplayAction, setFullScreen, duration, playing, played, video, setPlaying, muted, setMuted, subtitle }: BottomProps) => {
 
     const [mouse, setMouse] = useState<boolean>(false)
     const [mousePosition, setMousePosition] = useState<MousePosition>({ x: 0, y: 0 })
@@ -146,21 +147,6 @@ const Bottom = ({ currentUser, displayNextEpisode, currentSubtitles, openSubtitl
         const playedProcess = processMouse / processWidth
         if (video) {
             video.seekTo(duration * playedProcess)
-        }
-    }
-
-    const handleChangeEpisode = () => {
-        const watching = {
-            movie_id: currentMovie._id,
-            indexOfEpisode: currentEpisode + 1,
-            currentTime: 0,
-            process: 0
-        }
-        if (currentUser) {
-            apiUser({ path: `/users/update-watching/${currentUser._id}`, body: watching, type: TypeHTTP.PUT })
-                .then(res => {
-                    window.location.reload()
-                })
         }
     }
 

@@ -117,6 +117,25 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
         }
     }
 
+    const handleChangeEpisode = () => {
+        if (currentMovie.listEpisode?.episodes.length) {
+            if (currentEpisode < currentMovie.listEpisode?.episodes.length) {
+                const watching = {
+                    movie_id: currentMovie._id,
+                    indexOfEpisode: currentEpisode + 1,
+                    currentTime: 0,
+                    process: 0
+                }
+                if (currentUser) {
+                    apiUser({ path: `/users/update-watching/${currentUser._id}`, body: watching, type: TypeHTTP.PUT })
+                        .then(res => {
+                            window.location.reload()
+                        })
+                }
+            }
+        }
+    }
+
 
     return (
         <section style={{ height: `${window.innerHeight}px` }} id='video'>
@@ -134,6 +153,7 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
                 muted={muted}
                 progressInterval={1}
                 onStart={() => { reactPlayerRef.current?.seekTo(currentTime) }}
+                onEnded={() => handleChangeEpisode()}
                 onProgress={() => handleOnProgress()}
                 onPlay={() => setPlaying(true)}
                 onPause={() => setPlaying(false)}
@@ -145,6 +165,7 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
 
 
             <Bottom
+                handleChangeEpisode={handleChangeEpisode}
                 currentUser={currentUser}
                 displayNextEpisode={displayNextEpisode}
                 currentSubtitles={currentSubtitles}
