@@ -183,8 +183,8 @@ const FormSignUp = ({ email }: FormSignUpProp) => {
                             <input onFocus={() => setFocuses(() => ({ ...focuses, focusPassword: true }))} onBlur={(e) => { e.target.value === '' && setFocuses(() => ({ ...focuses, focusPassword: false })) }} type='password' className='txt-verify-code txt' />
                         </div>
                         <span style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <span>Don't Get Verify Code?<button onClick={() => handleCreateVerifyCode()} className='btn-resend'>ReSend</button></span>
-                            <span>{timeRemaining !== 0 ? <>Time remaining {secondsToTimeForSignUp(timeRemaining)}</> : <span style={{ color: 'red' }}>Expired</span>}</span>
+                            <span style={{ width: 'auto' }}>Don't Get Verify Code?<button onClick={() => handleCreateVerifyCode()} className='btn-resend'>ReSend</button></span>
+                            <span style={{ width: 'auto' }}>{timeRemaining !== 0 ? <>Time remaining {secondsToTimeForSignUp(timeRemaining)}</> : <span style={{ color: 'red', width: 'auto' }}>Expired</span>}</span>
                         </span>
                         <button onClick={() => handleConfirmVerifyCode()} className='btn-next'>{loadingSignUp ? <div className="spinner-border text-light" role="status" /> : <>Next</>}</button>
                     </div>
@@ -207,7 +207,7 @@ const FormSignUp = ({ email }: FormSignUpProp) => {
                     <div className='form-step-3 form-step'>
                         <h4>Welcome back!
                             Joining Qiflix is easy.</h4>
-                        <span>Enter your password and you'll be watching in no time.</span>
+                        <span style={{ width: 'auto' }}>Enter your password and you'll be watching in no time.</span>
                         <label style={{ marginTop: '15px' }}>Email Address</label>
                         <span className='lbl-email'>{email}</span>
                         <div className='input-group'>

@@ -11,6 +11,11 @@
         font-family: 'Noto Sans Tai Viet', sans-serif;
         overflow: hidden;
 
+        @media only screen and (max-width: 600px) {
+            scale: 0.9;
+            width: auto;
+        }
+
         & .form-step-parent {
             display: flex;
             width: 400%;
@@ -21,6 +26,12 @@
                 width: 550px;
                 display: flex;
                 flex-direction: column;
+
+                & input {
+                    @media only screen and (max-width: 600px) {
+                        width: 400px;
+                    }
+                }
 
                 & .btn-resend {
                     margin: 10px 0;
@@ -41,6 +52,10 @@
         }
 
         & span {
+            @media only screen and (max-width: 600px) {
+                width: 420px;
+            }
+
             font-size: 16px;
         }
 
@@ -69,6 +84,9 @@
             font-weight: 550;
             line-height: 25px;
 
+            @media only screen and (max-width: 600px) {
+                width: 400px;
+            }
         }
 
         & .lbl-email {
@@ -121,6 +139,10 @@
             background-color: red;
             color: white;
             border-radius: 5px;
+
+            @media only screen and (max-width: 600px) {
+                width: 400px;
+            }
         }
     }
 }
