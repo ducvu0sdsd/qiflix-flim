@@ -53,7 +53,7 @@ const SignInHeader = () => {
             </div>
             <div className='banner'>
                 <div className='banner-wapper col-lg-12'></div>
-                {window.innerHeight >= 900 ? <img src={Banner} height={"100%"} /> : <img src={Banner} width={"100%"} />}
+                {window.innerHeight >= 600 ? <img src={Banner} height={"100%"} /> : <img src={Banner} width={"100%"} />}
                 <div className="form-sign-in">
                     <h5>HELLO! WELCOME TO THE FAMILY.</h5>
                     <span className='message'>Help us get to know you better. You know, because family stays close.</span>
