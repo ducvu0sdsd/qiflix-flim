@@ -56,10 +56,6 @@ const FilmViewingPage = ({ data, currentUser }: FilmViewingPageProp) => {
             })
     }, [])
 
-    useEffect(() => {
-        console.log(currentEpisode, bufferTime)
-    }, [currentEpisode, bufferTime])
-
     return (
         <motion.div
             initial={{ x: window.innerWidth * -1 }}

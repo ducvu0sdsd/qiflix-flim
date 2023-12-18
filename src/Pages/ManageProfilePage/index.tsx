@@ -10,6 +10,7 @@ import { ThemeContext } from '../../Components/Context'
 import { UserInterface } from '../../Components/Context/interfaces'
 import { motion } from 'framer-motion'
 import { NotificationStatus } from '../../Components/Notification'
+import FormHandlePin, { TypeFormPin } from './components/FormHandlePin'
 
 enum Screen {
     LIST_USERS = 'list_user',
@@ -24,21 +25,30 @@ const ManageProfilePage = () => {
     const [screen, setScreen] = useState<Screen>(Screen.LIST_USERS);
     const [name, setName] = useState<string>('')
     const [gender, setGender] = useState('');
+    const [pin, setPin] = useState<string>('')
     const [avatarCreate, setAvatarCreate] = useState<string>('https://t4.ftcdn.net/jpg/05/49/98/39/360_F_549983970_bRCkYfk0P6PP5fKbMhZMIb07mCJ6esXL.jpg')
     const [avatarUpdate, setAvatarUpdate] = useState<string>('https://t4.ftcdn.net/jpg/05/49/98/39/360_F_549983970_bRCkYfk0P6PP5fKbMhZMIb07mCJ6esXL.jpg')
     const { datas, handles } = useContext(ThemeContext) || {}
     const [currentUser, setCurrentUser] = useState<UserInterface>()
     const [loadingComplete, setLoadingComplete] = useState<boolean>(false)
+    const [statusFormPin, setStatusFormPin] = useState<{ display: boolean, type: TypeFormPin }>({ display: false, type: TypeFormPin.NONE })
 
     useEffect(() => {
         handles?.setLoaded(!datas?.loaded)
     }, [])
 
     useEffect(() => {
+        if (!statusFormPin.display) {
+            $('body').css('overflow', 'auto')
+        }
+    }, [statusFormPin.display])
+
+    useEffect(() => {
         $('.txt-profile-name-update').val(currentUser?.name)
         setGender(currentUser?.gender || '')
         setName(currentUser?.name || '')
         setAvatarUpdate(currentUser?.avatar || '')
+        setPin(currentUser?.pin || '')
     }, [currentUser])
 
     const titleElement = document.querySelector('head title');
@@ -91,7 +101,7 @@ const ManageProfilePage = () => {
                 handles?.handleSetNotification({ type: NotificationStatus.WARNING, message: 'Please choose gender' })
                 return
             }
-            apiUser({ type: TypeHTTP.POST, body: { name, gender, avatar: avatarCreate, account_id: datas?.account?._id }, path: '/users' })
+            apiUser({ type: TypeHTTP.POST, body: { name, gender, avatar: avatarCreate, account_id: datas?.account?._id, pin: pin }, path: '/users' })
                 .then((result) => {
                     window.location.reload()
                 })
@@ -109,12 +119,16 @@ const ManageProfilePage = () => {
             })
     }
 
-    const handleSetCurrentUser = (name: string) => {
+    const handleSetCurrentUser = (name: string, pin: string) => {
         localStorage.setItem('currentUser', JSON.stringify(name))
         const json = localStorage.getItem('currentUser')
         const username = json && JSON.parse(json)
         if (username) {
-            navigate('/home-page')
+            if (pin !== '') {
+                setStatusFormPin({ display: true, type: TypeFormPin.CONFIRM })
+            } else {
+                navigate('/home-page')
+            }
         }
     }
 
@@ -128,13 +142,12 @@ const ManageProfilePage = () => {
                 handles?.handleSetNotification({ type: NotificationStatus.WARNING, message: 'Please choose gender' })
                 return
             }
-            apiUser({ type: TypeHTTP.PUT, body: { name, gender, avatar: avatarUpdate, account_id: datas?.account?._id }, path: `/users/${currentUser?._id}` })
+            apiUser({ type: TypeHTTP.PUT, body: { name, gender, avatar: avatarUpdate, account_id: datas?.account?._id, pin: pin }, path: `/users/${currentUser?._id}` })
                 .then((result) => {
                     window.location.reload()
                 })
         }
     }
-
 
     return (
         <motion.section
@@ -143,13 +156,14 @@ const ManageProfilePage = () => {
             exit={{ x: window.innerWidth, transition: { duration: 0.2 } }}
             id='manage-profile-page' className='col-lg-12' style={{ minHeight: `${window.innerHeight}px` }}>
             <img className='logo' src={Qiflix} width={'150px'} />
+            {statusFormPin.display && <FormHandlePin pin={pin} setPin={setPin} setStatusFormPin={setStatusFormPin} type={statusFormPin.type} />}
             {screen === Screen.LIST_USERS ? (
                 <>
                     <h3>Manage Profiles</h3>
                     <div className='profiles'>
                         {datas?.users?.map((user, index) => (
                             <div key={index} className='profile__parent'>
-                                <div onClick={() => handleSetCurrentUser(user.name)} className="profile__child">
+                                <div onClick={() => { handleSetCurrentUser(user.name, user.pin || ''); setPin(user.pin || '') }} className="profile__child">
                                     <img src={user.avatar} width={'100%'} />
                                 </div>
                                 <div onClick={() => { setScreen(Screen.UPDATE_USER); setCurrentUser(user) }} className="update-profile">
@@ -158,7 +172,7 @@ const ManageProfilePage = () => {
                                 <p>{user.name}</p>
                             </div>
                         ))}
-                        <div onClick={() => setScreen(Screen.CREATE_USER)} className="profile__child">
+                        <div onClick={() => { setScreen(Screen.CREATE_USER); setCurrentUser(undefined) }} className="profile__child">
                             <i className='bx bx-plus'></i>
                         </div>
                     </div>
@@ -192,8 +206,21 @@ const ManageProfilePage = () => {
                         </div>
                         <div className='col-lg-12 create-form__pins'>
                             <div className='col-lg-12 pin'>
-                                <span className='col-lg-10'>Create Pin <span style={{ fontWeight: '500' }}>(When creating a pin code, the user will enter 4 numeric characters)</span></span>
-                                <button style={{ backgroundColor: 'green' }}>Create</button>
+                                {pin === '' ?
+                                    <>
+                                        <span className='col-lg-10'>Create Pin <span style={{ fontWeight: '500' }}>(When creating a pin code, the user will enter 4 numeric characters)</span></span>
+                                        <button
+                                            onClick={() => setStatusFormPin({ display: true, type: TypeFormPin.CREATE })}
+                                            style={{ backgroundColor: 'green' }}>Create</button>
+                                    </>
+                                    :
+                                    <>
+                                        <span className='col-lg-10'>Created Pin <span style={{ fontWeight: '500' }}>(Create Pin Successful)</span></span>
+                                        <button
+                                            onClick={() => setStatusFormPin({ display: true, type: TypeFormPin.UPDATE })}
+                                            style={{ backgroundColor: 'blue' }}>Update</button>
+                                    </>
+                                }
                             </div>
                         </div>
                     </div>
@@ -231,13 +258,33 @@ const ManageProfilePage = () => {
                         </div>
                         <div className='col-lg-12 create-form__pins'>
                             <div className='col-lg-12 pin'>
-                                <span className='col-lg-10'>Create Pin <span style={{ fontWeight: '500' }}>(When creating a pin code, the user will enter 4 numeric characters)</span></span>
-                                <button style={{ backgroundColor: 'green' }}>Create</button>
+                                {pin === '' ?
+                                    <>
+                                        <span className='col-lg-10'>Create Pin <span style={{ fontWeight: '500' }}>(When creating a pin code, the user will enter 4 numeric characters)</span></span>
+                                        <button
+                                            onClick={() => setStatusFormPin({ display: true, type: TypeFormPin.CREATE })}
+                                            style={{ backgroundColor: 'green' }}>Create</button>
+                                    </>
+                                    :
+                                    <>
+                                        <span className='col-lg-10'>Created Pin <span style={{ fontWeight: '500' }}>(Create Pin Successful)</span></span>
+                                        <button
+                                            onClick={() => setStatusFormPin({ display: true, type: TypeFormPin.UPDATE })}
+                                            style={{ backgroundColor: 'blue' }}>Update</button>
+                                    </>
+                                }
                             </div>
-                            <div className='col-lg-12 pin'>
-                                <span>Remove Pin</span>
-                                <button disabled>Remove</button>
-                            </div>
+                            {pin !== '' ?
+                                <>
+                                    <div className='col-lg-12 pin'>
+                                        <span>Remove Pin</span>
+                                        <button onClick={() => setStatusFormPin({ display: true, type: TypeFormPin.DELETE })}>Remove</button>
+                                    </div>
+                                </>
+                                :
+                                <>
+                                </>
+                            }
                         </div>
                     </div>
                     <div className='col-lg-4 delete-user'>

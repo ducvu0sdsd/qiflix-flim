@@ -1,0 +1,67 @@
+#form-handle-pin {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.71);
+    border-radius: 10px;
+    position: fixed;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & .form-pin {
+        width: 400px;
+        height: 300px;
+        border-radius: 10px;
+        background-color: #1b1b1b;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        color: white;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+
+        & .btn-exit {
+            position: absolute;
+            color: white;
+            font-size: 29px;
+            top: 10px;
+            cursor: pointer;
+            right: 10px;
+        }
+
+        & h2 {
+            font-weight: bold;
+            font-size: 23px;
+            text-align: center;
+        }
+
+        & .input-pin {
+            display: flex;
+            margin: 10px 0;
+
+            & button {
+                margin: 0 3px;
+            }
+
+            & input {
+                height: 40px;
+                width: 35px;
+                border: 0;
+                margin: 0 5px;
+                border-radius: 7px;
+                color: black;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+
+                &:focus {
+                    outline: 0;
+                }
+            }
+        }
+    }
+}
