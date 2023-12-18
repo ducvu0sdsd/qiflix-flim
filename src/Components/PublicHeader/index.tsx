@@ -34,7 +34,7 @@ const PublicHeader = () => {
   }
 
   return (
-    <header id='public--header' style={{ height: `${window.innerHeight <= 800 ? window.innerHeight : 600}px`, width: `${window.innerWidth}px` }} className='col-lg-12'>
+    <header id='public--header' style={{ height: `${window.innerHeight <= 800 ? window.innerHeight : 'auto'}px`, width: `${window.innerWidth}px` }} className='col-lg-12'>
       <div className="header">
         <div className='col-lg-2 logo'>
           <img src={Qiflix} width={window.innerWidth <= 600 ? '45%' : '60%'} />
@@ -52,7 +52,7 @@ const PublicHeader = () => {
           </div> :
           <div style={{ width: '100%' }} className='banner'>
             <div className='wapper--banner'></div>
-            <img alt='The Banner of the public header' src={Banner} height={'110%'} />
+            <img alt='The Banner of the public header' src={Banner} height={'100%'} />
           </div>
         }
         <motion.div

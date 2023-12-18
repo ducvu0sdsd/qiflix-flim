@@ -179,7 +179,7 @@ const FormSignUp = ({ email }: FormSignUpProp) => {
                         <label style={{ marginTop: '15px' }}>Email Address</label>
                         <span className='lbl-email'>{email}</span>
                         <div className='input-group'>
-                            <span className={`lbl-password-focus ${focuses.focusPassword && 'lbl-password-focused'}`}>Verify Code</span>
+                            <span onClick={() => setFocuses(() => ({ ...focuses, focusPassword: true }))} className={`lbl-password-focus ${focuses.focusPassword && 'lbl-password-focused'}`}>Verify Code</span>
                             <input onFocus={() => setFocuses(() => ({ ...focuses, focusPassword: true }))} onBlur={(e) => { e.target.value === '' && setFocuses(() => ({ ...focuses, focusPassword: false })) }} type='password' className='txt-verify-code txt' />
                         </div>
                         <span style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -191,15 +191,15 @@ const FormSignUp = ({ email }: FormSignUpProp) => {
                     <div className='form-step-2 form-step'>
                         <h4>Please enter your information.</h4>
                         <div className='input-group'>
-                            <span className={`lbl-password-focus ${focuses.focusFullName && 'lbl-password-focused'}`}>Full Name</span>
+                            <span onClick={() => setFocuses(() => ({ ...focuses, focusFullName: true }))} className={`lbl-password-focus ${focuses.focusFullName && 'lbl-password-focused'}`}>Full Name</span>
                             <input onFocus={() => setFocuses(() => ({ ...focuses, focusFullName: true }))} onBlur={(e) => { e.target.value === '' && setFocuses(() => ({ ...focuses, focusFullName: false })) }} type='text' className='txt-name txt' />
                         </div>
                         <div className='input-group'>
-                            <span className={`lbl-password-focus ${focuses.focusPhone && 'lbl-password-focused'}`}>Phone Number</span>
+                            <span onClick={() => setFocuses(() => ({ ...focuses, focusPhone: true }))} className={`lbl-password-focus ${focuses.focusPhone && 'lbl-password-focused'}`}>Phone Number</span>
                             <input onFocus={() => setFocuses(() => ({ ...focuses, focusPhone: true }))} onBlur={(e) => { e.target.value === '' && setFocuses(() => ({ ...focuses, focusPhone: false })) }} type='text' className='txt-phone txt' />
                         </div>
                         <div className='input-group'>
-                            <span className={`lbl-password-focus ${focuses.focusAddress && 'lbl-password-focused'}`}>Address</span>
+                            <span onClick={() => setFocuses(() => ({ ...focuses, focusAddress: true }))} className={`lbl-password-focus ${focuses.focusAddress && 'lbl-password-focused'}`}>Address</span>
                             <input onFocus={() => setFocuses(() => ({ ...focuses, focusAddress: true }))} onBlur={(e) => { e.target.value === '' && setFocuses(() => ({ ...focuses, focusAddress: false })) }} type='text' className='txt-address txt' />
                         </div>
                         <button onClick={() => handleUpdateBasisInformation()} className='btn-next'>{loadingSignUp ? <div className="spinner-border text-light" role="status" /> : <>Next</>}</button>
@@ -211,11 +211,11 @@ const FormSignUp = ({ email }: FormSignUpProp) => {
                         <label style={{ marginTop: '15px' }}>Email Address</label>
                         <span className='lbl-email'>{email}</span>
                         <div className='input-group'>
-                            <span className={`lbl-password-focus ${focuses.focusPassword && 'lbl-password-focused'}`}>Enter New Password</span>
+                            <span onClick={() => setFocuses(() => ({ ...focuses, focusPassword: true }))} className={`lbl-password-focus ${focuses.focusPassword && 'lbl-password-focused'}`}>Enter New Password</span>
                             <input onFocus={() => setFocuses(() => ({ ...focuses, focusPassword: true }))} onBlur={(e) => { e.target.value === '' && setFocuses(() => ({ ...focuses, focusPassword: false })) }} type='password' className='txt-password txt' />
                         </div>
                         <div className='input-group'>
-                            <span className={`lbl-password-focus ${focuses.focusConfirm && 'lbl-password-focused'}`}>Enter Confirm Password</span>
+                            <span onClick={() => setFocuses(() => ({ ...focuses, focusConfirm: true }))} className={`lbl-password-focus ${focuses.focusConfirm && 'lbl-password-focused'}`}>Enter Confirm Password</span>
                             <input onFocus={() => setFocuses(() => ({ ...focuses, focusConfirm: true }))} onBlur={(e) => { e.target.value === '' && setFocuses(() => ({ ...focuses, focusConfirm: false })) }} type='password' className='txt-confirm-password txt' />
                         </div>
                         <button onClick={() => handleUpdatePassword()} className='btn-next'>{loadingSignUp ? <div className="spinner-border text-light" role="status" /> : <>Finish</>}</button>
