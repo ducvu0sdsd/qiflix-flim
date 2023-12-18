@@ -34,6 +34,7 @@ const SignInHeader = () => {
                 localStorage.setItem('refreshToken', JSON.stringify(res.data.refreshToken))
                 navigate('/manage-profile-page')
                 setLoadingSignIn(false)
+                handles?.handleSetNotification({ type: NotificationStatus.SUCCESS, message: 'Logged in successfully' })
             })
             .catch(res => {
                 let message: string = res.response.data.message

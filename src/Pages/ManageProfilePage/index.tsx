@@ -103,6 +103,7 @@ const ManageProfilePage = () => {
             }
             apiUser({ type: TypeHTTP.POST, body: { name, gender, avatar: avatarCreate, account_id: datas?.account?._id, pin: pin }, path: '/users' })
                 .then((result) => {
+                    handles?.handleSetNotification({ type: NotificationStatus.SUCCESS, message: 'Successful Create User "' + name + '"' })
                     window.location.reload()
                 })
         }
@@ -144,6 +145,7 @@ const ManageProfilePage = () => {
             }
             apiUser({ type: TypeHTTP.PUT, body: { name, gender, avatar: avatarUpdate, account_id: datas?.account?._id, pin: pin }, path: `/users/${currentUser?._id}` })
                 .then((result) => {
+                    handles?.handleSetNotification({ type: NotificationStatus.SUCCESS, message: 'Successful Update User "' + name + '"' })
                     window.location.reload()
                 })
         }

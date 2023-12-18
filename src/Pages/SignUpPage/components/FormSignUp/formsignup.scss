@@ -22,6 +22,18 @@
                 display: flex;
                 flex-direction: column;
 
+                & .btn-resend {
+                    margin: 10px 0;
+                    width: 100px;
+                    border: 0;
+                    background: 0;
+                    text-align: start;
+                    text-decoration: underline;
+                    font-weight: bold;
+                    height: 20px;
+                    cursor: pointer;
+                }
+
                 & .notify--success {
                     margin: 50px;
                 }
