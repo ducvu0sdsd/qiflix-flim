@@ -34,7 +34,7 @@ const PublicHeader = () => {
   }
 
   return (
-    <header id='public--header' style={{ height: `${window.innerHeight <= 800 ? window.innerHeight : 'auto'}px`, width: `${window.innerWidth}px` }} className='col-lg-12'>
+    <header id='public--header' style={{ height: `${window.innerHeight <= 600 ? window.innerHeight : 'auto'}px`, width: `${window.innerWidth}px` }} className='col-lg-12'>
       <div className="header">
         <div className='col-lg-2 logo'>
           <img src={Qiflix} width={window.innerWidth <= 600 ? '45%' : '60%'} />
