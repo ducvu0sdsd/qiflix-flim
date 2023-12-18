@@ -4,6 +4,7 @@
     position: relative;
     overflow: hidden;
     border-bottom: 5px solid #2e2e2e;
+    width: 100%;
 
     & .header {
         width: 100%;
@@ -15,6 +16,10 @@
         position: absolute;
         top: 0;
         left: 0;
+
+        @media only screen and (max-width: 600px) {
+            padding: 15px 20px;
+        }
 
         & .sign--parent {
             display: flex;
@@ -35,6 +40,10 @@
             & .sign-in {
                 background-color: red;
                 color: white;
+
+                @media only screen and (max-width: 600px) {
+                    width: 80px;
+                }
             }
 
             & .sign-up {
@@ -78,6 +87,11 @@
             color: white;
             font-family: 'Noto Sans Tai Viet', sans-serif;
             text-align: center;
+
+            @media only screen and (max-width: 600px) {
+                scale: 0.8;
+                left: 42%;
+            }
 
             & .message--1 {
                 font-size: 24px;

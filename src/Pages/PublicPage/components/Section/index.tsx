@@ -8,7 +8,7 @@ import QiflixEveryWhere from '../../../../resources/qiflix-everywhere.png'
 const SectionPublicPage = ({ reverse, header, message, indexImage }: SectionPublicPageProps) => {
 
   return (
-    <div id='section-public-page' style={reverse ? { flexDirection: 'row-reverse' } : undefined}>
+    <div id='section-public-page' style={reverse ? { flexDirection: 'row-reverse', width: `${window.innerWidth}px` } : undefined}>
       <div className="section-left-child section-child">
         <h2>{header}</h2>
         <p>{message}</p>

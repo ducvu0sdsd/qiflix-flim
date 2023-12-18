@@ -9,25 +9,25 @@ const Footer = () => {
                 Have questions? Contact us.
             </div>
             <div className='footer-child-2 footer-child col-lg-12'>
-                <div className="footer-child-item">
+                <div className="footer-child-item col-lg-3 col-ms-4">
                     <span>Frequently asked questions</span>
                     <span>Relations with investors</span>
                     <span>Privacy</span>
                     <span>Speed ​​test</span>
                 </div>
-                <div className="footer-child-item">
+                <div className="footer-child-item col-lg-3 col-ms-4">
                     <span>Help Center</span>
                     <span>Job</span>
                     <span>Cookie preferences</span>
                     <span>Policy notification</span>
                 </div>
-                <div className="footer-child-item">
+                <div className="footer-child-item col-lg-3 col-ms-4">
                     <span>Account</span>
                     <span>Ways to view</span>
                     <span>Business information</span>
                     <span>Only available on Netflix</span>
                 </div>
-                <div className="footer-child-item">
+                <div className="footer-child-item col-lg-3 col-ms-4">
                     <span>Multimedia center</span>
                     <span>Terms of use</span>
                     <span>Contact us</span>

@@ -1,7 +1,6 @@
 footer {
     border-bottom: 5px solid #2e2e2e;
     border-top: 5px solid #2e2e2e;
-    height: 400px;
     background-color: black;
     overflow: hidden;
     padding: 0 200px;
@@ -10,6 +9,10 @@ footer {
     flex-direction: column;
     align-items: center;
     width: 100%;
+
+    @media only screen and (max-width: 600px) {
+        padding: 0 20px;
+    }
 
     & .footer-child {
         color: rgb(167, 167, 167);
@@ -22,13 +25,18 @@ footer {
         &-2 {
             display: flex;
             justify-content: space-between;
+            // background-color: red;
+            flex-wrap: wrap;
 
             & .footer-child-item {
-                width: 260px;
                 display: flex;
                 flex-direction: column;
                 align-items: start;
                 justify-content: start;
+
+                @media only screen and (max-width: 600px) {
+                    scale: 0.9;
+                }
 
                 & span {
                     line-height: 37px;
@@ -41,6 +49,11 @@ footer {
             display: flex;
             align-items: end;
             margin-top: 20px;
+
+            @media only screen and (max-width: 600px) {
+                align-items: center;
+                justify-content: center;
+            }
 
             & span {
                 margin: 0 15px;

@@ -34,10 +34,10 @@ const PublicHeader = () => {
   }
 
   return (
-    <header id='public--header' style={{ height: `${window.innerHeight}px` }} className='col-lg-12'>
+    <header id='public--header' style={{ height: `${window.innerHeight <= 800 ? window.innerHeight : 600}px`, width: `${window.innerWidth}px` }} className='col-lg-12'>
       <div className="header">
         <div className='col-lg-2 logo'>
-          <img src={Qiflix} width={'60%'} />
+          <img src={Qiflix} width={window.innerWidth <= 600 ? '45%' : '60%'} />
         </div>
         <div className='col-lg-2 sign--parent'>
           <Link to={'/sign-in-page'}><button className='sign-in'>Sign in</button></Link>
@@ -45,10 +45,16 @@ const PublicHeader = () => {
       </div>
 
       <div id='banner--public'>
-        <div className='banner'>
-          <div className='wapper--banner'></div>
-          <img alt='The Banner of the public header' src={Banner} width={'100%'} />
-        </div>
+        {window.innerHeight <= 800 ?
+          <div className='banner'>
+            <div className='wapper--banner'></div>
+            <img alt='The Banner of the public header' src={Banner} width={'100%'} />
+          </div> :
+          <div style={{ width: '100%' }} className='banner'>
+            <div className='wapper--banner'></div>
+            <img alt='The Banner of the public header' src={Banner} height={'110%'} />
+          </div>
+        }
         <motion.div
           initial={{ opacity: 0, transform: 'translateY(-70%) translateX(-50%)' }}
           animate={{ opacity: 1, transform: 'translateY(-50%) translateX(-50%)' }}
