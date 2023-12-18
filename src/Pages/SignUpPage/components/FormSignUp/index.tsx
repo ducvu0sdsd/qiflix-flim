@@ -54,7 +54,7 @@ const FormSignUp = ({ email }: FormSignUpProp) => {
 
     useEffect(() => {
         if (formStepParentRef.current) {
-            formStepParentRef.current.style.marginLeft = `${550 * (step - 1) * -1}px`
+            formStepParentRef.current.style.marginLeft = `${window.innerWidth >= 600 ? 550 : 350 * (step - 1) * -1}px`
         }
     }, [step])
 
