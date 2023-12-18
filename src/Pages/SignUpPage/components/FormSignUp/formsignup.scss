@@ -13,7 +13,7 @@
 
         @media only screen and (max-width: 600px) {
             scale: 0.8;
-            width: auto;
+            width: 410px;
         }
 
         & .form-step-parent {
@@ -27,10 +27,13 @@
                 display: flex;
                 flex-direction: column;
 
+                @media only screen and (max-width: 600px) {
+                    width: 410px;
+                }
+
                 & input {
-                    @media only screen and (max-width: 600px) {
-                        width: 400px;
-                    }
+                    width: 100%;
+
                 }
 
                 & .btn-resend {
@@ -83,10 +86,6 @@
         & label {
             font-weight: 550;
             line-height: 25px;
-
-            @media only screen and (max-width: 600px) {
-                width: 400px;
-            }
         }
 
         & .lbl-email {
