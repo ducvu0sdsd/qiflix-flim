@@ -158,8 +158,8 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
                 onPlay={() => setPlaying(true)}
                 onPause={() => setPlaying(false)}
                 onDuration={() => setDuration(reactPlayerRef.current?.getDuration())}
-                url={`${(currentMovie.listEpisode?.episodes[currentEpisode - 1].url && currentMovie.listEpisode.episodes[currentEpisode - 1].url.length <= 10) ? 'https://www.dailymotion.com/video/' : ''}` + currentMovie.listEpisode?.episodes[currentEpisode - 1].url}
-            // url={'https://aa.opstream6.com/20220324/5422_1ab3a8cf/index.m3u8'} 
+                // url={`${(currentMovie.listEpisode?.episodes[currentEpisode - 1].url && currentMovie.listEpisode.episodes[currentEpisode - 1].url.length <= 10) ? 'https://www.dailymotion.com/video/' : ''}` + currentMovie.listEpisode?.episodes[currentEpisode - 1].url}
+                url={'https://ok.ru/video/3149887441631'}
             // url={'https://aa.opstream6.com/20220324/5431_283b15c7/index.m3u8'}
             />
 

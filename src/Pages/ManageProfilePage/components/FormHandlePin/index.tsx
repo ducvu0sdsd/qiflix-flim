@@ -169,10 +169,10 @@ const FormHandlePin = ({ type, setStatusFormPin, setPin, pin }: FromHandlePinPro
                             <>
                                 <h2>Enter Pin</h2>
                                 <div className='input-pin input-pin-create'>
-                                    <input onChange={(e: any) => handleEnteredInput(1, e)} type='text' className='input-pin-item-1 input-pin-item' />
-                                    <input onChange={(e: any) => handleEnteredInput(2, e)} type='text' className='input-pin-item-2 input-pin-item' />
-                                    <input onChange={(e: any) => handleEnteredInput(3, e)} type='text' className='input-pin-item-3 input-pin-item' />
-                                    <input onChange={(e: any) => handleEnteredInput(4, e)} type='text' className='input-pin-item-4 input-pin-item' />
+                                    <input onChange={(e: any) => handleEnteredInput(1, e)} type='password' className='input-pin-item-1 input-pin-item' />
+                                    <input onChange={(e: any) => handleEnteredInput(2, e)} type='password' className='input-pin-item-2 input-pin-item' />
+                                    <input onChange={(e: any) => handleEnteredInput(3, e)} type='password' className='input-pin-item-3 input-pin-item' />
+                                    <input onChange={(e: any) => handleEnteredInput(4, e)} type='password' className='input-pin-item-4 input-pin-item' />
                                 </div>
                             </>
 
