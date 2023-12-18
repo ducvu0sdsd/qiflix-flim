@@ -168,9 +168,9 @@ const FormSignUp = ({ email }: FormSignUpProp) => {
             <div className='form'>
                 <span><b>STEP {step} OF 3</b></span>
                 <div className='process'>
-                    <div onClick={() => handleChangeStep(1)} className={`process-child process-child-1 ${(stepCurrent === 1 || stepCurrent === 2 || stepCurrent === 3) && 'process-child-active'}`}></div>
-                    <div onClick={() => handleChangeStep(2)} className={`process-child process-child-2 ${(stepCurrent === 2 || stepCurrent === 3) && 'process-child-active'}`}></div>
-                    <div onClick={() => handleChangeStep(3)} className={`process-child process-child-3 ${(stepCurrent === 3) && 'process-child-active'}`}></div>
+                    <div className={`process-child process-child-1 ${(stepCurrent === 1 || stepCurrent === 2 || stepCurrent === 3) && 'process-child-active'}`}></div>
+                    <div className={`process-child process-child-2 ${(stepCurrent === 2 || stepCurrent === 3) && 'process-child-active'}`}></div>
+                    <div className={`process-child process-child-3 ${(stepCurrent === 3) && 'process-child-active'}`}></div>
                 </div>
                 <div ref={formStepParentRef} className='form-step-parent'>
                     <div className='form-step-1 form-step'>
