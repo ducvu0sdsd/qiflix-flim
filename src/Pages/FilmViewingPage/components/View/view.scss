@@ -35,7 +35,8 @@
     & .bottom {
         width: 100%;
         position: absolute;
-        bottom: -1px;
+        bottom: -5px;
+        padding-bottom: 5px;
         left: 0;
         transition: 0.5s;
         display: flex;
