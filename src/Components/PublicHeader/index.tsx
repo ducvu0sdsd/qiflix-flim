@@ -45,7 +45,7 @@ const PublicHeader = () => {
       </div>
 
       <div id='banner--public'>
-        {window.innerHeight <= 800 ?
+        {window.innerHeight <= 900 ?
           <div className='banner'>
             <div className='wapper--banner'></div>
             <img alt='The Banner of the public header' src={Banner} width={'100%'} />
