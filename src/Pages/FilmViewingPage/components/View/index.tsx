@@ -159,7 +159,7 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
                 onPause={() => setPlaying(false)}
                 onDuration={() => setDuration(reactPlayerRef.current?.getDuration())}
                 url={`${(currentMovie.listEpisode?.episodes[currentEpisode - 1].url && currentMovie.listEpisode.episodes[currentEpisode - 1].url.length <= 10) ? 'https://www.dailymotion.com/video/' : ''}` + currentMovie.listEpisode?.episodes[currentEpisode - 1].url}
-            // url={'https://hls.streamc.xyz/4c3173e8fc5b28953b1f7d65c747fc8e/hls.m3u8'}
+            // url={'https://www.youtube.com/watch?v=JBfNgP9eQ74'}
             />
 
 

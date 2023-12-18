@@ -21,7 +21,7 @@ const Movies = () => {
     }, [datas?.movies])
 
     return (
-        <section className='list-movie-page' style={{ height: `${window.innerHeight}px` }}>
+        <section className='list-movie-page' style={{ minHeight: `${window.innerHeight}px` }}>
             <h4>Movies</h4>
             <div className='col-lg-12 my-list-movie' >
                 {movies.map((movie, index) => {

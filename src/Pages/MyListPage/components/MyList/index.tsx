@@ -20,7 +20,7 @@ const MyList = () => {
     }, [datas?.currentUser])
 
     return (
-        <section className='list-movie-page' style={{ height: `${window.innerHeight}px` }}>
+        <section className='list-movie-page' style={{ minHeight: `${window.innerHeight}px` }}>
             <h4>My List</h4>
             <div className='col-lg-12 my-list-movie' >
                 {moviesLiked.map((movie, index) => {

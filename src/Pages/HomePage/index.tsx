@@ -78,6 +78,10 @@ const HomePage = () => {
         return item.country === "Korea"
     })
 
+    const hongKongFilms: MovieInterface[] | undefined = datas?.movies.filter(item => {
+        return item.country === "Hong Kong"
+    })
+
     const animes: MovieInterface[] | undefined = datas?.movies.filter(item => {
         return item.belong.includes("Anime")
     })
@@ -105,6 +109,7 @@ const HomePage = () => {
             {(moviesWatching && moviesWatching.length > 0) && <ListFilm movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'Continue Watching'} movies={moviesWatching.map(item => item.movies)} processes={moviesWatching.map(item => item.process)} />}
             <ListFilm movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'For Christmas'} movies={christmasFilms || []} />
             <ListFilm movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'Korea Flims'} movies={koreaFilms || []} />
+            <ListFilm movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'Hong Kong Flims'} movies={hongKongFilms || []} />
             <ListFilm movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'Anime'} movies={animes || []} />
             <Footer />
         </motion.div>
