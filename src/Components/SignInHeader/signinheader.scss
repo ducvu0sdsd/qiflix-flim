@@ -1,12 +1,18 @@
 #sign-in-header {
+    height: 100%;
 
     & .banner {
         position: relative;
 
+        @media only screen and (max-width: 600px) {
+            height: 600px;
+        }
+
         & .banner-wapper {
-            height: 100%;
             background-color: rgba(0, 0, 0, 0.459);
             position: absolute;
+            width: 100%;
+            height: 100%;
             top: 0;
             left: 0;
         }
@@ -16,8 +22,8 @@
             top: 45%;
             left: 50%;
             transform: translateX(-50%) translateY(-50%);
-            height: 500px;
-            width: 450px;
+            height: 470px;
+            width: 420px;
             border-radius: 10px;
             background-color: rgba(0, 0, 0, 0.699);
             padding: 70px 50px;
@@ -26,6 +32,11 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+
+            @media only screen and (max-width: 600px) {
+                scale: 0.8;
+                left: 39%;
+            }
 
             & .option {
                 margin: 5px 0;

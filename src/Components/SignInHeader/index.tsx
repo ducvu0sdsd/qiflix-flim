@@ -48,12 +48,12 @@ const SignInHeader = () => {
         <header id='sign-in-header' className='col-lg-12'>
             <div className="header">
                 <div className='col-lg-2 logo'>
-                    <img src={Qiflix} width={'60%'} />
+                    {window.innerHeight <= 800 ? <img src={Qiflix} width={'60%'} /> : <img src={Qiflix} width={'45%'} />}
                 </div>
             </div>
             <div className='banner'>
                 <div className='banner-wapper col-lg-12'></div>
-                <img src={Banner} width={"100%"} />
+                {window.innerHeight >= 800 ? <img src={Banner} height={"100%"} /> : <img src={Banner} width={"100%"} />}
                 <div className="form-sign-in">
                     <h5>HELLO! WELCOME TO THE FAMILY.</h5>
                     <span className='message'>Help us get to know you better. You know, because family stays close.</span>
