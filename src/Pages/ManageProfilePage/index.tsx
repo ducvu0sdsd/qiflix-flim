@@ -156,7 +156,7 @@ const ManageProfilePage = () => {
             initial={{ x: window.innerWidth * -1 }}
             animate={{ x: 0 }}
             exit={{ x: window.innerWidth, transition: { duration: 0.2 } }}
-            id='manage-profile-page' className='col-lg-12' >
+            id='manage-profile-page' className='col-lg-12' style={{ minHeight: `${window.innerHeight}px` }}>
             <img className='logo' src={Qiflix} width={'150px'} />
             {statusFormPin.display && <FormHandlePin pin={pin} setPin={setPin} setStatusFormPin={setStatusFormPin} type={statusFormPin.type} />}
             {screen === Screen.LIST_USERS ? (
@@ -181,7 +181,7 @@ const ManageProfilePage = () => {
                 </>
             ) : screen === Screen.CREATE_USER ? (
                 <>
-                    {/* <h3>Create Profile</h3> */}
+                    <h3 style={{ transform: window.innerWidth < 600 ? 'translateY(120px)' : 'translateY(0px)' }}>Create Profile</h3>
                     <div className='create-form col-lg-4'>
                         <div className='create-form__avatar col-lg-5'>
                             <div className='avatar col-lg-10'>
@@ -226,14 +226,14 @@ const ManageProfilePage = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='btns col-lg-4'>
+                    <div style={{ transform: window.innerWidth < 600 ? 'translateY(-150px)' : 'translateY(0px)' }} className='btns col-lg-4'>
                         <button onClick={() => setScreen(Screen.LIST_USERS)} >Cancel</button>
                         <button onClick={handleSubmitCreate} style={{ backgroundColor: 'white', color: 'black' }}>{loadingComplete ? <div className="spinner-border text-light" role="status" /> : <>Complete</>}</button>
                     </div>
                 </>
             ) : (
                 <>
-                    <h3>Update Profile</h3>
+                    <h3 style={{ transform: window.innerWidth < 600 ? 'translateY(120px)' : 'translateY(0px)' }}>Update Profile</h3>
                     <div className='create-form col-lg-4'>
                         <div className='create-form__avatar col-lg-5'>
                             <div className='avatar col-lg-10'>
@@ -289,11 +289,11 @@ const ManageProfilePage = () => {
                             }
                         </div>
                     </div>
-                    <div className='col-lg-4 delete-user'>
+                    <div style={{ transform: window.innerWidth < 600 ? 'translateY(-180px)' : 'translateY(0px)' }} className='col-lg-4 delete-user'>
                         <span>Delete User</span>
                         <button onClick={() => handleDeleteUser()}>Delete</button>
                     </div>
-                    <div className='btns col-lg-4'>
+                    <div style={{ transform: window.innerWidth < 600 ? 'translateY(-205px)' : 'translateY(0px)' }} className='btns col-lg-4'>
                         <button onClick={() => setScreen(Screen.LIST_USERS)}>Cancel</button>
                         <button onClick={handleSubmitUpdate} style={{ backgroundColor: 'white', color: 'black' }}>Complete</button>
                     </div>
