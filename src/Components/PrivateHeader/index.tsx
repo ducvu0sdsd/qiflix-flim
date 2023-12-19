@@ -62,30 +62,32 @@ const PrivateHeader = ({ users, currentUser }: { users: UserInterface[], current
                 <div className='logo-menu__logo col-lg-2'>
                     <Link to={"/home-page"}><img src={Qiflix} width={'80%'} /></Link>
                 </div>
-                <div className="logo-menu__menu col-lg-8">
-                    <Link className='link' to={'/home-page'}>
-                        <div className="menu__menu-item">
-                            Home
-                        </div>
-                    </Link>
-                    <Link className='link' to={"/tvshow-page"}>
-                        <div className="menu__menu-item">
-                            TV Shows
-                        </div>
-                    </Link>
-                    <Link className='link' to={"/movies-page"}>
-                        <div className="menu__menu-item">
-                            Movies
-                        </div>
-                    </Link>
-                    <Link className='link' to={"/my-list-page"}>
-                        <div className="menu__menu-item">
-                            My List
-                        </div>
-                    </Link>
-                </div>
+                {window.innerWidth >= 600 &&
+                    <div className="logo-menu__menu col-lg-8">
+                        <Link className='link' to={'/home-page'}>
+                            <div className="menu__menu-item">
+                                Home
+                            </div>
+                        </Link>
+                        <Link className='link' to={"/tvshow-page"}>
+                            <div className="menu__menu-item">
+                                TV Shows
+                            </div>
+                        </Link>
+                        <Link className='link' to={"/movies-page"}>
+                            <div className="menu__menu-item">
+                                Movies
+                            </div>
+                        </Link>
+                        <Link className='link' to={"/my-list-page"}>
+                            <div className="menu__menu-item">
+                                My List
+                            </div>
+                        </Link>
+                    </div>
+                }
             </div>
-            <div className="col-lg-2 user-notify-search">
+            <div className="col-lg-3 user-notify-search">
                 <Link className='link' style={{ marginTop: '5px' }} to={"/find-movies-page"}>
                     <i className='bx bx-search' ></i>
                 </Link>
@@ -139,8 +141,31 @@ const PrivateHeader = ({ users, currentUser }: { users: UserInterface[], current
                         </div>
                     </div>
                 </div>
-
             </div>
+            {window.innerWidth < 600 &&
+                <div style={{ position: 'fixed', top: '65px', display: 'flex', alignItems: 'center', height: '40px', backgroundColor: 'rgba(0, 0, 0, 0.301)', width: '100%' }} className="logo-menu__menu col-lg-12">
+                    <Link className='link' to={'/home-page'}>
+                        <div className="menu__menu-item">
+                            Home
+                        </div>
+                    </Link>
+                    <Link className='link' to={"/tvshow-page"}>
+                        <div className="menu__menu-item">
+                            TV Shows
+                        </div>
+                    </Link>
+                    <Link className='link' to={"/movies-page"}>
+                        <div className="menu__menu-item">
+                            Movies
+                        </div>
+                    </Link>
+                    <Link className='link' to={"/my-list-page"}>
+                        <div className="menu__menu-item">
+                            My List
+                        </div>
+                    </Link>
+                </div>
+            }
         </header>
     )
 }

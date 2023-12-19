@@ -26,11 +26,20 @@
             background: 0;
             z-index: 1;
 
+            @media only screen and (max-width: 600px) {
+                left: 20px;
+                top: 40%;
+            }
+
             & h2 {
                 font-size: 40px;
                 font-weight: bold;
                 color: white;
                 font-family: 'Roboto', sans-serif;
+
+                @media only screen and (max-width: 600px) {
+                    font-size: 20px;
+                }
             }
 
             & .description {
@@ -42,6 +51,11 @@
                 flex-wrap: wrap;
                 white-space: wrap;
                 overflow: hidden;
+
+                @media only screen and (max-width: 600px) {
+                    font-size: 11px;
+                    width: 330px;
+                }
             }
 
             & .btns {
@@ -57,6 +71,10 @@
                     justify-content: center;
                     border-radius: 5px;
                     margin: 0 10px;
+
+                    @media only screen and (max-width: 600px) {
+                        font-size: 15px;
+                    }
 
                     & i {
                         margin-right: 5px;

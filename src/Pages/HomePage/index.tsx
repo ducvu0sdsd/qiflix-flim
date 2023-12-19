@@ -95,6 +95,7 @@ const HomePage = () => {
             initial={{ x: window.innerWidth * -1 }}
             animate={{ x: 0 }}
             exit={{ x: window.innerWidth, transition: { duration: 0.2 } }}
+            style={{ overflow: 'hidden' }}
         >
             <Helmet>
                 <title>Home Page</title>

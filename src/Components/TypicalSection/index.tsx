@@ -28,11 +28,11 @@ const TypicalSection = ({ movies, setMovieDetail, movieDetail }: TypicalSectionP
     }
 
     return (
-        <section id='typical-section' className='col-lg-12' style={{ height: `${window.innerHeight}px` }}>
+        <section id='typical-section' className='col-lg-12' style={window.innerWidth >= 600 ? { height: `${window.innerHeight}px` } : { width: `${window.innerWidth}px` }}>
             {movies.map((movie, index) => {
                 if (index == 0)
                     return (
-                        <div key={index} className='trailer col-lg-12' style={{ height: '570px' }}>
+                        <div key={index} className='trailer col-lg-12' style={{ height: window.innerWidth >= 600 ? '570px' : '500px' }}>
                             {/* style={{ height: `${window.innerWidth / 2.67}px` }} */}
                             <video
                                 className='col-lg-12'

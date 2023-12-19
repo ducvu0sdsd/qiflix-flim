@@ -23,6 +23,13 @@
         z-index: 1;
         transition: 0.5s;
 
+        @media only screen and (max-width: 600px) {
+            scale: 0.57;
+            left: 14%;
+            top: 30%;
+            height: 600px;
+        }
+
         & .info-actions {
             color: white;
             padding: 0 20px;

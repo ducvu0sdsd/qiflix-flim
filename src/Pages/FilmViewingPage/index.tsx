@@ -11,6 +11,7 @@ import { useLocation } from 'react-router-dom'
 import { TypeHTTP, apiUser } from '../../Utils/api'
 import { ThemeContext } from '../../Components/Context'
 import { motion } from 'framer-motion'
+import Phone from '../../resources/phone.gif'
 interface FilmViewingPageProp {
     data: MovieInterface,
     currentUser: UserInterface | undefined
@@ -62,10 +63,18 @@ const FilmViewingPage = ({ data, currentUser }: FilmViewingPageProp) => {
             animate={{ x: 0 }}
             exit={{ x: window.innerWidth, transition: { duration: 0.2 } }}
         >
-            <View setCurrentEpisode={setCurrentEpisode} currentUser={currentUser || undefined} currentSubtitles={currentSubtitles} currentEpisode={currentEpisode || 1} currentTime={bufferTime || 0} currentMovie={data} />
-            <Informations currentEpisode={currentEpisode || 1} currentFilm={data} currentUser={currentUser || undefined} setCurrentEpisode={setCurrentEpisode} setBufferTime={setBufferTime} />
-            <Comments movie_id={data._id} user_id={currentUser?._id || ''} user_avatar={currentUser?.avatar || ''} />
-            <Footer />
+            {window.innerWidth >= 600 ?
+                <>
+                    <View setCurrentEpisode={setCurrentEpisode} currentUser={currentUser || undefined} currentSubtitles={currentSubtitles} currentEpisode={currentEpisode || 1} currentTime={bufferTime || 0} currentMovie={data} />
+                    <Informations currentEpisode={currentEpisode || 1} currentFilm={data} currentUser={currentUser || undefined} setCurrentEpisode={setCurrentEpisode} setBufferTime={setBufferTime} />
+                    <Comments movie_id={data._id} user_id={currentUser?._id || ''} user_avatar={currentUser?.avatar || ''} />
+                    <Footer />
+                </> :
+                <div className='col-lg-12' style={{ height: `${window.innerHeight}px`, display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+                    <img src={Phone} width={'50%'} />
+                    <p style={{ color: 'white' }}>Please rotate your phone screen horizontally</p>
+                </div>
+            }
         </motion.div>
     )
 }
