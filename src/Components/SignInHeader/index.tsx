@@ -48,7 +48,7 @@ const SignInHeader = () => {
         <header id='sign-in-header' className='col-lg-12'>
             <div className="header">
                 <div className='col-lg-2 logo'>
-                    {window.innerHeight <= 800 ? <img src={Qiflix} width={'60%'} /> : <img src={Qiflix} width={'45%'} />}
+                    {window.innerWidth >= 600 ? <img src={Qiflix} width={'60%'} /> : <img src={Qiflix} width={'45%'} />}
                 </div>
             </div>
             <div className='banner'>
