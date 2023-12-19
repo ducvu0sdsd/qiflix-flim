@@ -156,7 +156,7 @@ const ManageProfilePage = () => {
             initial={{ x: window.innerWidth * -1 }}
             animate={{ x: 0 }}
             exit={{ x: window.innerWidth, transition: { duration: 0.2 } }}
-            id='manage-profile-page' className='col-lg-12' style={{ minHeight: `${window.innerHeight}px` }}>
+            id='manage-profile-page' className='col-lg-12' >
             <img className='logo' src={Qiflix} width={'150px'} />
             {statusFormPin.display && <FormHandlePin pin={pin} setPin={setPin} setStatusFormPin={setStatusFormPin} type={statusFormPin.type} />}
             {screen === Screen.LIST_USERS ? (
@@ -181,7 +181,7 @@ const ManageProfilePage = () => {
                 </>
             ) : screen === Screen.CREATE_USER ? (
                 <>
-                    <h3>Create Profile</h3>
+                    {/* <h3>Create Profile</h3> */}
                     <div className='create-form col-lg-4'>
                         <div className='create-form__avatar col-lg-5'>
                             <div className='avatar col-lg-10'>
