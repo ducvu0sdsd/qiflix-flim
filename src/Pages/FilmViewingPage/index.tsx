@@ -23,6 +23,7 @@ const FilmViewingPage = ({ data, currentUser }: FilmViewingPageProp) => {
     const [currentSubtitles, setCurrentSubtitles] = useState<SubtitleInterface[]>([])
     const { pathname } = useLocation()
     const { datas } = useContext(ThemeContext) || {}
+    const [width, setWidth] = useState<number>(0)
 
     const titleElement = document.querySelector('head title');
     if (titleElement) {
@@ -57,13 +58,17 @@ const FilmViewingPage = ({ data, currentUser }: FilmViewingPageProp) => {
             })
     }, [])
 
+    useEffect(() => {
+        setWidth(window.innerWidth)
+    }, [window.innerWidth])
+
     return (
         <motion.div
             initial={{ x: window.innerWidth * -1 }}
             animate={{ x: 0 }}
             exit={{ x: window.innerWidth, transition: { duration: 0.2 } }}
         >
-            {window.innerWidth >= 600 ?
+            {width >= 600 ?
                 <>
                     <View setCurrentEpisode={setCurrentEpisode} currentUser={currentUser || undefined} currentSubtitles={currentSubtitles} currentEpisode={currentEpisode || 1} currentTime={bufferTime || 0} currentMovie={data} />
                     <Informations currentEpisode={currentEpisode || 1} currentFilm={data} currentUser={currentUser || undefined} setCurrentEpisode={setCurrentEpisode} setBufferTime={setBufferTime} />
