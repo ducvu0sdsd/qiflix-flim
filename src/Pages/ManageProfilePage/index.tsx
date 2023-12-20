@@ -162,7 +162,7 @@ const ManageProfilePage = () => {
             {screen === Screen.LIST_USERS ? (
                 <>
                     <h3>Manage Profiles</h3>
-                    {datas?.users !== undefined ?
+                    {datas?.loadedUsers ?
                         <div className='profiles'>
                             {datas?.users?.map((user, index) => (
                                 <div key={index} className='profile__parent'>

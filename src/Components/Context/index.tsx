@@ -8,19 +8,21 @@ export interface ThemeContextProviderProps {
 }
 
 export interface ThemeData {
-    users: UserInterface[] | undefined
+    users: UserInterface[]
     account: AccountInterface | undefined
     currentUser: UserInterface | undefined
     loaded: boolean
     movies: MovieInterface[]
     moviesWatching: MovieWatchingByUserIdInterface[]
+    loadedUsers: boolean
 }
 
 export interface ThemeHandles {
-    setUsers: React.Dispatch<React.SetStateAction<UserInterface[] | undefined>>
+    setUsers: React.Dispatch<React.SetStateAction<UserInterface[]>>
     setAccount: React.Dispatch<React.SetStateAction<AccountInterface | undefined>>
     setCurrentUser: React.Dispatch<React.SetStateAction<UserInterface | undefined>>
     setLoaded: React.Dispatch<React.SetStateAction<boolean>>
+    setLoadedUsers: React.Dispatch<React.SetStateAction<boolean>>
     setMovies: React.Dispatch<React.SetStateAction<MovieInterface[]>>
     setMoviesWatching: React.Dispatch<React.SetStateAction<MovieWatchingByUserIdInterface[]>>
     handleSetNotification: ({ type, message }: { type: NotificationStatus; message: string; }) => void
@@ -29,13 +31,14 @@ export interface ThemeHandles {
 export const ThemeContext = createContext<{ datas: ThemeData; handles: ThemeHandles } | undefined>(undefined);
 
 export const Provider: React.FC<ThemeContextProviderProps> = ({ children }) => {
-    const [users, setUsers] = useState<UserInterface[]>()
+    const [users, setUsers] = useState<UserInterface[]>([])
     const [account, setAccount] = useState<AccountInterface>()
     const [currentUser, setCurrentUser] = useState<UserInterface>()
     const [movies, setMovies] = useState<MovieInterface[]>([])
     const [moviesWatching, setMoviesWatching] = useState<MovieWatchingByUserIdInterface[]>([])
     const [notificationStatus, setNotificationStatus] = useState<{ type: NotificationStatus, message: string }>({ type: NotificationStatus.NONE, message: '' })
     const [loaded, setLoaded] = useState<boolean>(false)
+    const [loadedUsers, setLoadedUsers] = useState<boolean>(false)
 
     const handleSetNotification = ({ type, message }: { type: NotificationStatus, message: string }) => {
         setNotificationStatus({ type, message })
@@ -50,7 +53,8 @@ export const Provider: React.FC<ThemeContextProviderProps> = ({ children }) => {
         currentUser,
         movies,
         moviesWatching,
-        loaded
+        loaded,
+        loadedUsers
     };
 
     const handles: ThemeHandles = {
@@ -60,7 +64,8 @@ export const Provider: React.FC<ThemeContextProviderProps> = ({ children }) => {
         setMovies,
         setMoviesWatching,
         handleSetNotification,
-        setLoaded
+        setLoaded,
+        setLoadedUsers
     };
 
     // Call API
@@ -75,7 +80,7 @@ export const Provider: React.FC<ThemeContextProviderProps> = ({ children }) => {
         if (account) {
             apiUser({ path: `/users/${datas.account?._id}`, type: TypeHTTP.GET })
                 .then(result => {
-                    console.log(result)
+                    setLoadedUsers(true)
                     setUsers(result)
                 })
         }
