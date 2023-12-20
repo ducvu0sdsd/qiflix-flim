@@ -75,7 +75,7 @@ export const Provider: React.FC<ThemeContextProviderProps> = ({ children }) => {
         if (account) {
             apiUser({ path: `/users/${datas.account?._id}`, type: TypeHTTP.GET })
                 .then(result => {
-                    // setUsers(result)
+                    setUsers(result)
                 })
         }
     }, [account])
