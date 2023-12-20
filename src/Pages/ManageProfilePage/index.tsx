@@ -114,7 +114,7 @@ const ManageProfilePage = () => {
         apiUser({ type: TypeHTTP.DELETE, path: `/users/${currentUser?._id}` })
             .then(result => {
                 handles?.setUsers(prev => {
-                    return prev.filter(item => item._id !== result._id)
+                    return prev?.filter(item => item._id !== result._id)
                 })
                 setScreen(Screen.LIST_USERS)
             })
@@ -162,7 +162,10 @@ const ManageProfilePage = () => {
             {screen === Screen.LIST_USERS ? (
                 <>
                     <h3>Manage Profiles</h3>
-                    {datas?.users.length !== 0 ?
+
+                    v
+
+                    {datas?.users ?
                         <div className='profiles'>
                             {datas?.users?.map((user, index) => (
                                 <div key={index} className='profile__parent'>

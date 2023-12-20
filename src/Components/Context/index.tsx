@@ -8,7 +8,7 @@ export interface ThemeContextProviderProps {
 }
 
 export interface ThemeData {
-    users: UserInterface[]
+    users: UserInterface[] | undefined
     account: AccountInterface | undefined
     currentUser: UserInterface | undefined
     loaded: boolean
@@ -17,7 +17,7 @@ export interface ThemeData {
 }
 
 export interface ThemeHandles {
-    setUsers: React.Dispatch<React.SetStateAction<UserInterface[]>>
+    setUsers: React.Dispatch<React.SetStateAction<UserInterface[] | undefined>>
     setAccount: React.Dispatch<React.SetStateAction<AccountInterface | undefined>>
     setCurrentUser: React.Dispatch<React.SetStateAction<UserInterface | undefined>>
     setLoaded: React.Dispatch<React.SetStateAction<boolean>>
@@ -29,7 +29,7 @@ export interface ThemeHandles {
 export const ThemeContext = createContext<{ datas: ThemeData; handles: ThemeHandles } | undefined>(undefined);
 
 export const Provider: React.FC<ThemeContextProviderProps> = ({ children }) => {
-    const [users, setUsers] = useState<UserInterface[]>([])
+    const [users, setUsers] = useState<UserInterface[]>()
     const [account, setAccount] = useState<AccountInterface>()
     const [currentUser, setCurrentUser] = useState<UserInterface>()
     const [movies, setMovies] = useState<MovieInterface[]>([])
