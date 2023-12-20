@@ -162,9 +162,6 @@ const ManageProfilePage = () => {
             {screen === Screen.LIST_USERS ? (
                 <>
                     <h3>Manage Profiles</h3>
-
-                    v
-
                     {datas?.users ?
                         <div className='profiles'>
                             {datas?.users?.map((user, index) => (
