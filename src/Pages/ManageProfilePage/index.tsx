@@ -162,22 +162,30 @@ const ManageProfilePage = () => {
             {screen === Screen.LIST_USERS ? (
                 <>
                     <h3>Manage Profiles</h3>
-                    <div className='profiles'>
-                        {datas?.users?.map((user, index) => (
-                            <div key={index} className='profile__parent'>
-                                <div onClick={() => { handleSetCurrentUser(user.name, user.pin || ''); setPin(user.pin || '') }} className="profile__child">
-                                    <img src={user.avatar} width={'100%'} />
+                    {datas?.users.length !== 0 ?
+                        <div className='profiles'>
+                            {datas?.users?.map((user, index) => (
+                                <div key={index} className='profile__parent'>
+                                    <div onClick={() => { handleSetCurrentUser(user.name, user.pin || ''); setPin(user.pin || '') }} className="profile__child">
+                                        <img src={user.avatar} width={'100%'} />
+                                    </div>
+                                    <div onClick={() => { setScreen(Screen.UPDATE_USER); setCurrentUser(user) }} className="update-profile">
+                                        <i className='bx bx-pencil'></i>
+                                    </div>
+                                    <p>{user.name}</p>
                                 </div>
-                                <div onClick={() => { setScreen(Screen.UPDATE_USER); setCurrentUser(user) }} className="update-profile">
-                                    <i className='bx bx-pencil'></i>
-                                </div>
-                                <p>{user.name}</p>
+                            ))}
+                            <div onClick={() => { setScreen(Screen.CREATE_USER); setCurrentUser(undefined) }} className="profile__child">
+                                <i className='bx bx-plus'></i>
                             </div>
-                        ))}
-                        <div onClick={() => { setScreen(Screen.CREATE_USER); setCurrentUser(undefined) }} className="profile__child">
-                            <i className='bx bx-plus'></i>
                         </div>
-                    </div>
+                        :
+                        <div className='profiles'>
+                            <div className="spinner-border text-light" role="status">
+                                <span className="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    }
                 </>
             ) : screen === Screen.CREATE_USER ? (
                 <>

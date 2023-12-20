@@ -247,6 +247,11 @@
         justify-content: center;
         flex-wrap: wrap;
 
+        & .spinner-border {
+            width: 70px;
+            height: 70px;
+        }
+
         & .profile__parent {
             position: relative;
             display: flex;
