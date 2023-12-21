@@ -16,9 +16,10 @@ export interface ViewProps {
     currentSubtitles: SubtitleInterface[]
     currentUser: UserInterface | undefined
     setCurrentEpisode: React.Dispatch<React.SetStateAction<number | undefined>>;
+    setBufferTime: React.Dispatch<React.SetStateAction<number | undefined>>;
 }
 
-const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, currentTime, currentSubtitles }: ViewProps) => {
+const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, currentTime, currentSubtitles, setBufferTime }: ViewProps) => {
     //ref
     const reactPlayerRef = useRef<ReactPlayer>(null);
 
@@ -37,6 +38,25 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
     useEffect(() => {
         setOpenSubtitle(currentSubtitles.length > 0)
     }, [currentSubtitles])
+
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.code === 'Space') {
+                event.preventDefault();
+                handlePlayOrPause();
+            } else if (event.code === 'ArrowLeft') {
+                event.preventDefault();
+                handleChangeTime(-10)
+            } else if (event.code === 'ArrowRight') {
+                event.preventDefault();
+                handleChangeTime(10)
+            }
+        };
+        document.addEventListener('keydown', handleKeyDown);
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [playing, played]);
 
     const handleOnProgress = () => {
         setPlayed(reactPlayerRef.current?.getCurrentTime())
@@ -109,6 +129,12 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
         }
     }, [displayAction])
 
+    const handleChangeTime = (time: number) => {
+        if (reactPlayerRef.current && played) {
+            reactPlayerRef.current.seekTo(played + time)
+        }
+    }
+
     const handlePlayOrPause = () => {
         if (playing) {
             setPlaying(false)
@@ -129,7 +155,8 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
                 if (currentUser) {
                     apiUser({ path: `/users/update-watching/${currentUser._id}`, body: watching, type: TypeHTTP.PUT })
                         .then(res => {
-                            window.location.reload()
+                            setCurrentEpisode(currentEpisode + 1)
+                            setBufferTime(0)
                         })
                 }
             }

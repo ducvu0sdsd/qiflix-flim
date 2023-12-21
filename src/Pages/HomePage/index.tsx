@@ -110,6 +110,7 @@ const HomePage = () => {
             {movieDetail.display && <MovieDetail movieDetail={movieDetail} setMovieDetail={setMovieDetail} />}
             <PrivateHeader users={datas?.users || []} currentUser={datas?.currentUser} />
             <TypicalSection movieDetail={movieDetail} setMovieDetail={setMovieDetail} movies={datas?.movies || []} />
+            {window.innerWidth >= 600 && <><br /><br /></>}
             <ListFilm movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'Newly Released'} movies={newlyReleased || []} />
             {(moviesWatching && moviesWatching.length > 0) && <ListFilm movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'Continue Watching'} movies={moviesWatching.map(item => item.movies)} processes={moviesWatching.map(item => item.process)} />}
             <ListFilm movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'For Christmas'} movies={christmasFilms || []} />

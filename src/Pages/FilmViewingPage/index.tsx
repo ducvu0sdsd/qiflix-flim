@@ -70,7 +70,7 @@ const FilmViewingPage = ({ data, currentUser }: FilmViewingPageProp) => {
         >
             {width >= 600 ?
                 <>
-                    <View setCurrentEpisode={setCurrentEpisode} currentUser={currentUser || undefined} currentSubtitles={currentSubtitles} currentEpisode={currentEpisode || 1} currentTime={bufferTime || 0} currentMovie={data} />
+                    <View setBufferTime={setBufferTime} setCurrentEpisode={setCurrentEpisode} currentUser={currentUser || undefined} currentSubtitles={currentSubtitles} currentEpisode={currentEpisode || 1} currentTime={bufferTime || 0} currentMovie={data} />
                     <Informations currentEpisode={currentEpisode || 1} currentFilm={data} currentUser={currentUser || undefined} setCurrentEpisode={setCurrentEpisode} setBufferTime={setBufferTime} />
                     <Comments movie_id={data._id} user_id={currentUser?._id || ''} user_avatar={currentUser?.avatar || ''} />
                     <Footer />
