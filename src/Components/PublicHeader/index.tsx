@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './publicheader.scss'
 import Qiflix from '../../resources/qiflix.png'
 import Banner from '../../resources/banner.png'
@@ -16,6 +16,18 @@ const PublicHeader = () => {
   const [loadingSignUp, setLoadingSignUp] = useState<boolean>(false)
   const { datas, handles } = useContext(ThemeContext) || {}
 
+  useEffect(() => {
+    document.addEventListener('keydown', (event: KeyboardEvent) => {
+      if (event.code === 'Enter') {
+        handleCreateVerifyCode()
+      }
+    });
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'auto'
+    });
+  }, [])
 
   const handleCreateVerifyCode = () => {
     const emailSignUp = $('.txt-email-sign-up').val()

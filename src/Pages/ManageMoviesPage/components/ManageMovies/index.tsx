@@ -8,7 +8,7 @@ import { TypeHTTP, apiUser } from '../../../../Utils/api'
 import { ThemeContext } from '../../../../Components/Context'
 
 const ManageMovies = () => {
-    const [currentMovie, setCurrentMovie] = useState<MovieInterface>()
+    const [currentMovie, setCurrentMovie] = useState<MovieInterface | undefined>(undefined)
     const [currentMovieSub, setCurrentMovieSub] = useState<MovieInterface>()
     const [countrySub, setCountrySub] = useState<string>('')
     const [selectedFile, setSelectedFile] = useState(null);
@@ -68,16 +68,58 @@ const ManageMovies = () => {
             })
     }
 
+    const handleUpdate = () => {
+        const listEpisode = { numberOfEpisodes: episode.length, episodes: episode }
+        const body = { title, description, url, thumbnail, trailerUrl, yearRelease, country, genres, actors, directors, listEpisode, belong }
+        apiUser({ path: `/movies/${currentMovie?._id}`, type: TypeHTTP.PUT, body: body })
+            .then(res => {
+                console.log(res)
+                alert("Update Success")
+            })
+    }
+
+    useEffect(() => {
+        const title = $('.txt-title')
+        const des = $('.txt-des')
+        const url = $('.txt-url')
+        const thum = $('.txt-thum')
+        const trailer = $('.txt-trailer')
+        const year = $('.txt-year')
+        const country = $('.select-country')
+
+        title.val(currentMovie?.title)
+        des.val(currentMovie?.description)
+        url.val(currentMovie?.url)
+        thum.val(currentMovie?.thumbnail)
+        trailer.val(currentMovie?.trailerUrl)
+        year.val(currentMovie?.yearRelease)
+        country.val(currentMovie?.country)
+        if (currentMovie?.genres && currentMovie?.belong && currentMovie.listEpisode?.episodes) {
+            setTitle(currentMovie.title)
+            setDescription(currentMovie.description)
+            setUrl(currentMovie.url)
+            setThumbnail(currentMovie.thumbnail)
+            setTrailerUrl(currentMovie.trailerUrl)
+            setYearRelease(currentMovie.yearRelease)
+            setCountry(currentMovie.country)
+            setGenre(currentMovie?.genres)
+            setBelong(currentMovie.belong)
+            setActors(currentMovie.actors)
+            setDirectors(currentMovie.directors)
+            setEpisode(currentMovie.listEpisode?.episodes)
+        }
+    }, [currentMovie])
+
     return (
         <section className='col-lg-12 manage-movies'>
             <div className='parent-form'>
-                <input onChange={(e) => setTitle(e.target.value)} type="text" placeholder='Title' className="form-control" />
-                <input onChange={(e) => setDescription(e.target.value)} type="text" placeholder='Description' className="form-control" />
-                <input onChange={(e) => setUrl(e.target.value)} type="text" placeholder='URL' className="form-control" />
-                <input onChange={(e) => setThumbnail(e.target.value)} type="text" placeholder='Thumbnail' className="form-control" />
-                <input onChange={(e) => setTrailerUrl(`https://drive.google.com/uc?export=download&id=${e.target.value}`)} type="text" placeholder='Trailer URL' className="form-control" />
-                <input onChange={(e) => setYearRelease(parseInt(e.target.value))} type="text" placeholder='Year Release' className="form-control" />
-                <select onChange={(e) => setCountry(e.target.value)} className="form-select">
+                <input onChange={(e) => setTitle(e.target.value)} type="text" placeholder='Title' className="form-control txt-title" />
+                <input onChange={(e) => setDescription(e.target.value)} type="text" placeholder='Description' className="form-control txt-des" />
+                <input onChange={(e) => setUrl(e.target.value)} type="text" placeholder='URL' className="form-control txt-url" />
+                <input onChange={(e) => setThumbnail(e.target.value)} type="text" placeholder='Thumbnail' className="form-control txt-thum" />
+                <input onChange={(e) => setTrailerUrl(`https://drive.google.com/uc?export=download&id=${e.target.value}`)} type="text" placeholder='Trailer URL' className="form-control txt-trailer" />
+                <input onChange={(e) => setYearRelease(parseInt(e.target.value))} type="text" placeholder='Year Release' className="form-control txt-year" />
+                <select onChange={(e) => setCountry(e.target.value)} className="form-select select-country">
                     {countries.map((country, index) => {
                         return (
                             <option key={index}>{country}</option>
@@ -152,9 +194,9 @@ const ManageMovies = () => {
                 </div>
                 <div className='col-lg-12' style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
                     <button onClick={() => handleInsert()} type="button" style={{ margin: '0 5px' }} className="btn btn-success">Insert</button>
-                    <button type="button" style={{ margin: '0 5px' }} className="btn btn-primary">Update</button>
+                    <button onClick={() => handleUpdate()} type="button" style={{ margin: '0 5px' }} className="btn btn-primary">Update</button>
                     <button onClick={() => handleDelete()} type="button" style={{ margin: '0 5px' }} className="btn btn-danger">Delete</button>
-                    <select onChange={(e) => { e.target.value !== 'none' && setCurrentMovie(datas?.movies.filter(item => item._id === e.target.value)[0]) }} className="form-select">
+                    <select onChange={(e) => { e.target.value !== 'none' ? setCurrentMovie(datas?.movies.filter(item => item._id === e.target.value)[0]) : setCurrentMovie(undefined) }} className="form-select">
                         <option value={'none'}>None</option>
                         {datas?.movies.map((movie, index) => {
                             return (

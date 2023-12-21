@@ -54,7 +54,7 @@ const FormSignUp = ({ email }: FormSignUpProp) => {
 
     useEffect(() => {
         if (formStepParentRef.current) {
-            formStepParentRef.current.style.marginLeft = `${window.innerWidth >= 600 ? 550 : 350 * (step - 1) * -1}px`
+            formStepParentRef.current.style.marginLeft = `${window.innerWidth >= 600 ? 550 * (step - 1) * -1 : 350 * (step - 1) * -1}px`
         }
     }, [step])
 
@@ -162,6 +162,20 @@ const FormSignUp = ({ email }: FormSignUpProp) => {
                 }
             })
     }
+
+    useEffect(() => {
+        document.addEventListener('keydown', (event: KeyboardEvent) => {
+            if (event.code === 'Enter') {
+                if (step === 1) {
+                    handleConfirmVerifyCode()
+                } else if (step === 2) {
+                    handleUpdateBasisInformation()
+                } else if (step === 3) {
+                    handleUpdatePassword()
+                }
+            }
+        });
+    }, [step])
 
     return (
         <section id='form-sign-up' className='col-lg-12' style={{ height: `${window.innerHeight}px` }}>

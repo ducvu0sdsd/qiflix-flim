@@ -1,6 +1,6 @@
 
 import './signinheader.scss'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Banner from '../../resources/banner.png'
 import Qiflix from '../../resources/qiflix.png'
 import { Link, useNavigate } from 'react-router-dom'
@@ -14,6 +14,13 @@ const SignInHeader = () => {
     const [loadingSignIn, setLoadingSignIn] = useState<boolean>(false)
     const { datas, handles } = useContext(ThemeContext) || {}
     const navigate = useNavigate()
+    useEffect(() => {
+        document.addEventListener('keydown', (event: KeyboardEvent) => {
+            if (event.code === 'Enter') {
+                handleSignIn()
+            }
+        });
+    }, [])
 
     const handleSignIn = () => {
         // navigate('/manage-profile-page')

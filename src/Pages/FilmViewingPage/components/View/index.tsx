@@ -75,6 +75,13 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
             }
         }
 
+        // change episode when The remaining time of the video is 2 seconds
+        if (played && duration) {
+            if (played / duration >= 0.999) {
+                handleChangeEpisode()
+            }
+        }
+
         // handle display button next episode
         if (currentMovie.listEpisode && currentEpisode !== currentMovie.listEpisode.episodes.length) {
             if (currentMovie.listEpisode?.episodes.length > 0) {
@@ -180,7 +187,6 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
                 muted={muted}
                 progressInterval={1}
                 onStart={() => { reactPlayerRef.current?.seekTo(currentTime) }}
-                onEnded={() => handleChangeEpisode()}
                 onProgress={() => handleOnProgress()}
                 onPlay={() => setPlaying(true)}
                 onPause={() => setPlaying(false)}
