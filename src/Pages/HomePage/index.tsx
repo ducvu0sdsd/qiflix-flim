@@ -68,9 +68,13 @@ const HomePage = () => {
 
 
     const newlyReleased: MovieInterface[] = []
+    const moviesUnshift: MovieInterface[] = []
     datas?.movies.forEach((item, index) => {
+        moviesUnshift.unshift(item)
+    })
+    moviesUnshift.forEach((item, index) => {
         if (newlyReleased.length <= 20) {
-            newlyReleased.unshift(item)
+            newlyReleased.push(item)
         }
     })
 
