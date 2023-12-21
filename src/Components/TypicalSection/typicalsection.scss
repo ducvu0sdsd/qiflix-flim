@@ -1,100 +1,105 @@
 #typical-section {
     // background-color: rgb(0, 0, 0);
-    overflow: hidden;
+    // overflow: hidden;
+    display: flex;
     max-height: 620px;
 
-    & .trailer {
-        position: relative;
-        overflow: hidden;
+    & .typical-wrapper {
         display: flex;
-        justify-content: center;
-        align-items: center;
+        transition: 0.2s;
 
-        & .trailer-wrapper {
-            width: 100%;
-            height: 101%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            box-shadow: inset 0px -150px 170px 0px rgba(0, 0, 0, 0.842);
-        }
+        & .trailer {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
-        & .info {
-            position: absolute;
-            top: 40%;
-            left: 70px;
-            background: 0;
-            z-index: 1;
+            & .trailer-wrapper {
+                width: 100%;
+                height: 101%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                box-shadow: inset 0px -150px 170px 0px rgba(0, 0, 0, 0.842);
+            }
 
-            @media only screen and (max-width: 600px) {
-                left: 20px;
+            & .info {
+                position: absolute;
                 top: 40%;
-            }
-
-            & h2 {
-                font-size: 40px;
-                font-weight: bold;
-                color: white;
-                font-family: 'Roboto', sans-serif;
+                left: 70px;
+                background: 0;
+                z-index: 1;
 
                 @media only screen and (max-width: 600px) {
-                    font-size: 20px;
+                    left: 20px;
+                    top: 40%;
                 }
-            }
 
-            & .description {
-                font-size: 14px;
-                color: white;
-                width: 570px;
-                height: 160px;
-                display: flex;
-                flex-wrap: wrap;
-                white-space: wrap;
-                overflow: hidden;
-
-                @media only screen and (max-width: 600px) {
-                    font-size: 11px;
-                    width: 330px;
-                }
-            }
-
-            & .btns {
-                display: flex;
-                margin-top: 20px;
-                align-items: center;
-
-                & .btn-parent {
-                    padding: 5px 30px;
-                    font-size: 18px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    border-radius: 5px;
-                    margin: 0 10px;
+                & h2 {
+                    font-size: 40px;
+                    font-weight: bold;
+                    color: white;
+                    font-family: 'Roboto', sans-serif;
 
                     @media only screen and (max-width: 600px) {
-                        font-size: 15px;
-                    }
-
-                    & i {
-                        margin-right: 5px;
-                        font-size: 40px;
+                        font-size: 20px;
                     }
                 }
 
-                & .btn-watch {
-                    background-color: rgb(234, 0, 0);
+                & .description {
+                    font-size: 14px;
                     color: white;
-                    font-weight: bold;
-                    border: 0;
+                    width: 570px;
+                    height: 17 0px;
+                    display: flex;
+                    flex-wrap: wrap;
+                    white-space: wrap;
+                    overflow: hidden;
+
+                    @media only screen and (max-width: 600px) {
+                        font-size: 11px;
+                        width: 330px;
+                    }
                 }
 
-                & .btn-detail {
-                    padding: 3px 28px;
-                    background: 0;
-                    border: 2px solid white;
-                    color: white;
+                & .btns {
+                    display: flex;
+                    margin-top: 20px;
+                    align-items: center;
 
+                    & .btn-parent {
+                        padding: 5px 30px;
+                        font-size: 18px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        border-radius: 5px;
+
+                        @media only screen and (max-width: 600px) {
+                            font-size: 15px;
+                        }
+
+                        & i {
+                            margin-right: 5px;
+                            font-size: 40px;
+                        }
+                    }
+
+                    & .btn-watch {
+                        background-color: rgb(234, 0, 0);
+                        color: white;
+                        font-weight: bold;
+                        border: 0;
+                    }
+
+                    & .btn-detail {
+                        padding: 3px 28px;
+                        background: 0;
+                        border: 2px solid white;
+                        color: white;
+                        margin: 0 10px;
+                    }
                 }
             }
         }
