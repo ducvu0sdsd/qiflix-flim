@@ -81,7 +81,8 @@ const Informations = ({ currentFilm, setCurrentEpisode, currentEpisode, currentU
         if (currentUser) {
             apiUser({ path: `/users/update-watching/${currentUser._id}`, body: watching, type: TypeHTTP.PUT })
                 .then(res => {
-                    window.location.reload()
+                    setCurrentEpisode(item.indexOfEpisode)
+                    // console.log(res)
                 })
         }
     }
