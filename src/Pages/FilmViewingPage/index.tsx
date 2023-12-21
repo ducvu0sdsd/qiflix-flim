@@ -59,8 +59,10 @@ const FilmViewingPage = ({ data, currentUser }: FilmViewingPageProp) => {
     }, [])
 
     useEffect(() => {
-        setWidth(window.innerWidth)
-    }, [window.innerWidth])
+        setInterval(() => {
+            setWidth(window.innerWidth)
+        }, 1)
+    }, [])
 
     return (
         <motion.div
