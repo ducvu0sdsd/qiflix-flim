@@ -22,6 +22,7 @@ export interface MoviesWatching {
 const HomePage = () => {
 
     const { datas, handles } = useContext(ThemeContext) || {}
+    const [movieTypical, setMovieTypical] = useState<MovieInterface[]>([])
     const [movieDetail, setMovieDetail] = useState<{ display: boolean, movie: MovieInterface | undefined }>({
         display: false,
         movie: undefined
@@ -34,6 +35,12 @@ const HomePage = () => {
             $('body').css('overflow', 'visible')
         }
     }, [movieDetail.display])
+
+    useEffect(() => {
+        if (datas) {
+            setMovieTypical(shuffleArray(datas?.movies.filter(item => item.belong.includes('Typical')) || []))
+        }
+    }, [datas?.movies])
 
     useEffect(() => {
         if (datas?.account) {
@@ -60,7 +67,6 @@ const HomePage = () => {
         titleElement.textContent = "Home Page";
     }
 
-    const movieTypical: MovieInterface[] | undefined = shuffleArray(datas?.movies.filter(item => item.belong.includes('Typical')) || [])
     const moviesWatching: MoviesWatching[] | undefined = datas?.moviesWatching.map(item => {
         return {
             movies: item.movie,

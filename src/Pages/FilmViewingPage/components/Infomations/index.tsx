@@ -20,6 +20,10 @@ const Informations = ({ currentFilm, setCurrentEpisode, currentEpisode, currentU
     const [marginLeft, setMarginLeft] = useState<number>(0)
     const { datas, handles } = useContext(ThemeContext) || {}
 
+    useEffect(() => {
+        handleScrollEpisode(currentEpisode - 1)
+    }, [currentEpisode])
+
     const handleChange = (type: string) => {
         const wrapperEpisode = $('.wrapper-episode')
         const episodeItem = $('.episode-item')
@@ -83,9 +87,45 @@ const Informations = ({ currentFilm, setCurrentEpisode, currentEpisode, currentU
                 .then(res => {
                     setCurrentEpisode(item.indexOfEpisode)
                     setBufferTime(0)
-                    // console.log(res)
                 })
         }
+    }
+
+    const handleScrollEpisode = (from: number) => {
+        const episode = $('.episode-item')[0]
+        const width = episode.offsetWidth + 20
+        const wrapperEpisode = $('.wrapper-episode')
+        const episodeItem = $('.episode-item')
+        setMarginLeft(from * width)
+        wrapperEpisode.css('margin-left', `-${(from * width)}px`)
+    }
+
+    const ListEpisode = () => {
+        if (currentFilm.listEpisode) {
+            const numberOfSection = Math.floor(currentFilm.listEpisode.numberOfEpisodes / 30)
+            const remainEpisode = currentFilm.listEpisode.numberOfEpisodes % 30 + numberOfSection * 30
+            const sections = []
+            for (let i = 0; i <= numberOfSection; i++) {
+                if (30 * (i + 1) >= remainEpisode) {
+                    sections.push({ from: 30 * i + 1, to: remainEpisode })
+                } else {
+                    sections.push({ from: 30 * i + 1, to: 30 * (i + 1) })
+                }
+            }
+            return (
+                <>
+                    {sections.map((item, index) => {
+                        return (
+                            <span
+                                onClick={() => handleScrollEpisode(item.from === 1 ? item.from - 1 : item.from)}
+                                className={`${(currentEpisode >= item.from && currentEpisode <= item.to) && 'active'}`}
+                                key={index}>{item.from} - {item.to}</span>
+                        )
+                    })}
+                </>
+            )
+        }
+        return <></>
     }
 
     return (
@@ -131,10 +171,7 @@ const Informations = ({ currentFilm, setCurrentEpisode, currentEpisode, currentU
                 <span className='title col-lg-12'>Episode List <span>{currentFilm.listEpisode?.episodes.length}  episode</span></span>
                 {currentFilm.listEpisode && currentFilm.listEpisode.episodes && currentFilm.listEpisode.episodes.length > 30 ? (
                     <div className="session-episode col-lg-12">
-                        <span className='active'>01-30</span>
-                        <span>31-60</span>
-                        <span>61-90</span>
-                        <span>91-120</span>
+                        <ListEpisode />
                     </div>
                 ) : (
                     <></>

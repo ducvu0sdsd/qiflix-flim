@@ -29,10 +29,9 @@
         overflow: hidden;
         display: flex;
         transition: 0.3s;
-        cursor: pointer;
         justify-content: center;
         align-items: center;
-        box-shadow: 0px 0px 80px black;
+        box-shadow: 0px 0px 40px black;
         background-color: black;
 
         & video {
