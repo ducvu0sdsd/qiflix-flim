@@ -12,6 +12,7 @@ import { motion } from 'framer-motion'
 import MovieDetail from '../../Components/MovieDetail'
 import { Helmet } from 'react-helmet';
 import QiflixMeta from '../../resources/qiflix-meta.png'
+import { shuffleArray } from '../../Utils/movie'
 
 export interface MoviesWatching {
     movies: MovieInterface
@@ -59,8 +60,7 @@ const HomePage = () => {
         titleElement.textContent = "Home Page";
     }
 
-    const movieTypical: MovieInterface[] | undefined = datas?.movies.filter(item => item.belong.includes('Typical'))
-    console.log(movieTypical)
+    const movieTypical: MovieInterface[] | undefined = shuffleArray(datas?.movies.filter(item => item.belong.includes('Typical')) || [])
     const moviesWatching: MoviesWatching[] | undefined = datas?.moviesWatching.map(item => {
         return {
             movies: item.movie,
@@ -102,16 +102,10 @@ const HomePage = () => {
             exit={{ x: window.innerWidth, transition: { duration: 0.2 } }}
             style={{ overflow: 'hidden' }}
         >
-            <Helmet>
-                <title>Home Page</title>
-                <meta property="og:title" content="Qiflix" />
-                <meta property="og:image" content={QiflixMeta} />
-                <meta property="og:url" content="https://qiflix.vercel.app/" />
-            </Helmet>
             {movieDetail.display && <MovieDetail movieDetail={movieDetail} setMovieDetail={setMovieDetail} />}
             <PrivateHeader users={datas?.users || []} currentUser={datas?.currentUser} />
             <TypicalSection movieDetail={movieDetail} setMovieDetail={setMovieDetail} movies={movieTypical || []} />
-            {/* {window.innerWidth >= 600 && <><br /><br /></>} */}
+            {window.innerWidth >= 600 && <><br /><br /></>}
             <ListFilm movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'Newly Released'} movies={newlyReleased || []} />
             {(moviesWatching && moviesWatching.length > 0) && <ListFilm movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'Continue Watching'} movies={moviesWatching.map(item => item.movies)} processes={moviesWatching.map(item => item.process)} />}
             <ListFilm movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'For Christmas'} movies={christmasFilms || []} />

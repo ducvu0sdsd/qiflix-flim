@@ -30,7 +30,7 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
     const [displayAction, setDisplayAction] = useState<boolean>(true)
     const [duration, setDuration] = useState<number>()
     const [playing, setPlaying] = useState<boolean>(true)
-    const [played, setPlayed] = useState<number | undefined>(0)
+    const [played, setPlayed] = useState<number>(0)
     const [muted, setMuted] = useState<boolean>(false)
     const [subtitle, setSubtitle] = useState<string>('')
     const [fullScreen, setFullScreen] = useState<boolean>(false)
@@ -46,10 +46,60 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
                 handlePlayOrPause();
             } else if (event.code === 'ArrowLeft') {
                 event.preventDefault();
-                handleChangeTime(-10)
+                handleChangeTime(played - 10)
             } else if (event.code === 'ArrowRight') {
                 event.preventDefault();
-                handleChangeTime(10)
+                handleChangeTime(played + 10)
+            } else if (event.code === 'Digit1') {
+                event.preventDefault();
+                if (duration) {
+                    handleChangeTime(duration * 0.1)
+                }
+            } else if (event.code === 'Digit2') {
+                event.preventDefault();
+                if (duration) {
+                    handleChangeTime(duration * 0.2)
+                }
+            } else if (event.code === 'Digit3') {
+                event.preventDefault();
+                if (duration) {
+                    handleChangeTime(duration * 0.3)
+                }
+            } else if (event.code === 'Digit4') {
+                event.preventDefault();
+                if (duration) {
+                    handleChangeTime(duration * 0.4)
+                }
+            } else if (event.code === 'Digit5') {
+                event.preventDefault();
+                if (duration) {
+                    handleChangeTime(duration * 0.5)
+                }
+            } else if (event.code === 'Digit6') {
+                event.preventDefault();
+                if (duration) {
+                    handleChangeTime(duration * 0.6)
+                }
+            } else if (event.code === 'Digit7') {
+                event.preventDefault();
+                if (duration) {
+                    handleChangeTime(duration * 0.7)
+                }
+            } else if (event.code === 'Digit8') {
+                event.preventDefault();
+                if (duration) {
+                    handleChangeTime(duration * 0.8)
+                }
+            } else if (event.code === 'Digit9') {
+                event.preventDefault();
+                if (duration) {
+                    handleChangeTime(duration * 0.9)
+                }
+            } else if (event.code === 'Digit0') {
+                event.preventDefault();
+                if (duration) {
+                    handleChangeTime(0)
+                }
             }
         };
         document.addEventListener('keydown', handleKeyDown);
@@ -59,7 +109,7 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
     }, [playing, played]);
 
     const handleOnProgress = () => {
-        setPlayed(reactPlayerRef.current?.getCurrentTime())
+        setPlayed(reactPlayerRef.current?.getCurrentTime() || 0)
         if (currentSubtitles.length > 0) {
             let have = false
             currentSubtitles[0].subtitles.forEach(item => {
@@ -138,7 +188,7 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
 
     const handleChangeTime = (time: number) => {
         if (reactPlayerRef.current && played) {
-            reactPlayerRef.current.seekTo(played + time)
+            reactPlayerRef.current.seekTo(time)
         }
     }
 

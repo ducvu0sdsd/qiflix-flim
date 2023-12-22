@@ -9,6 +9,7 @@ import { type } from 'os'
 import { ThemeContext } from '../Context'
 import { NotificationStatus } from '../Notification'
 import { motion } from 'framer-motion'
+import ReactPlayer from 'react-player'
 
 export interface FilmItemProp {
     displayDetail?: boolean,

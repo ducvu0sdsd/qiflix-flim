@@ -4,6 +4,9 @@ import React, { useEffect, useState } from 'react'
 import Trailer from '../../resources/trailer.mp4'
 import { Link } from 'react-router-dom'
 import { MovieInterface } from '../Context/interfaces'
+import $ from 'jquery'
+import { url } from 'inspector'
+import Video from './components/video'
 
 interface TypicalSectionProps {
     movies: MovieInterface[]
@@ -18,62 +21,44 @@ export interface MovieDetail {
 
 const TypicalSection = ({ movies, setMovieDetail, movieDetail }: TypicalSectionProps) => {
 
-    const FilterText: (value: string, max: number) => string = (str, max) => {
-        let origin = str.split(' ')
-        if (origin.length > max) {
-            let arr: string[] = origin.filter((item, index) => index < max)
-            return arr.join(' ') + '...'
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.code === 'ArrowLeft') {
+                event.preventDefault();
+                handleClickTrailer(true)
+            } else if (event.code === 'ArrowRight') {
+                event.preventDefault();
+                handleClickTrailer(false)
+            }
         }
-        return str
+        document.addEventListener('keydown', handleKeyDown);
+    }, [])
+
+    const handleClickTrailer = (prev: boolean) => {
+        if (prev) {
+            const typical = document.querySelector('#typical-section .trailers')
+            const trailers = document.querySelectorAll('.trailer')
+            typical?.prepend(trailers[trailers.length - 1])
+        } else {
+            const typical = document.querySelector('#typical-section .trailers')
+            const trailers = document.querySelectorAll('.trailer')
+            typical?.append(trailers[0])
+        }
     }
 
     return (
         <section id='typical-section' className='col-lg-12' style={window.innerWidth >= 600 ? { height: `${window.innerHeight}px` } : { width: `${window.innerWidth}px` }}>
-            <div className="typical-wrapper col-lg-12">
+            <div className="btn-actions">
+                <button onClick={() => handleClickTrailer(true)}><i className='bx bx-chevron-left'></i></button>
+                <button onClick={() => handleClickTrailer(false)}><i className='bx bx-chevron-right'></i></button>
+            </div>
+            <div className='trailers'>
                 {movies.map((movie, index) => {
-                    if (index == 0)
+                    if (index <= 5) {
                         return (
-                            <>
-                                <div key={index} className='trailer col-lg-12' style={{ height: window.innerWidth >= 600 ? '550px' : '500px' }}>
-                                    {/* style={{ height: `${window.innerWidth / 2.67}px` }} */}
-                                    <video
-                                        className='col-lg-12'
-                                        autoPlay
-                                        muted
-                                        loop
-                                        src={movie.trailerUrl}
-                                    />
-                                    <div className='trailer-wrapper'></div>
-                                    <div className='info'>
-                                        <h2>{movie.title.split(' - ')[1]}</h2>
-                                        <div className='description'>{FilterText(movie.description, 120)}</div>
-                                        <div className="btns">
-                                            <Link className='link' to={`/${movie.url}`}><button className='btn-parent btn-watch'><i className='bx bx-play'></i> Watch Now</button></Link>
-                                            <button onClick={() => setMovieDetail({ display: true, movie: movies[0] })} className='btn-parent btn-detail'><i className='bx bx-info-circle' ></i> Detail</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div key={index} className='trailer col-lg-12' style={{ height: window.innerWidth >= 600 ? '550px' : '500px' }}>
-                                    {/* style={{ height: `${window.innerWidth / 2.67}px` }} */}
-                                    <video
-                                        className='col-lg-12'
-                                        autoPlay
-                                        muted
-                                        loop
-                                        src={movie.trailerUrl}
-                                    />
-                                    <div className='trailer-wrapper'></div>
-                                    <div className='info'>
-                                        <h2>{movie.title.split(' - ')[1]}</h2>
-                                        <div className='description'>{FilterText(movie.description, 120)}</div>
-                                        <div className="btns">
-                                            <Link className='link' to={`/${movie.url}`}><button className='btn-parent btn-watch'><i className='bx bx-play'></i> Watch Now</button></Link>
-                                            <button onClick={() => setMovieDetail({ display: true, movie: movies[0] })} className='btn-parent btn-detail'><i className='bx bx-info-circle' ></i> Detail</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </>
+                            <Video index={index} movie={movie} movies={movies} setMovieDetail={setMovieDetail} />
                         )
+                    }
                 })}
             </div>
         </section>
