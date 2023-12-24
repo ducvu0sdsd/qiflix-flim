@@ -5,9 +5,9 @@ import { MovieDetail } from '../../../MovieDetail'
 
 export interface VideoProps {
     index: number,
-    movie: MovieInterface,
+    movie: MovieInterface | undefined,
     setMovieDetail: React.Dispatch<React.SetStateAction<MovieDetail>>,
-    movies: MovieInterface[]
+    movies: MovieInterface[] | undefined
 }
 
 const Video = ({ index, movie, setMovieDetail, movies }: VideoProps) => {
@@ -24,24 +24,32 @@ const Video = ({ index, movie, setMovieDetail, movies }: VideoProps) => {
     }
     return (
         <div key={index} className={'trailer col-lg-12 '} >
-            <video
-                className='col-lg-12'
-                autoPlay
-                muted
-                loop
-                onPlaying={() => setReady(true)}
-                onWaiting={() => setReady(false)}
-                src={movie.trailerUrl}
-            />
-            <div className='trailer-wrapper' style={!ready ? { backgroundImage: `url(${movie.thumbnail})` } : {}}></div>
-            <div className='info'>
-                <h2>{movie.title.split(' - ')[1]}</h2>
-                <div className='description'>{FilterText(movie.description, 120)}</div>
-                <div className="btns">
-                    <Link className='link' to={`/${movie.url}`}><button className='btn-parent btn-watch'><i className='bx bx-play'></i> Watch Now</button></Link>
-                    <button onClick={() => setMovieDetail({ display: true, movie: movie })} className='btn-parent btn-detail'><i className='bx bx-info-circle' ></i> Detail</button>
-                </div>
-            </div>
+            {(movies && movie) ?
+                <>
+                    <video
+                        className='col-lg-12'
+                        autoPlay
+                        muted
+                        loop
+                        onPlaying={() => setReady(true)}
+                        onWaiting={() => setReady(false)}
+                        src={movie.trailerUrl}
+                    />
+                    <div className='trailer-wrapper' style={!ready ? { backgroundImage: `url(${movie.thumbnail})` } : {}}></div>
+                    <div className='info'>
+                        <h2>{movie.title.split(' - ')[1]}</h2>
+                        <div className='description'>{FilterText(movie.description, 120)}</div>
+                        <div className="btns">
+                            <Link className='link' to={`/${movie.url}`}><button className='btn-parent btn-watch'><i className='bx bx-play'></i> Watch Now</button></Link>
+                            <button onClick={() => setMovieDetail({ display: true, movie: movie })} className='btn-parent btn-detail'><i className='bx bx-info-circle' ></i> Detail</button>
+                        </div>
+                    </div>
+                </>
+                :
+                <>
+                    <div className="spinner-border text-light" role="status" />
+                </>
+            }
         </div>
     )
 }

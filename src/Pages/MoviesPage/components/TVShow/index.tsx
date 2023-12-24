@@ -11,7 +11,7 @@ const Movies = () => {
     const { datas } = useContext(ThemeContext) || {}
     const [movies, setMovies] = useState<MovieInterface[]>([])
     useEffect(() => {
-        datas?.movies.forEach(item => {
+        datas?.movies?.forEach(item => {
             if (item.listEpisode?.episodes) {
                 if (item.listEpisode?.episodes.length == 1) {
                     setMovies(p => [...p, item])

@@ -135,6 +135,10 @@
 
     & .trailers {
         & .trailer:nth-child(n + 3) {
+            & .trailer-wrapper {
+                width: 101%;
+            }
+
             & .info {
                 left: 0px;
                 width: 210px;

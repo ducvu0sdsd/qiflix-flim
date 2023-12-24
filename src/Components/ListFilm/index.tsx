@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react'
 import $ from 'jquery'
 
 interface ListFilmProp {
-    movies: MovieInterface[],
+    movies: MovieInterface[] | undefined,
     title: string,
     paddingLeft?: number,
     processes?: number[] | undefined
@@ -58,13 +58,23 @@ const ListFilm = ({ movies, title, paddingLeft, processes, setMovieDetail, movie
             <div className="wrapper-film col-lg-12">
                 <div className='col-lg-12 films'>
                     <div className={`wrapper-${title.toLowerCase().split(' ').join('-')} wrapper`}>
-                        {movies.map((movie, index) => {
-                            return (
-                                <div key={index} className="film">
-                                    <FilmItem movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={title} displayDetail={true} movie={movie} process={processes ? processes[index] : 0} />
-                                </div>
-                            )
-                        })}
+                        {movies ?
+                            <>
+                                {movies.map((movie, index) => {
+                                    return (
+                                        <div key={index} className="film">
+                                            <FilmItem movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={title} displayDetail={true} movie={movie} process={processes ? processes[index] : 0} />
+                                        </div>
+                                    )
+                                })}
+                            </>
+                            :
+                            <>
+                                <div
+                                    style={{ position: 'absolute', top: '50%', left: '50%' }}
+                                    className="spinner-border text-light" role="status" />
+                            </>
+                        }
                     </div>
                 </div>
                 {marginLeft !== 0 && <button onClick={() => handleChange('prev')} className='btn-action-prev btn-action'><i className='bx bxs-left-arrow'></i></button>}

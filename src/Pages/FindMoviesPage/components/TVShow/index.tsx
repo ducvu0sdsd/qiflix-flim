@@ -19,7 +19,7 @@ const Movies = () => {
     useEffect(() => {
         setMovies(datas?.movies || [])
         const array: string[] = []
-        datas?.movies.forEach(movie => {
+        datas?.movies?.forEach(movie => {
             if (!array.includes(movie.country)) {
                 array.push(movie.country)
             }

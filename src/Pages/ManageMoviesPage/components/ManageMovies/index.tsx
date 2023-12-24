@@ -196,9 +196,9 @@ const ManageMovies = () => {
                     <button onClick={() => handleInsert()} type="button" style={{ margin: '0 5px' }} className="btn btn-success">Insert</button>
                     <button onClick={() => handleUpdate()} type="button" style={{ margin: '0 5px' }} className="btn btn-primary">Update</button>
                     <button onClick={() => handleDelete()} type="button" style={{ margin: '0 5px' }} className="btn btn-danger">Delete</button>
-                    <select onChange={(e) => { e.target.value !== 'none' ? setCurrentMovie(datas?.movies.filter(item => item._id === e.target.value)[0]) : setCurrentMovie(undefined) }} className="form-select">
+                    <select onChange={(e) => { e.target.value !== 'none' ? setCurrentMovie(datas?.movies?.filter(item => item._id === e.target.value)[0]) : setCurrentMovie(undefined) }} className="form-select">
                         <option value={'none'}>None</option>
-                        {datas?.movies.map((movie, index) => {
+                        {datas?.movies?.map((movie, index) => {
                             return (
                                 <option key={movie._id} value={movie._id}>{movie.title}</option>
                             )
@@ -208,9 +208,9 @@ const ManageMovies = () => {
             </div>
             <div className='form-subtitle col-lg-12'>
                 SRT
-                <select onChange={(e) => { e.target.value !== 'none' && setCurrentMovieSub(datas?.movies.filter(item => item._id === e.target.value)[0]) }} className="form-select-subtitle form-select">
+                <select onChange={(e) => { e.target.value !== 'none' && setCurrentMovieSub(datas?.movies?.filter(item => item._id === e.target.value)[0]) }} className="form-select-subtitle form-select">
                     <option value={'none'}>None</option>
-                    {datas?.movies.map((movie, index) => {
+                    {datas?.movies?.map((movie, index) => {
                         return (
                             <option key={movie._id} value={movie._id}>{movie.title}</option>
                         )

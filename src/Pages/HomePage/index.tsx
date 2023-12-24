@@ -22,7 +22,7 @@ export interface MoviesWatching {
 const HomePage = () => {
 
     const { datas, handles } = useContext(ThemeContext) || {}
-    const [movieTypical, setMovieTypical] = useState<MovieInterface[]>([])
+    const [movieTypical, setMovieTypical] = useState<MovieInterface[] | undefined>(undefined)
     const [movieDetail, setMovieDetail] = useState<{ display: boolean, movie: MovieInterface | undefined }>({
         display: false,
         movie: undefined
@@ -37,7 +37,9 @@ const HomePage = () => {
     }, [movieDetail.display])
 
     useEffect(() => {
-        if (datas) {
+        if (datas?.movies === undefined) {
+
+        } else {
             setMovieTypical(shuffleArray(datas?.movies.filter(item => item.belong.includes('Typical')) || []))
         }
     }, [datas?.movies])
@@ -76,7 +78,7 @@ const HomePage = () => {
 
     const newlyReleased: MovieInterface[] = []
     const moviesUnshift: MovieInterface[] = []
-    datas?.movies.forEach((item, index) => {
+    datas?.movies?.forEach((item, index) => {
         moviesUnshift.unshift(item)
     })
     moviesUnshift.forEach((item, index) => {
@@ -85,19 +87,19 @@ const HomePage = () => {
         }
     })
 
-    const koreaFilms: MovieInterface[] | undefined = datas?.movies.filter(item => {
+    const koreaFilms: MovieInterface[] | undefined = datas?.movies?.filter(item => {
         return item.country === "Korea"
     })
 
-    const hongKongFilms: MovieInterface[] | undefined = datas?.movies.filter(item => {
+    const hongKongFilms: MovieInterface[] | undefined = datas?.movies?.filter(item => {
         return item.country === "Hong Kong"
     })
 
-    const animes: MovieInterface[] | undefined = datas?.movies.filter(item => {
+    const animes: MovieInterface[] | undefined = datas?.movies?.filter(item => {
         return item.belong.includes("Anime")
     })
 
-    const christmasFilms: MovieInterface[] | undefined = datas?.movies.filter(item => {
+    const christmasFilms: MovieInterface[] | undefined = datas?.movies?.filter(item => {
         return item.belong.includes("For Christmas")
     })
 
@@ -110,14 +112,14 @@ const HomePage = () => {
         >
             {movieDetail.display && <MovieDetail movieDetail={movieDetail} setMovieDetail={setMovieDetail} />}
             <PrivateHeader users={datas?.users || []} currentUser={datas?.currentUser} />
-            <TypicalSection movieDetail={movieDetail} setMovieDetail={setMovieDetail} movies={movieTypical || []} />
+            <TypicalSection movieDetail={movieDetail} setMovieDetail={setMovieDetail} movies={movieTypical} />
             {window.innerWidth >= 600 && <><br /><br /></>}
-            <ListFilm movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'Newly Released'} movies={newlyReleased || []} />
+            <ListFilm movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'Newly Released'} movies={newlyReleased} />
             {(moviesWatching && moviesWatching.length > 0) && <ListFilm movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'Continue Watching'} movies={moviesWatching.map(item => item.movies)} processes={moviesWatching.map(item => item.process)} />}
-            <ListFilm movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'For Christmas'} movies={christmasFilms || []} />
-            <ListFilm movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'Korea Flims'} movies={koreaFilms || []} />
-            <ListFilm movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'Hong Kong Flims'} movies={hongKongFilms || []} />
-            <ListFilm movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'Anime'} movies={animes || []} />
+            <ListFilm movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'For Christmas'} movies={christmasFilms} />
+            <ListFilm movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'Korea Flims'} movies={koreaFilms} />
+            <ListFilm movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'Hong Kong Flims'} movies={hongKongFilms} />
+            <ListFilm movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'Anime'} movies={animes} />
             <Footer />
         </motion.div>
     )

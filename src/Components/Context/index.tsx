@@ -12,7 +12,7 @@ export interface ThemeData {
     account: AccountInterface | undefined
     currentUser: UserInterface | undefined
     loaded: boolean
-    movies: MovieInterface[]
+    movies: MovieInterface[] | undefined
     moviesWatching: MovieWatchingByUserIdInterface[]
     loadedUsers: boolean
 }
@@ -23,7 +23,7 @@ export interface ThemeHandles {
     setCurrentUser: React.Dispatch<React.SetStateAction<UserInterface | undefined>>
     setLoaded: React.Dispatch<React.SetStateAction<boolean>>
     setLoadedUsers: React.Dispatch<React.SetStateAction<boolean>>
-    setMovies: React.Dispatch<React.SetStateAction<MovieInterface[]>>
+    setMovies: React.Dispatch<React.SetStateAction<MovieInterface[] | undefined>>
     setMoviesWatching: React.Dispatch<React.SetStateAction<MovieWatchingByUserIdInterface[]>>
     handleSetNotification: ({ type, message }: { type: NotificationStatus; message: string; }) => void
 }
@@ -34,7 +34,7 @@ export const Provider: React.FC<ThemeContextProviderProps> = ({ children }) => {
     const [users, setUsers] = useState<UserInterface[]>([])
     const [account, setAccount] = useState<AccountInterface>()
     const [currentUser, setCurrentUser] = useState<UserInterface>()
-    const [movies, setMovies] = useState<MovieInterface[]>([])
+    const [movies, setMovies] = useState<MovieInterface[] | undefined>(undefined)
     const [moviesWatching, setMoviesWatching] = useState<MovieWatchingByUserIdInterface[]>([])
     const [notificationStatus, setNotificationStatus] = useState<{ type: NotificationStatus, message: string }>({ type: NotificationStatus.NONE, message: '' })
     const [loaded, setLoaded] = useState<boolean>(false)

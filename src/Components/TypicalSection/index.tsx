@@ -9,7 +9,7 @@ import { url } from 'inspector'
 import Video from './components/video'
 
 interface TypicalSectionProps {
-    movies: MovieInterface[]
+    movies: MovieInterface[] | undefined
     movieDetail: MovieDetail
     setMovieDetail: React.Dispatch<React.SetStateAction<MovieDetail>>
 }
@@ -53,13 +53,23 @@ const TypicalSection = ({ movies, setMovieDetail, movieDetail }: TypicalSectionP
                 <button onClick={() => handleClickTrailer(false)}><i className='bx bx-chevron-right'></i></button>
             </div>
             <div className='trailers'>
-                {movies.map((movie, index) => {
-                    if (index <= 5) {
-                        return (
-                            <Video index={index} movie={movie} movies={movies} setMovieDetail={setMovieDetail} />
-                        )
-                    }
-                })}
+                {movies !== undefined ?
+                    <>
+                        {movies?.map((movie, index) => {
+                            if (index <= 5) {
+                                return (
+                                    <Video index={index} movie={movie} movies={movies} setMovieDetail={setMovieDetail} />
+                                )
+                            }
+                        })}
+                    </>
+                    :
+                    <>
+                        <div
+                            style={{ position: 'absolute', top: '50%', left: '50%' }}
+                            className="spinner-border text-light" role="status" />
+                    </>
+                }
             </div>
         </section>
     )
