@@ -45,6 +45,18 @@
         z-index: 2;
         box-shadow: inset 0px -60px 30px rgba(0, 0, 0, 0.689);
 
+        & .btn-next {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: 0;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            border: 0;
+            padding: 0;
+        }
+
         & .btn-next-episode {
             height: 60px;
             position: absolute;
