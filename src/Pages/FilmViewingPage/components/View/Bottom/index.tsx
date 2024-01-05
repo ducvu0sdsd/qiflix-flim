@@ -36,7 +36,6 @@ const Bottom = ({ handleChangeEpisode, currentUser, displayNextEpisode, currentS
 
     const [mouse, setMouse] = useState<boolean>(false)
     const [mousePosition, setMousePosition] = useState<MousePosition>({ x: 0, y: 0 })
-
     const timeout = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
@@ -202,7 +201,7 @@ const Bottom = ({ handleChangeEpisode, currentUser, displayNextEpisode, currentS
                         {currentMovie.listEpisode?.episodes[currentEpisode - 1]?.name}
                     </div>
                     <div className='item-right item' style={{ justifyContent: 'end' }}>
-                        <i style={{ display: `${displayNextEpisode ? 'block' : 'none'}`, fontSize: '28px' }} onClick={() => handleChangeEpisode()} className="fa-solid fa-angles-right"></i>
+                        <i style={{ display: `${currentEpisode !== currentMovie.listEpisode?.numberOfEpisodes ? 'block' : 'none'}`, fontSize: '28px' }} onClick={() => handleChangeEpisode()} className="fa-solid fa-angles-right"></i>
                         <i style={{ fontSize: '24px' }} className="fa-solid fa-gauge"></i>
                         <i onClick={handleOpenSubtitleOrNot} style={{ color: `${openSubtitle ? 'white' : '#999'}` }} className='bx bx-captions' ></i>
                         <i onClick={handleChangeFullScreen} className={`bx ${fullScreen ? 'bx-exit-fullscreen' : 'bx bx-fullscreen'}`} ></i>
