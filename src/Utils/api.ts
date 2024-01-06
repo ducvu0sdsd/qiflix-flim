@@ -131,15 +131,9 @@ export const refreshToken: () => Promise<boolean | undefined> = () => {
                     rejects(true)
                 })
                 .catch(() => {
-                    localStorage.removeItem('accessToken')
-                    localStorage.removeItem('refreshToken')
-                    localStorage.removeItem('currentUser')
                     rejects(false)
                 })
         } else {
-            localStorage.removeItem('accessToken')
-            localStorage.removeItem('refreshToken')
-            localStorage.removeItem('currentUser')
             rejects(false)
         }
     })
