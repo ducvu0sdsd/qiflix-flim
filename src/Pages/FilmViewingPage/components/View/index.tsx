@@ -35,6 +35,8 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
     const [subtitle, setSubtitle] = useState<string>('')
     const [fullScreen, setFullScreen] = useState<boolean>(false)
 
+    console.log(currentEpisode)
+
     useEffect(() => {
         setOpenSubtitle(currentSubtitles.length > 0)
     }, [currentSubtitles])
@@ -229,6 +231,19 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
             </>}
             <div onClick={handlePlayOrPause} className='wrapper-video'></div>
             <ReactPlayer
+                config={{
+                    youtube: {
+                        playerVars: {
+                            controls: 1, // Hiển thị bảng điều khiển
+                            modestbranding: 1, // Ẩn logo YouTube
+                            showinfo: 0, // Ẩn tiêu đề và thông tin video
+                            rel: 0, // Tắt gợi ý video liên quan
+                        },
+                    },
+                    facebook: {
+                        appId: '12345'
+                    }
+                }}
                 ref={reactPlayerRef}
                 width={'100%'}
                 height={`${window.innerHeight}px`}
