@@ -25,7 +25,7 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
 
     // state
     const [displayNextEpisode, setDisplayNextEpisode] = useState<boolean>(false)
-    const [waitingUpdate, setWaitingUpdate] = useState<number>(100)
+    const [waitingUpdate, setWaitingUpdate] = useState<number>(10)
     const [openSubtitle, setOpenSubtitle] = useState<boolean>(currentSubtitles.length > 0)
     const [displayAction, setDisplayAction] = useState<boolean>(true)
     const [duration, setDuration] = useState<number>()
@@ -34,12 +34,21 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
     const [muted, setMuted] = useState<boolean>(false)
     const [subtitle, setSubtitle] = useState<string>('')
     const [fullScreen, setFullScreen] = useState<boolean>(false)
+    const [changing, setChanging] = useState<number>(0)
 
-    console.log(currentEpisode)
+    useEffect(() => {
+        setPlaying(true)
+    }, [currentEpisode])
 
     useEffect(() => {
         setOpenSubtitle(currentSubtitles.length > 0)
     }, [currentSubtitles])
+
+    useEffect(() => {
+        if (changing === 1) {
+            handleChangeEpisode()
+        }
+    }, [changing])
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
@@ -127,10 +136,13 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
             }
         }
 
-        // change episode when The remaining time of the video is 2 seconds
+        if (changing !== 0) {
+            setChanging(0)
+        }
+
         if (played && duration) {
-            if (played / duration >= 0.999) {
-                handleChangeEpisode()
+            if (played / duration >= 0.997) {
+                setChanging(prev => prev + 1)
             }
         }
 
@@ -160,10 +172,10 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
             }
             if (waitingUpdate === 0) {
                 if (reactPlayerRef.current?.getCurrentTime() / duration > 0.95 && currentEpisode === currentMovie.listEpisode?.episodes.length) {
-                    setWaitingUpdate(100)
+                    setWaitingUpdate(10)
                     apiUser({ path: `/users/delete-watching/${currentUser._id}`, body: watching, type: TypeHTTP.PUT })
                 } else {
-                    setWaitingUpdate(100)
+                    setWaitingUpdate(10)
                     apiUser({ path: `/users/update-watching/${currentUser._id}`, body: watching, type: TypeHTTP.PUT })
                 }
             } else {
@@ -205,18 +217,23 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
     const handleChangeEpisode = () => {
         if (currentMovie.listEpisode?.episodes.length) {
             if (currentEpisode < currentMovie.listEpisode?.episodes.length) {
-                const watching = {
-                    movie_id: currentMovie._id,
-                    indexOfEpisode: currentEpisode + 1,
-                    currentTime: 0,
-                    process: 0
-                }
-                if (currentUser) {
-                    apiUser({ path: `/users/update-watching/${currentUser._id}`, body: watching, type: TypeHTTP.PUT })
-                        .then(res => {
-                            setCurrentEpisode(currentEpisode + 1)
-                            setBufferTime(0)
-                        })
+                if (played && duration) {
+                    if (played / duration >= 0.997) {
+                        const watching = {
+                            movie_id: currentMovie._id,
+                            indexOfEpisode: currentEpisode + 1,
+                            currentTime: 0,
+                            process: 0
+                        }
+                        if (currentUser) {
+                            apiUser({ path: `/users/update-watching/${currentUser._id}`, body: watching, type: TypeHTTP.PUT })
+                                .then(res => {
+                                    setCurrentEpisode(currentEpisode + 1)
+                                    setBufferTime(0)
+                                    setPlaying(true)
+                                })
+                        }
+                    }
                 }
             }
         }
@@ -234,10 +251,11 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
                 config={{
                     youtube: {
                         playerVars: {
-                            controls: 1, // Hiển thị bảng điều khiển
+                            controls: 0, // Hiển thị bảng điều khiển
                             modestbranding: 1, // Ẩn logo YouTube
                             showinfo: 0, // Ẩn tiêu đề và thông tin video
-                            rel: 0, // Tắt gợi ý video liên quan
+                            rel: 0, // Tắt gợi ý video liên quan 
+                            fs: 0,
                         },
                     },
                     facebook: {
@@ -250,7 +268,7 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
                 controls={false}
                 playing={playing}
                 muted={muted}
-                progressInterval={1}
+                progressInterval={1000}
                 onStart={() => { reactPlayerRef.current?.seekTo(currentTime) }}
                 onProgress={() => handleOnProgress()}
                 onPlay={() => setPlaying(true)}
