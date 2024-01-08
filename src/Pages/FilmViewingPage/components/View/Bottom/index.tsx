@@ -25,6 +25,7 @@ export interface BottomProps {
     setDisplayAction: React.Dispatch<React.SetStateAction<boolean>>
     currentUser: UserInterface | undefined,
     handleChangeEpisode: () => void
+    setChanging: React.Dispatch<React.SetStateAction<number>>
 }
 
 export interface MousePosition {
@@ -32,7 +33,7 @@ export interface MousePosition {
     y: number
 }
 
-const Bottom = ({ handleChangeEpisode, currentUser, displayNextEpisode, currentSubtitles, openSubtitle, setOpenSubtitle, currentMovie, currentEpisode, fullScreen, setDisplayAction, setFullScreen, duration, playing, played, video, setPlaying, muted, setMuted, subtitle }: BottomProps) => {
+const Bottom = ({ setChanging, handleChangeEpisode, currentUser, displayNextEpisode, currentSubtitles, openSubtitle, setOpenSubtitle, currentMovie, currentEpisode, fullScreen, setDisplayAction, setFullScreen, duration, playing, played, video, setPlaying, muted, setMuted, subtitle }: BottomProps) => {
 
     const [mouse, setMouse] = useState<boolean>(false)
     const [mousePosition, setMousePosition] = useState<MousePosition>({ x: 0, y: 0 })
@@ -201,10 +202,10 @@ const Bottom = ({ handleChangeEpisode, currentUser, displayNextEpisode, currentS
                         {currentMovie.listEpisode?.episodes[currentEpisode - 1]?.name}
                     </div>
                     <div className='item-right item' style={{ justifyContent: 'end' }}>
-                        <i style={{ display: `${currentEpisode !== currentMovie.listEpisode?.numberOfEpisodes ? 'block' : 'none'}`, fontSize: '28px' }} onClick={() => handleChangeEpisode()} className="fa-solid fa-angles-right"></i>
+                        <i style={{ display: `${currentEpisode !== currentMovie.listEpisode?.numberOfEpisodes ? 'block' : 'none'}`, fontSize: '28px' }} onClick={() => { handleChangeEpisode() }} className="fa-solid fa-angles-right"></i>
                         <i style={{ fontSize: '24px' }} className="fa-solid fa-gauge"></i>
                         <i onClick={handleOpenSubtitleOrNot} style={{ color: `${openSubtitle ? 'white' : '#999'}` }} className='bx bx-captions' ></i>
-                        <i onClick={handleChangeFullScreen} className={`bx ${fullScreen ? 'bx-exit-fullscreen' : 'bx bx-fullscreen'}`} ></i>
+                        <i onClick={handleChangeFullScreen} className={`bx ${fullScreen ? 'bx-exit-fullscreen' : 'bx bx-fullscreen'}`} ></i>a
                     </div>
                 </div>
             </div>

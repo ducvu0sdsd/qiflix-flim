@@ -46,7 +46,7 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
 
     useEffect(() => {
         if (changing === 1) {
-            handleChangeEpisode()
+            handleChangeEpisodeForEndVideo()
         }
     }, [changing])
 
@@ -214,7 +214,7 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
         }
     }
 
-    const handleChangeEpisode = () => {
+    const handleChangeEpisodeForEndVideo = () => {
         if (currentMovie.listEpisode?.episodes.length) {
             if (currentEpisode < currentMovie.listEpisode?.episodes.length) {
                 if (played && duration) {
@@ -234,6 +234,27 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
                                 })
                         }
                     }
+                }
+            }
+        }
+    }
+
+    const handleChangeEpisode = () => {
+        if (currentMovie.listEpisode?.episodes.length) {
+            if (currentEpisode < currentMovie.listEpisode?.episodes.length) {
+                const watching = {
+                    movie_id: currentMovie._id,
+                    indexOfEpisode: currentEpisode + 1,
+                    currentTime: 0,
+                    process: 0
+                }
+                if (currentUser) {
+                    apiUser({ path: `/users/update-watching/${currentUser._id}`, body: watching, type: TypeHTTP.PUT })
+                        .then(res => {
+                            setCurrentEpisode(currentEpisode + 1)
+                            setBufferTime(0)
+                            setPlaying(true)
+                        })
                 }
             }
         }
@@ -281,6 +302,7 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
 
 
             <Bottom
+                setChanging={setChanging}
                 handleChangeEpisode={handleChangeEpisode}
                 currentUser={currentUser}
                 displayNextEpisode={displayNextEpisode}
