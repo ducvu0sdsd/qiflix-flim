@@ -111,6 +111,12 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
                 if (duration) {
                     handleChangeTime(0)
                 }
+            } else if (event.code === 'ArrowUp') {
+                event.preventDefault();
+                handleChangeEpisode(1)
+            } else if (event.code === 'ArrowDown') {
+                event.preventDefault();
+                handleChangeEpisode(-1)
             }
         };
         document.addEventListener('keydown', handleKeyDown);
@@ -239,19 +245,19 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
         }
     }
 
-    const handleChangeEpisode = () => {
+    const handleChangeEpisode = (number: number) => {
         if (currentMovie.listEpisode?.episodes.length) {
             if (currentEpisode < currentMovie.listEpisode?.episodes.length) {
                 const watching = {
                     movie_id: currentMovie._id,
-                    indexOfEpisode: currentEpisode + 1,
+                    indexOfEpisode: currentEpisode + number,
                     currentTime: 0,
                     process: 0
                 }
                 if (currentUser) {
                     apiUser({ path: `/users/update-watching/${currentUser._id}`, body: watching, type: TypeHTTP.PUT })
                         .then(res => {
-                            setCurrentEpisode(currentEpisode + 1)
+                            setCurrentEpisode(currentEpisode + number)
                             setBufferTime(0)
                             setPlaying(true)
                         })

@@ -24,7 +24,7 @@ export interface BottomProps {
     setMuted: React.Dispatch<React.SetStateAction<boolean>>
     setDisplayAction: React.Dispatch<React.SetStateAction<boolean>>
     currentUser: UserInterface | undefined,
-    handleChangeEpisode: () => void
+    handleChangeEpisode: (number: number) => void
     setChanging: React.Dispatch<React.SetStateAction<number>>
 }
 
@@ -158,7 +158,7 @@ const Bottom = ({ setChanging, handleChangeEpisode, currentUser, displayNextEpis
                 </div >
             </div>
             <button
-                onClick={() => handleChangeEpisode()}
+                onClick={() => handleChangeEpisode(1)}
                 style={{ display: `${displayNextEpisode ? 'block' : 'none'}` }} className='btn-next-episode'>
                 Next Episode
             </button>
@@ -202,8 +202,8 @@ const Bottom = ({ setChanging, handleChangeEpisode, currentUser, displayNextEpis
                         {currentMovie.listEpisode?.episodes[currentEpisode - 1]?.name}
                     </div>
                     <div className='item-right item' style={{ justifyContent: 'end' }}>
-                        <i style={{ display: `${currentEpisode !== currentMovie.listEpisode?.numberOfEpisodes ? 'block' : 'none'}`, fontSize: '28px' }} onClick={() => { handleChangeEpisode() }} className="fa-solid fa-angles-right"></i>
-                        <i style={{ fontSize: '24px' }} className="fa-solid fa-gauge"></i>
+                        <i style={{ margin: '0 9px', display: `${currentEpisode !== 1 ? 'block' : 'none'}`, fontSize: '28px' }} onClick={() => { handleChangeEpisode(-1) }} className='fa-solid fa-backward-step'></i>
+                        <i style={{ margin: '0 9px', display: `${currentEpisode !== currentMovie.listEpisode?.numberOfEpisodes ? 'block' : 'none'}`, fontSize: '28px' }} onClick={() => { handleChangeEpisode(1) }} className='fa-solid fa-forward-step'></i>
                         <i onClick={handleOpenSubtitleOrNot} style={{ color: `${openSubtitle ? 'white' : '#999'}` }} className='bx bx-captions' ></i>
                         <i onClick={handleChangeFullScreen} className={`bx ${fullScreen ? 'bx-exit-fullscreen' : 'bx bx-fullscreen'}`} ></i>a
                     </div>
