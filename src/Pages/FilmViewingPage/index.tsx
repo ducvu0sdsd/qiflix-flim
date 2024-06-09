@@ -18,7 +18,7 @@ interface FilmViewingPageProp {
 }
 
 const FilmViewingPage = ({ data, currentUser }: FilmViewingPageProp) => {
-    console.log(data)
+
     const [currentEpisode, setCurrentEpisode] = useState<number>()
     const [bufferTime, setBufferTime] = useState<number>()
     const [currentSubtitles, setCurrentSubtitles] = useState<SubtitleInterface[]>([])

@@ -188,8 +188,6 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
                 setWaitingUpdate(prev => prev - 1)
             }
         }
-        if (currentEpisode)
-            setCurrentEpisode({ ...currentEpisode, indexOfEpisode: currentEpisode, process: reactPlayerRef.current?.getCurrentTime() / duration, currentTime: reactPlayerRef.current?.getCurrentTime() })
     }
 
     useEffect(() => {
