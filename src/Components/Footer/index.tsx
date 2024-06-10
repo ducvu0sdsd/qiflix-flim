@@ -5,6 +5,7 @@ import Qiflix from '../../resources/qiflix.png'
 const Footer = () => {
     return (
         <footer className='col-lg-12'>
+            <br />
             <div className='footer-child-1 footer-child col-lg-12'>
                 Have questions? Contact us.
             </div>

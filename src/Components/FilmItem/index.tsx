@@ -107,14 +107,13 @@ const FilmItem = ({ title, displayDetail = false, movie, process, setMovieDetail
             onMouseEnter={() => setWidthDetail(370)} onMouseLeave={() => setWidthDetail(0)} className="films__film-item">
             <div className={`detail-film-mini detail-film-mini-${movie?._id}-${title.toLowerCase().split(' ').join('-')}`}>
                 <div className='col-lg-12 video-film'>
-                    <video
+                    <iframe
                         style={{ backgroundColor: 'black' }}
-                        className='col-lg-12 film'
-                        muted
-                        loop
-                        autoPlay
-                        src={movie?.trailerUrl}
-                    />
+                        src={`https://www.dailymotion.com/embed/video/${movie.trailerUrl}?autoplay=1&controls=0&loop=1&mute=1`}
+                        width="120%"
+                        height="120%"
+                        title="Dailymotion Video Player"
+                        allow="autoplay; web-share" />
                     <div className="btns col-lg-12">
                         <Link className='link' to={`/${movie.url}`}><button className='btn-watch'><i className='bx bx-play' ></i> Watch</button></Link>
                         <button onClick={() => setMovieDetail({ display: true, movie: movie })} className='btn-info'><i className='bx bx-info-circle' ></i></button>

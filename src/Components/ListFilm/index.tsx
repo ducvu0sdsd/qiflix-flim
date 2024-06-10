@@ -54,7 +54,7 @@ const ListFilm = ({ movies, title, paddingLeft, processes, setMovieDetail, movie
 
     return (
         <section className='col-lg-12 list-film' style={{ paddingLeft: paddingLeft + 'px' }}>
-            <h3>{title}</h3>
+            <h4>{title}</h4>
             <div className="wrapper-film col-lg-12">
                 <div className='col-lg-12 films'>
                     <div className={`wrapper-${title.toLowerCase().split(' ').join('-')} wrapper`}>

@@ -117,7 +117,7 @@ const ManageMovies = () => {
                 <input onChange={(e) => setDescription(e.target.value)} type="text" placeholder='Description' className="form-control txt-des" />
                 <input onChange={(e) => setUrl(e.target.value)} type="text" placeholder='URL' className="form-control txt-url" />
                 <input onChange={(e) => setThumbnail(e.target.value)} type="text" placeholder='Thumbnail' className="form-control txt-thum" />
-                <input onChange={(e) => setTrailerUrl(`https://drive.google.com/uc?export=download&id=${e.target.value}`)} type="text" placeholder='Trailer URL' className="form-control txt-trailer" />
+                <input onChange={(e) => setTrailerUrl(`${e.target.value}`)} type="text" placeholder='Trailer URL' className="form-control txt-trailer" />
                 <input onChange={(e) => setYearRelease(parseInt(e.target.value))} type="text" placeholder='Year Release' className="form-control txt-year" />
                 <select onChange={(e) => setCountry(e.target.value)} className="form-select select-country">
                     {countries.map((country, index) => {

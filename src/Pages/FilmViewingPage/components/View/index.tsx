@@ -286,7 +286,7 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
                         },
                     },
                     facebook: {
-                        appId: '12345'
+                        appId: '1048093426472292'
                     }
                 }}
                 ref={reactPlayerRef}

@@ -205,7 +205,7 @@ const Bottom = ({ setChanging, handleChangeEpisode, currentUser, displayNextEpis
                         <i style={{ margin: '0 9px', display: `${currentEpisode !== 1 ? 'block' : 'none'}`, fontSize: '28px' }} onClick={() => { handleChangeEpisode(-1) }} className='fa-solid fa-backward-step'></i>
                         <i style={{ margin: '0 9px', display: `${currentEpisode !== currentMovie.listEpisode?.numberOfEpisodes ? 'block' : 'none'}`, fontSize: '28px' }} onClick={() => { handleChangeEpisode(1) }} className='fa-solid fa-forward-step'></i>
                         <i onClick={handleOpenSubtitleOrNot} style={{ color: `${openSubtitle ? 'white' : '#999'}` }} className='bx bx-captions' ></i>
-                        <i onClick={handleChangeFullScreen} className={`bx ${fullScreen ? 'bx-exit-fullscreen' : 'bx bx-fullscreen'}`} ></i>a
+                        <i onClick={handleChangeFullScreen} className={`bx ${fullScreen ? 'bx-exit-fullscreen' : 'bx bx-fullscreen'}`} ></i>
                     </div>
                 </div>
             </div>

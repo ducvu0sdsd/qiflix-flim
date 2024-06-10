@@ -116,9 +116,8 @@ const HomePage = () => {
             {window.innerWidth >= 600 && <><br /><br /></>}
             <ListFilm movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'Newly Released'} movies={newlyReleased} />
             {(moviesWatching && moviesWatching.length > 0) && <ListFilm movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'Continue Watching'} movies={moviesWatching.map(item => item.movies)} processes={moviesWatching.map(item => item.process)} />}
-            <ListFilm movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'For Christmas'} movies={christmasFilms} />
-            <ListFilm movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'Korea Flims'} movies={koreaFilms} />
-            <ListFilm movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'Hong Kong Flims'} movies={hongKongFilms} />
+            <ListFilm movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'Korea Films'} movies={koreaFilms} />
+            <ListFilm movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'Hong Kong Films'} movies={hongKongFilms} />
             <ListFilm movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'Anime'} movies={animes} />
             <Footer />
         </motion.div>

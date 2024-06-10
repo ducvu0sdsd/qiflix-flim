@@ -21,6 +21,19 @@ export interface MovieDetail {
 
 const TypicalSection = ({ movies, setMovieDetail, movieDetail }: TypicalSectionProps) => {
 
+    const [currentIndex, setCurrentIndex] = useState<number>(1)
+    const [totalMovies, setTotalMovies] = useState(0)
+
+    useEffect(() => {
+        if (movies) {
+            if (movies.length <= 6) {
+                setTotalMovies(movies.length - 1)
+            } else {
+                setTotalMovies(5)
+            }
+        }
+    }, [movies])
+
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
             if (event.code === 'ArrowLeft') {
@@ -38,11 +51,13 @@ const TypicalSection = ({ movies, setMovieDetail, movieDetail }: TypicalSectionP
         if (prev) {
             const typical = document.querySelector('#typical-section .trailers')
             const trailers = document.querySelectorAll('.trailer')
-            typical?.prepend(trailers[trailers.length - 1])
+            typical?.prepend(trailers[totalMovies - 1])
+            setCurrentIndex(currentIndex === 0 ? totalMovies : currentIndex - 1)
         } else {
             const typical = document.querySelector('#typical-section .trailers')
             const trailers = document.querySelectorAll('.trailer')
             typical?.append(trailers[0])
+            setCurrentIndex(currentIndex === totalMovies ? 0 : currentIndex + 1)
         }
     }
 
@@ -58,7 +73,7 @@ const TypicalSection = ({ movies, setMovieDetail, movieDetail }: TypicalSectionP
                         {movies?.map((movie, index) => {
                             if (index <= 5) {
                                 return (
-                                    <Video index={index} movie={movie} movies={movies} setMovieDetail={setMovieDetail} />
+                                    <Video currentIndex={currentIndex} key={index} index={index} movie={movie} movies={movies} setMovieDetail={setMovieDetail} />
                                 )
                             }
                         })}

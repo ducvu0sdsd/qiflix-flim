@@ -1,7 +1,7 @@
 
 import { motion } from 'framer-motion'
 import './moviedetail.scss'
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import $ from 'jquery'
 import Comments from '../../Pages/FilmViewingPage/components/Comments'
 import { Link } from 'react-router-dom'
@@ -24,7 +24,7 @@ export interface MovieDetail {
 const MovieDetail = ({ movieDetail, setMovieDetail }: MovieDetailProps) => {
 
     const { datas, handles } = useContext(ThemeContext) || {}
-
+    const frame = useRef<HTMLIFrameElement>(null)
 
     const handleUnFavoriteFlim = (movie_id: string) => {
         apiUser({ path: `/users/remove-liked/${datas?.currentUser?._id}`, body: { movie_id: movie_id }, type: TypeHTTP.PUT })
@@ -68,13 +68,14 @@ const MovieDetail = ({ movieDetail, setMovieDetail }: MovieDetailProps) => {
                     className='movie-detail'
                 >
                     <div className='video-area col-lg-12'>
-                        <ReactPlayer
-                            className='col-lg-12 trailer'
-                            playing
-                            muted
-                            loop
-                            url={movieDetail.movie.trailerUrl}
-                        />
+
+                        <iframe
+                            ref={frame}
+                            style={{ width: '100%', height: frame.current?.offsetWidth ? frame.current?.offsetWidth * 9 / 16 : '300px' }}
+                            className='trailer'
+                            src={`https://www.dailymotion.com/embed/video/${movieDetail.movie.trailerUrl}?autoplay=1&controls=0&loop=1&mute=1`}
+                            title="Dailymotion Video Player"
+                            allow="autoplay; web-share" />
                         <span className='title-movie'>
                             <span>{movieDetail.movie.title.split(' - ')[1]}</span>
                             <span>{movieDetail.movie.title.split(' - ')[0]}</span>
