@@ -2,9 +2,6 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { MovieInterface } from '../../../Context/interfaces'
 import { MovieDetail } from '../../../MovieDetail'
-import ReactPlayer from 'react-player'
-import DailyMotionPlayer from 'react-player/dailymotion'
-import Dailymotion from 'react-dailymotion';
 
 export interface VideoProps {
     index: number,
