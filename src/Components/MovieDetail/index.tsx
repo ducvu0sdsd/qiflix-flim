@@ -73,7 +73,7 @@ const MovieDetail = ({ movieDetail, setMovieDetail }: MovieDetailProps) => {
                             ref={frame}
                             style={{ width: '100%', height: frame.current?.offsetWidth ? frame.current?.offsetWidth * 9 / 16 : '300px' }}
                             className='trailer'
-                            src={`https://www.dailymotion.com/embed/video/${movieDetail.movie.trailerUrl}?autoplay=1&controls=0&loop=1&mute=1`}
+                            src={`https://www.dailymotion.com/embed/video/${movieDetail.movie.trailerUrl}?autoplay=1&controls=0&loop=true&mute=1`}
                             title="Dailymotion Video Player"
                             allow="autoplay; web-share" />
                         <span className='title-movie'>

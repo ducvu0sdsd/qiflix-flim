@@ -109,7 +109,7 @@ const FilmItem = ({ title, displayDetail = false, movie, process, setMovieDetail
                 <div className='col-lg-12 video-film'>
                     <iframe
                         style={{ backgroundColor: 'black' }}
-                        src={`https://www.dailymotion.com/embed/video/${movie.trailerUrl}?autoplay=1&controls=0&loop=1&mute=1`}
+                        src={`https://www.dailymotion.com/embed/video/${movie.trailerUrl}?autoplay=1&controls=0&loop=true&mute=1`}
                         width="120%"
                         height="120%"
                         title="Dailymotion Video Player"
