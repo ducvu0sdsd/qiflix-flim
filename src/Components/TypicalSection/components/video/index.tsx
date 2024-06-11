@@ -40,7 +40,7 @@ const Video = ({ currentIndex, index, movie, setMovieDetail, movies }: VideoProp
         <div ref={elementRef} key={index} className={'trailer col-lg-12 '} >
             {(movies && movie) ?
                 <>
-                    {ready === false ? <div className='trailer-wrapper' style={{ backgroundImage: `url(${movie.thumbnail})` }}></div>
+                    {/* {ready === false ? <div className='trailer-wrapper' style={{ backgroundImage: `url(${movie.thumbnail})` }}></div>
                         :
                         <iframe
                             src={`https://www.dailymotion.com/embed/video/${movie.trailerUrl}?autoplay=1&controls=0&loop=true&mute=1`}
@@ -48,7 +48,8 @@ const Video = ({ currentIndex, index, movie, setMovieDetail, movies }: VideoProp
                             height="120%"
                             title="Dailymotion Video Player"
                             allow="autoplay; web-share" />
-                    }
+                    } */}
+                    <div className='trailer-wrapper' style={{ backgroundImage: `url(${movie.thumbnail})` }}></div>
                     <div className='info'>
                         <h2>{movie.title.split(' - ')[1]}</h2>
                         <div className='description'>{FilterText(movie.description, 120)}</div>
