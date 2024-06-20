@@ -60,7 +60,7 @@ const PrivateHeader = ({ users, currentUser }: { users: UserInterface[], current
         <header id='private-header' className='col-lg-12'>
             <div className="col-lg-7 logo-menu">
                 <div className='logo-menu__logo col-lg-2'>
-                    <Link to={"/home-page"}><img src={Qiflix} width={'80%'} /></Link>
+                    <Link to={"/home-page"}><img src={Qiflix} width={'95%'} /></Link>
                 </div>
                 {window.innerWidth >= 600 &&
                     <div className="logo-menu__menu col-lg-8">

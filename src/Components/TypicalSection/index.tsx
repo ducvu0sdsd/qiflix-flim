@@ -63,29 +63,7 @@ const TypicalSection = ({ movies, setMovieDetail, movieDetail }: TypicalSectionP
 
     return (
         <section id='typical-section' className='col-lg-12' style={window.innerWidth >= 600 ? { height: `${window.innerHeight}px` } : { width: `${window.innerWidth}px` }}>
-            <div className="btn-actions">
-                <button onClick={() => handleClickTrailer(true)}><i className='bx bx-chevron-left'></i></button>
-                <button onClick={() => handleClickTrailer(false)}><i className='bx bx-chevron-right'></i></button>
-            </div>
-            <div className='trailers'>
-                {movies !== undefined ?
-                    <>
-                        {movies?.map((movie, index) => {
-                            if (index <= 5) {
-                                return (
-                                    <Video currentIndex={currentIndex} key={index} index={index} movie={movie} movies={movies} setMovieDetail={setMovieDetail} />
-                                )
-                            }
-                        })}
-                    </>
-                    :
-                    <>
-                        <div
-                            style={{ position: 'absolute', top: '50%', left: '50%' }}
-                            className="spinner-border text-light" role="status" />
-                    </>
-                }
-            </div>
+            <Video movies={movies} setMovieDetail={setMovieDetail} />
         </section>
     )
 }
