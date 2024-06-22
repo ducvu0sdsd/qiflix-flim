@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import Trailer from '../../resources/trailer.mp4'
 import $ from 'jquery'
 import { MovieInterface } from '../Context/interfaces'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { TypeHTTP, apiUser } from '../../Utils/api'
 import { type } from 'os'
 import { ThemeContext } from '../Context'
@@ -16,8 +16,6 @@ export interface FilmItemProp {
     movie: MovieInterface,
     title: string,
     process: number
-    movieDetail?: MovieDetail
-    setMovieDetail: React.Dispatch<React.SetStateAction<MovieDetail>>
 }
 
 export interface MovieDetail {
@@ -25,13 +23,14 @@ export interface MovieDetail {
     movie: MovieInterface | undefined
 }
 
-const FilmItem = ({ title, displayDetail = false, movie, process, setMovieDetail, movieDetail }: FilmItemProp) => {
+const FilmItem = ({ title, displayDetail = false, movie, process }: FilmItemProp) => {
     const titleCustom = movie?.title.split(' ').join('-')
     const displayRef = useRef<NodeJS.Timeout | null>(null)
     const [widthDetail, setWidthDetail] = useState<number>(0)
     const { datas, handles } = useContext(ThemeContext) || {}
     const [favorites, setFavorites] = useState<string[] | undefined>([])
     const [load, setLoad] = useState<boolean>(false)
+    const navigate = useNavigate()
 
     useEffect(() => {
         setFavorites(datas?.currentUser?.liked)
@@ -98,6 +97,10 @@ const FilmItem = ({ title, displayDetail = false, movie, process, setMovieDetail
             })
     }
 
+    const goToDetail = (data: MovieInterface | undefined) => {
+        navigate('/detail-movie-page', { state: { movie: data } })
+    }
+
 
     return (
         <motion.div
@@ -116,11 +119,11 @@ const FilmItem = ({ title, displayDetail = false, movie, process, setMovieDetail
                         allow="autoplay; web-share" />}
                     <div className="btns col-lg-12">
                         <Link className='link' to={`/${movie.url}`}><button className='btn-watch'><i className='bx bx-play' ></i> Watch</button></Link>
-                        <button onClick={() => setMovieDetail({ display: true, movie: movie })} className='btn-info'><i className='bx bx-info-circle' ></i></button>
+                        <button onClick={() => goToDetail(movie)} className='btn-info'><i className='bx bx-info-circle' ></i></button>
                     </div>
                 </div>
                 <div className="info">
-                    <span>{movie?.yearRelease} | {movie.listEpisode?.numberOfEpisodes}E | {movie?.country} | 1 Part | HD</span>
+                    <span>{movie?.yearRelease} | {movie.listEpisode?.numberOfEpisodes} | {movie?.country} | 1 Part | HD</span>
                     {favorites?.includes(movie._id) ?
                         <button onClick={() => handleUnFavoriteFlim(movie._id)}><i className="fa-solid fa-check"></i></button>
                         :

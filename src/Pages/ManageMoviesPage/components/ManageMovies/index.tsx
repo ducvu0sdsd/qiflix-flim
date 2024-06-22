@@ -16,6 +16,7 @@ const ManageMovies = () => {
     const [description, setDescription] = useState<string>('')
     const [url, setUrl] = useState<string>('')
     const [thumbnail, setThumbnail] = useState<string>('')
+    const [thumbnailVertical, setThumbnailVertical] = useState<string>('')
     const [trailerUrl, setTrailerUrl] = useState<string>('')
     const [yearRelease, setYearRelease] = useState<number>(0)
     const [episode, setEpisode] = useState<EpisodeInterface[]>([])
@@ -28,7 +29,7 @@ const ManageMovies = () => {
 
     const handleInsert = () => {
         const listEpisode = { numberOfEpisodes: episode.length, episodes: episode }
-        const body = { title, description, url, thumbnail, trailerUrl, yearRelease, country, genres, actors, directors, listEpisode, belong }
+        const body = { title, description, url, thumbnail, trailerUrl, yearRelease, country, genres, actors, directors, listEpisode, belong, thumbnailVertical }
         apiUser({ path: '/movies', body: body, type: TypeHTTP.POST })
             .then(res => {
                 alert('Insert success')
@@ -70,7 +71,7 @@ const ManageMovies = () => {
 
     const handleUpdate = () => {
         const listEpisode = { numberOfEpisodes: episode.length, episodes: episode }
-        const body = { title, description, url, thumbnail, trailerUrl, yearRelease, country, genres, actors, directors, listEpisode, belong }
+        const body = { title, description, url, thumbnail, trailerUrl, yearRelease, country, genres, actors, directors, listEpisode, belong, thumbnailVertical }
         apiUser({ path: `/movies/${currentMovie?._id}`, type: TypeHTTP.PUT, body: body })
             .then(res => {
                 console.log(res)
@@ -83,6 +84,7 @@ const ManageMovies = () => {
         const des = $('.txt-des')
         const url = $('.txt-url')
         const thum = $('.txt-thum')
+        const thumVer = $('.txt-thum-ver')
         const trailer = $('.txt-trailer')
         const year = $('.txt-year')
         const country = $('.select-country')
@@ -94,11 +96,13 @@ const ManageMovies = () => {
         trailer.val(currentMovie?.trailerUrl)
         year.val(currentMovie?.yearRelease)
         country.val(currentMovie?.country)
+        thumVer.val(currentMovie?.thumbnailVertical)
         if (currentMovie?.genres && currentMovie?.belong && currentMovie.listEpisode?.episodes) {
             setTitle(currentMovie.title)
             setDescription(currentMovie.description)
             setUrl(currentMovie.url)
             setThumbnail(currentMovie.thumbnail)
+            setThumbnailVertical(currentMovie.thumbnailVertical)
             setTrailerUrl(currentMovie.trailerUrl)
             setYearRelease(currentMovie.yearRelease)
             setCountry(currentMovie.country)
@@ -117,6 +121,7 @@ const ManageMovies = () => {
                 <input onChange={(e) => setDescription(e.target.value)} type="text" placeholder='Description' className="form-control txt-des" />
                 <input onChange={(e) => setUrl(e.target.value)} type="text" placeholder='URL' className="form-control txt-url" />
                 <input onChange={(e) => setThumbnail(e.target.value)} type="text" placeholder='Thumbnail' className="form-control txt-thum" />
+                <input onChange={(e) => setThumbnailVertical(e.target.value)} type="text" placeholder='Thumbnail Vertical' className="form-control txt-thum-ver" />
                 <input onChange={(e) => setTrailerUrl(`${e.target.value}`)} type="text" placeholder='Trailer URL' className="form-control txt-trailer" />
                 <input onChange={(e) => setYearRelease(parseInt(e.target.value))} type="text" placeholder='Year Release' className="form-control txt-year" />
                 <select onChange={(e) => setCountry(e.target.value)} className="form-select select-country">

@@ -1,17 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { MovieInterface } from '../../../Context/interfaces'
 import { MovieDetail } from '../../../MovieDetail'
 import Trailer from '../../../../resources/trailer.mp4'
 import Logo from '../../../../resources/logo-trailer.png'
 
 export interface VideoProps {
-    setMovieDetail: React.Dispatch<React.SetStateAction<MovieDetail>>,
     movies: MovieInterface[] | undefined,
 }
 
-const Video = ({ movies, setMovieDetail }: VideoProps) => {
-
+const Video = ({ movies }: VideoProps) => {
+    const navigate = useNavigate()
     const [ready, setReady] = useState<boolean>(false)
     const elementRef = useRef<HTMLDivElement>(null)
     const videoRef = useRef<HTMLVideoElement>(null)
@@ -25,6 +24,10 @@ const Video = ({ movies, setMovieDetail }: VideoProps) => {
         return str
     }
 
+    const goToDetail = (data: MovieInterface | undefined) => {
+        navigate('/detail-movie-page', { state: { movie: data } })
+    }
+
     return (
         <div ref={elementRef} style={{ height: window.innerHeight + 'px', width: '100%', position: 'relative' }} >
             <div className='trailer'>
@@ -35,7 +38,7 @@ const Video = ({ movies, setMovieDetail }: VideoProps) => {
                     </div>
                     <div className="btns">
                         <Link className='link' to={`/the-garden-of-words`}><button className='btn-parent btn-watch'><i className='bx bx-play'></i> Watch Now</button></Link>
-                        <button onClick={() => setMovieDetail({ display: true, movie: movies?.filter(item => item.url === 'the-garden-of-words')[0] })} className='btn-parent btn-detail'><i className='bx bx-info-circle' ></i> Detail</button>
+                        <button onClick={() => goToDetail(movies?.filter((item) => item.url === 'the-garden-of-words')[0])} className='btn-parent btn-detail'><i className='bx bx-info-circle' ></i> Detail</button>
                     </div>
                 </div>
             </div>

@@ -10,8 +10,6 @@ import Video from './components/video'
 
 interface TypicalSectionProps {
     movies: MovieInterface[] | undefined
-    movieDetail: MovieDetail
-    setMovieDetail: React.Dispatch<React.SetStateAction<MovieDetail>>
 }
 
 export interface MovieDetail {
@@ -19,7 +17,7 @@ export interface MovieDetail {
     movie: MovieInterface | undefined
 }
 
-const TypicalSection = ({ movies, setMovieDetail, movieDetail }: TypicalSectionProps) => {
+const TypicalSection = ({ movies }: TypicalSectionProps) => {
 
     const [currentIndex, setCurrentIndex] = useState<number>(1)
     const [totalMovies, setTotalMovies] = useState(0)
@@ -63,7 +61,7 @@ const TypicalSection = ({ movies, setMovieDetail, movieDetail }: TypicalSectionP
 
     return (
         <section id='typical-section' className='col-lg-12' style={window.innerWidth >= 600 ? { height: `${window.innerHeight}px` } : { width: `${window.innerWidth}px` }}>
-            <Video movies={movies} setMovieDetail={setMovieDetail} />
+            <Video movies={movies} />
         </section>
     )
 }

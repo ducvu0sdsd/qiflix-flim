@@ -111,15 +111,14 @@ const HomePage = () => {
             exit={{ x: window.innerWidth, transition: { duration: 0.2 } }}
             style={{ overflow: 'hidden' }}
         >
-            {movieDetail.display && <MovieDetail movieDetail={movieDetail} setMovieDetail={setMovieDetail} />}
             <PrivateHeader users={datas?.users || []} currentUser={datas?.currentUser} />
-            <TypicalSection movieDetail={movieDetail} setMovieDetail={setMovieDetail} movies={movieTypical} />
+            <TypicalSection movies={movieTypical} />
             {/* {window.innerWidth >= 600 && <><br /><br /></>} */}
-            <NewlyReleased movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'Newly Released'} movies={newlyReleased} />
-            {(moviesWatching && moviesWatching.length > 0) && <ListFilm movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'Continue Watching'} movies={moviesWatching.map(item => item.movies)} processes={moviesWatching.map(item => item.process)} />}
-            <ListFilm movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'Korea Films'} movies={koreaFilms} />
-            <ListFilm movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'Hong Kong Films'} movies={hongKongFilms} />
-            <ListFilm movieDetail={movieDetail} setMovieDetail={setMovieDetail} title={'Anime'} movies={animes} />
+            <NewlyReleased title={'Newly Released'} movies={newlyReleased} />
+            {(moviesWatching && moviesWatching.length > 0) && <ListFilm title={'Continue Watching'} movies={moviesWatching.map(item => item.movies)} processes={moviesWatching.map(item => item.process)} />}
+            <ListFilm title={'Korea Films'} movies={koreaFilms} />
+            <ListFilm title={'Hong Kong Films'} movies={hongKongFilms} />
+            <ListFilm title={'Anime'} movies={animes} />
             <Footer />
         </motion.div>
     )

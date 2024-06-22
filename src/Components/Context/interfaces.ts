@@ -72,6 +72,7 @@ export interface MovieInterface {
     yearRelease: number
     _id: string
     listEpisode?: Episode
+    thumbnailVertical: string
 }
 
 export interface MovieWatchingByUserIdInterface {
