@@ -77,6 +77,7 @@ const DetailFilm = () => {
                     <img src={movie?.thumbnailVertical} width={'300px'} style={{ borderRadius: '8px' }} />
                     <div className='info'>
                         <h1 style={{ fontWeight: 'bold' }}>{movie?.title}</h1>
+                        <span>{movie.yearRelease}</span>
                         <span>Number Of Episode: {movie.listEpisode?.numberOfEpisodes}</span>
                         <span>Genre: {movie.genres.join(', ')}</span>
                         <span style={{ color: 'white' }}>{movie.description}</span>
