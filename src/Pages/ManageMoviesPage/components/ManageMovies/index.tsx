@@ -1,7 +1,7 @@
 
 import React, { useContext, useEffect, useState } from 'react'
 import './managemovies.scss'
-import { countries, movieGenres } from './datas'
+import { belongs, countries, movieGenres } from './datas'
 import { EpisodeInterface, MovieInterface } from '../../../../Components/Context/interfaces'
 import $ from "jquery"
 import { TypeHTTP, apiUser } from '../../../../Utils/api'
@@ -153,7 +153,11 @@ const ManageMovies = () => {
                     </div>
                 </div>
                 <div className='episode' style={{ display: 'flex', width: "30%" }}>
-                    <input type="text" placeholder='Belong' className="form-control col-lg-5 txt-belong" style={{ width: '45%' }} />
+                    <select className="form-control col-lg-5 txt-belong" style={{ width: '45%' }}>
+                        {belongs.map((item, index) => (
+                            <option key={index} value={item}>{item}</option>
+                        ))}
+                    </select>
                     <button onClick={() => setBelong(prev => [...prev, $('.txt-belong').val()])} type="button" className="btn btn-success">Create</button>
                     <div className='col-lg-4 content'>{belong.join(', ')}
                         <button onClick={() => setBelong([])}>x</button>

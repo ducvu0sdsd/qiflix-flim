@@ -14,6 +14,7 @@ import { Helmet } from 'react-helmet';
 import QiflixMeta from '../../resources/qiflix-meta.png'
 import { shuffleArray } from '../../Utils/movie'
 import NewlyReleased from '../../Components/NewlyReleased'
+import { belongs } from '../ManageMoviesPage/components/ManageMovies/datas'
 
 export interface MoviesWatching {
     movies: MovieInterface
@@ -88,22 +89,6 @@ const HomePage = () => {
         }
     })
 
-    const koreaFilms: MovieInterface[] | undefined = datas?.movies?.filter(item => {
-        return item.country === "Korea"
-    })
-
-    const hongKongFilms: MovieInterface[] | undefined = datas?.movies?.filter(item => {
-        return item.country === "Hong Kong"
-    })
-
-    const animes: MovieInterface[] | undefined = datas?.movies?.filter(item => {
-        return item.belong.includes("Anime")
-    })
-
-    const christmasFilms: MovieInterface[] | undefined = datas?.movies?.filter(item => {
-        return item.belong.includes("For Christmas")
-    })
-
     return (
         <motion.div
             initial={{ x: window.innerWidth * -1 }}
@@ -114,11 +99,14 @@ const HomePage = () => {
             <PrivateHeader users={datas?.users || []} currentUser={datas?.currentUser} />
             <TypicalSection movies={movieTypical} />
             {/* {window.innerWidth >= 600 && <><br /><br /></>} */}
-            <NewlyReleased title={'Newly Released'} movies={newlyReleased} />
+            <NewlyReleased title={'Newly Released'} movies={newlyReleased} processes={moviesWatching?.map(item => item.process)} />
             {(moviesWatching && moviesWatching.length > 0) && <ListFilm title={'Continue Watching'} movies={moviesWatching.map(item => item.movies)} processes={moviesWatching.map(item => item.process)} />}
-            <ListFilm title={'Korea Films'} movies={koreaFilms} />
-            <ListFilm title={'Hong Kong Films'} movies={hongKongFilms} />
-            <ListFilm title={'Anime'} movies={animes} />
+            {belongs.map((item, index) => {
+                const movies = shuffleArray(datas?.movies?.filter(movie => movie.belong.includes(item)) || [])
+                if (movies.length > 4) {
+                    return <ListFilm key={index} title={item} movies={movies} processes={moviesWatching?.map(item => item.process)} />
+                }
+            })}
             <Footer />
         </motion.div>
     )
