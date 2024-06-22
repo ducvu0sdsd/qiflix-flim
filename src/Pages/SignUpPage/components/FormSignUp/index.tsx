@@ -197,9 +197,7 @@ const FormSignUp = ({ email }: FormSignUpProp) => {
                             <input onFocus={() => setFocuses(() => ({ ...focuses, focusPassword: true }))} onBlur={(e) => { e.target.value === '' && setFocuses(() => ({ ...focuses, focusPassword: false })) }} type='password' className='txt-verify-code txt' />
                         </div>
                         <span style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <span style={{ width: 'auto' }}>Don't Get Verify Code?<button onClick={() => handleCreateVerifyCode()} className='btn-resend'>ReSend</button></span>
-                            <span style={{ width: 'auto' }}>{timeRemaining !== 0 ? <>Time remaining {secondsToTimeForSignUp(timeRemaining)}</> : <span style={{ color: 'red', width: 'auto' }}>Expired</span>}</span>
-                        </span>
+                            <span style={{ width: 'auto' }}>Don't Get Verify Code?<button onClick={() => handleCreateVerifyCode()} className='btn-resend'>ReSend</button></span>                        </span>
                         <button onClick={() => handleConfirmVerifyCode()} className='btn-next'>{loadingSignUp ? <div className="spinner-border text-light" role="status" /> : <>Next</>}</button>
                     </div>
                     <div className='form-step-2 form-step'>

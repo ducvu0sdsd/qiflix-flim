@@ -39,7 +39,7 @@ const Video = ({ movies, setMovieDetail }: VideoProps) => {
                     </div>
                 </div>
             </div>
-            <video ref={videoRef} src={Trailer} loop autoPlay style={{ width: '100%' }}></video>
+            <video ref={videoRef} src={Trailer} loop autoPlay muted style={{ width: '100%' }}></video>
         </div >
     )
 }
