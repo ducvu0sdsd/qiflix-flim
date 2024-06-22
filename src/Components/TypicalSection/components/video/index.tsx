@@ -34,11 +34,11 @@ const Video = ({ movies }: VideoProps) => {
                 <div className='info' style={{ position: 'absolute', top: '50%', transform: 'translateY(-50%)', left: '3%' }}>
                     <img src={Logo} width={'18%'} />
                     <div style={{ width: '35%', fontSize: '18px', fontWeight: '500', color: 'white' }}>
-                        Một buổi sáng mùa mưa, trên đường đến trường, cậu đã cúp tiết lang thang đến một khu vườn để phác thảo mẫu giày và bắt gặp một cô gái quyến rũ tên Yukino Yukari đang ngồi uống bia ngắm mưa rơi. Họ không nói nhau lời nào, nhưng khi trời tạnh mưa, cô gái từ biệt cậu bằng một bài tanka khiến cậu bối rối. Tiếp tục những buổi sáng trời mưa tiếp theo, họ lại gặp nhau và...?
+                        {'Thư ký Kim sao thế? (Tiếng Hàn: 김비서가 왜 그럴까; Romaja: Kimbiseoga Wae Geureolkka) là một bộ phim truyền hình Hàn Quốc năm 2018 với sự tham gia của Park Seo-joon và Park Min-young. Nó dựa trên tiểu thuyết cùng tên của Jung Kyung-yoon được xuất bản lần đầu vào năm 2013, sau đó được KakaoPage chuyển thể thành truyện tranh vào năm 2015.[1] Bộ phim được phát sóng trên tvN từ ngày 6 tháng 6 đến ngày 26 tháng 7 năm 2018, vào thứ Tư và thứ Năm hàng tuần cho 16 tập.[2][3][4]'}
                     </div>
                     <div className="btns">
-                        <Link className='link' to={`/the-garden-of-words`}><button className='btn-parent btn-watch'><i className='bx bx-play'></i> Watch Now</button></Link>
-                        <button onClick={() => goToDetail(movies?.filter((item) => item.url === 'the-garden-of-words')[0])} className='btn-parent btn-detail'><i className='bx bx-info-circle' ></i> Detail</button>
+                        <Link className='link' to={`/whats-wrong-with-secretary-kim`}><button className='btn-parent btn-watch'><i className='bx bx-play'></i> Watch Now</button></Link>
+                        <button onClick={() => goToDetail(movies?.filter((item) => item.url === 'whats-wrong-with-secretary-kim')[0])} className='btn-parent btn-detail'><i className='bx bx-info-circle' ></i> Detail</button>
                     </div>
                 </div>
             </div>
