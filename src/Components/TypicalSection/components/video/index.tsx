@@ -25,7 +25,8 @@ const Video = ({ movies }: VideoProps) => {
     }
 
     const goToDetail = (data: MovieInterface | undefined) => {
-        navigate('/detail-movie-page', { state: { movie: data } })
+        console.log(data)
+        // navigate('/detail-movie-page', { state: { movie: data } })
     }
 
     return (

@@ -6,6 +6,7 @@ import { EpisodeInterface, MovieInterface } from '../../../../Components/Context
 import $ from "jquery"
 import { TypeHTTP, apiUser } from '../../../../Utils/api'
 import { ThemeContext } from '../../../../Components/Context'
+import { useNavigate } from 'react-router-dom'
 
 const ManageMovies = () => {
     const [currentMovie, setCurrentMovie] = useState<MovieInterface | undefined>(undefined)
@@ -26,6 +27,13 @@ const ManageMovies = () => {
     const [directors, setDirectors] = useState<string[]>([])
     const [belong, setBelong] = useState<string[]>([])
     const { datas } = useContext(ThemeContext) || {}
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (datas?.account?.admin === false) {
+            navigate('/home-page')
+        }
+    }, [datas?.account])
 
     const handleInsert = () => {
         const listEpisode = { numberOfEpisodes: episode.length, episodes: episode }
