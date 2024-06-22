@@ -33,6 +33,7 @@ const Video = ({ movies }: VideoProps) => {
             <div className='trailer'>
                 <div className='info' style={{ position: 'absolute', top: '50%', transform: 'translateY(-50%)', left: '3%' }}>
                     <img src={Logo} width={'18%'} />
+                    <br />
                     <div style={{ width: '35%', fontSize: '18px', fontWeight: '500', color: 'white' }}>
                         {'Thư ký Kim sao thế? (Tiếng Hàn: 김비서가 왜 그럴까; Romaja: Kimbiseoga Wae Geureolkka) là một bộ phim truyền hình Hàn Quốc năm 2018 với sự tham gia của Park Seo-joon và Park Min-young. Nó dựa trên tiểu thuyết cùng tên của Jung Kyung-yoon được xuất bản lần đầu vào năm 2013, sau đó được KakaoPage chuyển thể thành truyện tranh vào năm 2015.[1] Bộ phim được phát sóng trên tvN từ ngày 6 tháng 6 đến ngày 26 tháng 7 năm 2018, vào thứ Tư và thứ Năm hàng tuần cho 16 tập.[2][3][4]'}
                     </div>
