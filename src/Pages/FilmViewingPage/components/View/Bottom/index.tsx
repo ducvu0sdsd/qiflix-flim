@@ -81,6 +81,10 @@ const Bottom = ({ setVisibleGuide, handleChangeFullScreen, setChanging, setVolum
             const volumeFormat = volume as Volume
             setVolume(volumeFormat.volumePercent)
             setVolumeWidth(volumeFormat.volumeWidth)
+        } else {
+            const controlVolumeElement = document.querySelector('.control-volume') as HTMLElement;
+            setVolume(1)
+            setVolumeWidth(controlVolumeElement.offsetWidth)
         }
     }, [window.localStorage.getItem('volume')])
 
