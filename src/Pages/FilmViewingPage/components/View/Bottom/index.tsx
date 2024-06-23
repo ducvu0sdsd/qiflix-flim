@@ -27,6 +27,8 @@ export interface BottomProps {
     handleChangeEpisode: (number: number) => void
     setChanging: React.Dispatch<React.SetStateAction<number>>
     setVolume: React.Dispatch<React.SetStateAction<number>>
+    handleChangeFullScreen: any
+    setVisibleGuide: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export interface MousePosition {
@@ -39,7 +41,7 @@ export interface Volume {
     volumeWidth: number
 }
 
-const Bottom = ({ setChanging, setVolume, handleChangeEpisode, currentUser, displayNextEpisode, currentSubtitles, openSubtitle, setOpenSubtitle, currentMovie, currentEpisode, fullScreen, setDisplayAction, setFullScreen, duration, playing, played, video, setPlaying, muted, setMuted, subtitle }: BottomProps) => {
+const Bottom = ({ setVisibleGuide, handleChangeFullScreen, setChanging, setVolume, handleChangeEpisode, currentUser, displayNextEpisode, currentSubtitles, openSubtitle, setOpenSubtitle, currentMovie, currentEpisode, fullScreen, setDisplayAction, setFullScreen, duration, playing, played, video, setPlaying, muted, setMuted, subtitle }: BottomProps) => {
 
     const [mouse, setMouse] = useState<boolean>(false)
     const [mousePosition, setMousePosition] = useState<MousePosition>({ x: 0, y: 0 })
@@ -59,6 +61,7 @@ const Bottom = ({ setChanging, setVolume, handleChangeEpisode, currentUser, disp
         setDisplayAction(true)
         clearTimeout(timeout.current!)
         timeout.current = setTimeout(() => {
+            setVisibleGuide(false)
             setDisplayAction(false)
         }, 4000)
     }, [mousePosition])
@@ -81,12 +84,13 @@ const Bottom = ({ setChanging, setVolume, handleChangeEpisode, currentUser, disp
     }, [window.localStorage.getItem('volume')])
 
     useEffect(() => {
-        if (volumeWidth === 0) {
-            setMuted(true)
+        const volume = JSON.parse(window.localStorage.getItem('volume') || '') as Volume
+        if (muted) {
+            setVolumeWidth(0)
         } else {
-            setMuted(false)
+            setVolumeWidth(volume.volumeWidth)
         }
-    }, [volumeWidth])
+    }, [muted])
 
     const handleMouseMove = () => {
         if (mouse) {
@@ -110,26 +114,6 @@ const Bottom = ({ setChanging, setVolume, handleChangeEpisode, currentUser, disp
         setMouse(true)
         $('.bottom .stick').css('width', '25px')
         $('.bottom .stick').css('height', '25px')
-    }
-
-    const handleChangeFullScreen = () => {
-        const elem: HTMLElement | null = document.documentElement as HTMLElement;
-        if (!document.fullscreenElement) {
-            if (elem?.requestFullscreen) {
-                window.scrollTo({ top: 0, behavior: 'auto' });
-                setTimeout(() => {
-                    elem.requestFullscreen()
-                    document.body.style.overflow = 'hidden'
-                    setFullScreen(true)
-                }, 400)
-            }
-        } else {
-            if (document.exitFullscreen) {
-                document.exitFullscreen()
-                document.body.style.overflow = ''
-                setFullScreen(false)
-            }
-        }
     }
 
     const handlePlayOrPause = () => {
@@ -183,6 +167,10 @@ const Bottom = ({ setChanging, setVolume, handleChangeEpisode, currentUser, disp
         if (controlVolumeElement) {
             const rect = controlVolumeElement.getBoundingClientRect();
             const width = controlVolumeElement.offsetWidth;
+            if ((mousePosition.x - rect.left) / (width) > 0) {
+                setMuted(false)
+            } else
+                setMuted(true)
             window.localStorage.setItem('volume', JSON.stringify({ volumePercent: (mousePosition.x - rect.left) / (width), volumeWidth: mousePosition.x - rect.left }))
         }
     }
@@ -229,9 +217,9 @@ const Bottom = ({ setChanging, setVolume, handleChangeEpisode, currentUser, disp
                                 onClick={handleMutedOrNot}
                                 style={{ fontSize: '26px', transform: 'translateY(0px)', width: '30px' }} className={`fa-solid ${muted ? 'fa-volume-xmark' : 'fa-volume-high'}`}>
                             </i>
-                            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', height: '40px', width: visibleVolume ? '100px' : '0px', transition: '0.5s', top: '-8px', left: '45px' }}>
-                                <div onClick={() => handleClickProcessVolume()} className='control-volume' style={{ height: '5px', cursor: 'pointer', width: '95%', display: 'flex', alignItems: 'center', backgroundColor: '#999', borderRadius: '10px' }}>
-                                    <div style={{ backgroundColor: 'red', height: '100%', width: `${volumeWidth}px` }}>
+                            <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden', justifyContent: 'center', alignItems: 'center', position: 'absolute', height: '40px', width: visibleVolume ? '100px' : '0px', transition: '0.5s', top: '-8px', left: '45px' }}>
+                                <div onClick={() => handleClickProcessVolume()} className='control-volume' style={{ height: '5px', cursor: 'pointer', width: '90%', display: 'flex', alignItems: 'center', backgroundColor: '#999', borderRadius: '10px' }}>
+                                    <div style={{ backgroundColor: 'red', height: '100%', width: `${volumeWidth}px`, borderRadius: '10px 0px 0px 10px' }}>
 
                                     </div>
                                     <div style={{ height: '18px', width: '18px', borderRadius: '50%', backgroundColor: 'red', cursor: 'pointer', transform: 'translateY(1px)' }}>

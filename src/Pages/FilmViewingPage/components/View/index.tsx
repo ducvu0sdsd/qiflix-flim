@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import ReactPlayer from 'react-player/lazy'
 import { MovieInterface, SubtitleInterface, UserInterface } from '../../../../Components/Context/interfaces'
 import './view.scss'
-import Bottom from './Bottom'
+import Bottom, { Volume } from './Bottom'
 import $ from 'jquery'
 import { Link } from 'react-router-dom'
 import { TypeHTTP, apiUser } from '../../../../Utils/api'
@@ -36,6 +36,7 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
     const [fullScreen, setFullScreen] = useState<boolean>(false)
     const [changing, setChanging] = useState<number>(0)
     const [volume, setVolume] = useState<number>(0)
+    const [visibleGuide, setVisibleGuide] = useState<boolean>(false)
 
     useEffect(() => {
         setPlaying(true)
@@ -118,6 +119,29 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
             } else if (event.code === 'ArrowDown') {
                 event.preventDefault();
                 handleChangeEpisode(-1)
+            } else if (event.code === 'KeyF') {
+                event.preventDefault();
+                handleChangeFullScreen()
+            } else if (event.code === 'KeyM') {
+                event.preventDefault();
+                setMuted(!muted)
+            } else if (event.code === 'BracketLeft') {
+                event.preventDefault();
+                const volumeNumber = (JSON.parse(window.localStorage.getItem('volume') || '') as Volume)
+                if (volumeNumber.volumePercent < 0.1) {
+                    // window.localStorage.setItem('volume', JSON.stringify({ volumePercent: 0, volumeWidth: 0 }))
+                } else {
+                    window.localStorage.setItem('volume', JSON.stringify({ volumePercent: volumeNumber.volumePercent - 0.1, volumeWidth: volumeNumber.volumeWidth * (volumeNumber.volumePercent - 0.1) / volumeNumber.volumePercent }))
+                }
+            } else if (event.code === 'BracketRight') {
+                event.preventDefault();
+                const volumeNumber = (JSON.parse(window.localStorage.getItem('volume') || '') as Volume)
+                if (volumeNumber.volumePercent > 0.9) {
+                    window.localStorage.setItem('volume', JSON.stringify({ volumePercent: 1, volumeWidth: volumeNumber.volumeWidth * 1 / volumeNumber.volumePercent }))
+                } else {
+                    window.localStorage.setItem('volume', JSON.stringify({ volumePercent: volumeNumber.volumePercent + 0.1, volumeWidth: volumeNumber.volumeWidth * (volumeNumber.volumePercent + 0.1) / volumeNumber.volumePercent }))
+                }
+
             }
         };
         document.addEventListener('keydown', handleKeyDown);
@@ -125,6 +149,26 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
             document.removeEventListener('keydown', handleKeyDown);
         };
     }, [playing, played]);
+
+    const handleChangeFullScreen = () => {
+        const elem: HTMLElement | null = document.documentElement as HTMLElement;
+        if (!document.fullscreenElement) {
+            if (elem?.requestFullscreen) {
+                window.scrollTo({ top: 0, behavior: 'auto' });
+                setTimeout(() => {
+                    elem.requestFullscreen()
+                    document.body.style.overflow = 'hidden'
+                    setFullScreen(true)
+                }, 400)
+            }
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen()
+                document.body.style.overflow = ''
+                setFullScreen(false)
+            }
+        }
+    }
 
     const handleOnProgress = () => {
         setPlayed(reactPlayerRef.current?.getCurrentTime() || 0)
@@ -267,12 +311,36 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
         }
     }
 
+    const guides = [
+        { key: 'Space', value: 'Play/Pause Movie' },
+        { key: '0-9', value: 'Adjust the duration of Movie' },
+        { key: 'Left', value: '10 seconds backward' },
+        { key: 'Right', value: 'Forward 10 seconds' },
+        { key: 'Up', value: 'Next Episode' },
+        { key: 'Down', value: 'Previous Episode' },
+        { key: 'F', value: 'FullScreen Or UnFullScreen' },
+        { key: 'M', value: 'Muted Or Unmuted' },
+    ]
+
 
     return (
         <section style={{ height: `${window.innerHeight}px` }} id='video'>
             {!fullScreen && <>
                 <Link className='link' to={'/home-page'}><i className='btn-return bx bx-left-arrow-alt'></i></Link>
-                <i className='bx bx-share-alt btn-share' ></i>
+                <i className='bx bx-book-content btn-share' onMouseEnter={() => setVisibleGuide(true)} onMouseLeave={() => setVisibleGuide(false)} >
+                    <div className='content' style={{ width: visibleGuide ? 'auto' : 0, padding: visibleGuide ? '15px' : '0' }}>
+                        {visibleGuide && guides.map((item, index) => (
+                            <div key={index} style={{ display: 'flex', alignItems: 'center' }}>
+                                <div style={{ fontWeight: 'bold', fontSize: '18px', width: '70px' }}>
+                                    {item.key}
+                                </div>
+                                <div style={{ fontSize: '16px', width: '250px' }}>
+                                    <span>{': ' + item.value}</span>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </i>
             </>}
             <div onClick={handlePlayOrPause} className='wrapper-video'></div>
             <ReactPlayer
@@ -297,7 +365,7 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
                 volume={volume}
                 playing={playing}
                 muted={muted}
-                progressInterval={1000}
+                progressInterval={100}
                 onStart={() => { reactPlayerRef.current?.seekTo(currentTime) }}
                 onProgress={() => handleOnProgress()}
                 onPlay={() => setPlaying(true)}
@@ -310,6 +378,8 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
 
 
             <Bottom
+                setVisibleGuide={setVisibleGuide}
+                handleChangeFullScreen={handleChangeFullScreen}
                 setChanging={setChanging}
                 handleChangeEpisode={handleChangeEpisode}
                 currentUser={currentUser}
