@@ -98,6 +98,10 @@ const Bottom = ({ setVisibleGuide, handleChangeFullScreen, setChanging, setVolum
             } else {
                 setVolumeWidth(volumeFormat.volumeWidth)
             }
+        } else {
+            const controlVolumeElement = document.querySelector('.control-volume') as HTMLElement;
+            setVolume(1)
+            setVolumeWidth(controlVolumeElement.offsetWidth)
         }
     }, [muted])
 
