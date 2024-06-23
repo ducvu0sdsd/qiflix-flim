@@ -85,11 +85,15 @@ const Bottom = ({ setVisibleGuide, handleChangeFullScreen, setChanging, setVolum
     }, [window.localStorage.getItem('volume')])
 
     useEffect(() => {
-        const volume = JSON.parse(window.localStorage.getItem('volume') || '') as Volume
-        if (muted) {
-            setVolumeWidth(0)
-        } else {
-            setVolumeWidth(volume.volumeWidth)
+        const json = window.localStorage.getItem('volume')
+        if (json) {
+            const volume = JSON.parse(json)
+            const volumeFormat = volume as Volume
+            if (muted) {
+                setVolumeWidth(0)
+            } else {
+                setVolumeWidth(volumeFormat.volumeWidth)
+            }
         }
     }, [muted])
 
