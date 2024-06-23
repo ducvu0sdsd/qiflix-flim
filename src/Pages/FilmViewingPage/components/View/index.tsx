@@ -35,6 +35,7 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
     const [subtitle, setSubtitle] = useState<string>('')
     const [fullScreen, setFullScreen] = useState<boolean>(false)
     const [changing, setChanging] = useState<number>(0)
+    const [volume, setVolume] = useState<number>(0)
 
     useEffect(() => {
         setPlaying(true)
@@ -293,6 +294,7 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
                 width={'100%'}
                 height={`${window.innerHeight}px`}
                 controls={false}
+                volume={volume}
                 playing={playing}
                 muted={muted}
                 progressInterval={1000}
@@ -320,6 +322,7 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
                 fullScreen={fullScreen}
                 subtitle={subtitle}
                 playing={playing}
+                setVolume={setVolume}
                 played={played || 0}
                 duration={duration || 0}
                 video={reactPlayerRef.current}

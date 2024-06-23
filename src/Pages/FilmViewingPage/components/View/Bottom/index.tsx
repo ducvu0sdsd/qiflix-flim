@@ -26,6 +26,7 @@ export interface BottomProps {
     currentUser: UserInterface | undefined,
     handleChangeEpisode: (number: number) => void
     setChanging: React.Dispatch<React.SetStateAction<number>>
+    setVolume: React.Dispatch<React.SetStateAction<number>>
 }
 
 export interface MousePosition {
@@ -33,11 +34,18 @@ export interface MousePosition {
     y: number
 }
 
-const Bottom = ({ setChanging, handleChangeEpisode, currentUser, displayNextEpisode, currentSubtitles, openSubtitle, setOpenSubtitle, currentMovie, currentEpisode, fullScreen, setDisplayAction, setFullScreen, duration, playing, played, video, setPlaying, muted, setMuted, subtitle }: BottomProps) => {
+export interface Volume {
+    volumePercent: number,
+    volumeWidth: number
+}
+
+const Bottom = ({ setChanging, setVolume, handleChangeEpisode, currentUser, displayNextEpisode, currentSubtitles, openSubtitle, setOpenSubtitle, currentMovie, currentEpisode, fullScreen, setDisplayAction, setFullScreen, duration, playing, played, video, setPlaying, muted, setMuted, subtitle }: BottomProps) => {
 
     const [mouse, setMouse] = useState<boolean>(false)
     const [mousePosition, setMousePosition] = useState<MousePosition>({ x: 0, y: 0 })
     const timeout = useRef<NodeJS.Timeout | null>(null);
+    const [visibleVolume, setVisibleVolume] = useState<boolean>(false)
+    const [volumeWidth, setVolumeWidth] = useState<number>(0)
 
     useEffect(() => {
         document.addEventListener('mousemove', (e) => {
@@ -62,6 +70,23 @@ const Bottom = ({ setChanging, handleChangeEpisode, currentUser, displayNextEpis
             $('.bottom .played').css('width', `${process * processWidth}px`)
         }
     }, [played])
+
+    useEffect(() => {
+        const volume = JSON.parse(window.localStorage.getItem('volume') || '')
+        if (volume !== '') {
+            const volumeFormat = volume as Volume
+            setVolume(volumeFormat.volumePercent)
+            setVolumeWidth(volumeFormat.volumeWidth)
+        }
+    }, [window.localStorage.getItem('volume')])
+
+    useEffect(() => {
+        if (volumeWidth === 0) {
+            setMuted(true)
+        } else {
+            setMuted(false)
+        }
+    }, [volumeWidth])
 
     const handleMouseMove = () => {
         if (mouse) {
@@ -116,9 +141,12 @@ const Bottom = ({ setChanging, handleChangeEpisode, currentUser, displayNextEpis
     }
 
     const handleMutedOrNot = () => {
+        const volume = JSON.parse(window.localStorage.getItem('volume') || '') as Volume
         if (muted) {
+            setVolumeWidth(volume.volumeWidth)
             setMuted(false)
         } else {
+            setVolumeWidth(0)
             setMuted(true)
         }
     }
@@ -147,6 +175,15 @@ const Bottom = ({ setChanging, handleChangeEpisode, currentUser, displayNextEpis
         const playedProcess = processMouse / processWidth
         if (video) {
             video.seekTo(duration * playedProcess)
+        }
+    }
+
+    const handleClickProcessVolume = () => {
+        const controlVolumeElement = document.querySelector('.control-volume') as HTMLElement;
+        if (controlVolumeElement) {
+            const rect = controlVolumeElement.getBoundingClientRect();
+            const width = controlVolumeElement.offsetWidth;
+            window.localStorage.setItem('volume', JSON.stringify({ volumePercent: (mousePosition.x - rect.left) / (width), volumeWidth: mousePosition.x - rect.left }))
         }
     }
 
@@ -184,17 +221,25 @@ const Bottom = ({ setChanging, handleChangeEpisode, currentUser, displayNextEpis
                         <i onClick={handlePlayOrPause} style={{ width: '23px' }} className={`fa-solid ${playing ? 'fa-pause' : 'fa-play'}`}></i>
                         <i onClick={() => handleChangeTime(-10)} className="fa-solid fa-arrow-rotate-left"></i>
                         <i onClick={() => handleChangeTime(10)} className="fa-solid fa-arrow-rotate-right"></i>
-                        <i
-                            onClick={handleMutedOrNot}
-                            style={{ fontSize: '26px', position: 'relative', transform: 'translateY(0px)', width: '30px' }} className={`fa-solid ${muted ? 'fa-volume-xmark' : 'fa-volume-high'}`}>
-                            {/* <div className='control-volume'>
-                            <div className='volumed'>
-                                <div className='stick-volume'>
+                        <div
+                            onMouseEnter={() => setVisibleVolume(true)}
+                            onMouseLeave={() => setVisibleVolume(false)}
+                            style={{ position: 'relative' }}>
+                            <i
+                                onClick={handleMutedOrNot}
+                                style={{ fontSize: '26px', transform: 'translateY(0px)', width: '30px' }} className={`fa-solid ${muted ? 'fa-volume-xmark' : 'fa-volume-high'}`}>
+                            </i>
+                            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', position: 'absolute', height: '40px', width: visibleVolume ? '100px' : '0px', transition: '0.5s', top: '-8px', left: '45px' }}>
+                                <div onClick={() => handleClickProcessVolume()} className='control-volume' style={{ height: '5px', cursor: 'pointer', width: '95%', display: 'flex', alignItems: 'center', backgroundColor: '#999', borderRadius: '10px' }}>
+                                    <div style={{ backgroundColor: 'red', height: '100%', width: `${volumeWidth}px` }}>
 
+                                    </div>
+                                    <div style={{ height: '18px', width: '18px', borderRadius: '50%', backgroundColor: 'red', cursor: 'pointer', transform: 'translateY(1px)' }}>
+
+                                    </div>
                                 </div>
                             </div>
-                        </div> */}
-                        </i>
+                        </div>
                     </div>
                     <div className='title-movie'>
                         {currentMovie.title}
