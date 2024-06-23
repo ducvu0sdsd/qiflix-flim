@@ -84,7 +84,7 @@ const Bottom = ({ setVisibleGuide, handleChangeFullScreen, setChanging, setVolum
         } else {
             const controlVolumeElement = document.querySelector('.control-volume') as HTMLElement;
             setVolume(1)
-            setVolumeWidth(controlVolumeElement.offsetWidth)
+            setVolumeWidth(90)
         }
     }, [window.localStorage.getItem('volume')])
 
@@ -101,7 +101,7 @@ const Bottom = ({ setVisibleGuide, handleChangeFullScreen, setChanging, setVolum
         } else {
             const controlVolumeElement = document.querySelector('.control-volume') as HTMLElement;
             setVolume(1)
-            setVolumeWidth(controlVolumeElement.offsetWidth)
+            setVolumeWidth(90)
         }
     }, [muted])
 
