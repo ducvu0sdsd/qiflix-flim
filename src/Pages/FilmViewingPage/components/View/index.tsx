@@ -128,18 +128,18 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
             } else if (event.code === 'BracketLeft') {
                 event.preventDefault();
                 const volumeNumber = (JSON.parse(window.localStorage.getItem('volume') || '') as Volume)
-                if (volumeNumber.volumePercent < 0.05) {
+                if (volumeNumber.volumePercent < 0.1) {
                     // window.localStorage.setItem('volume', JSON.stringify({ volumePercent: 0, volumeWidth: 0 }))
                 } else {
-                    window.localStorage.setItem('volume', JSON.stringify({ volumePercent: volumeNumber.volumePercent - 0.05, volumeWidth: volumeNumber.volumeWidth * (volumeNumber.volumePercent - 0.05) / volumeNumber.volumePercent }))
+                    window.localStorage.setItem('volume', JSON.stringify({ volumePercent: volumeNumber.volumePercent - 0.1, volumeWidth: volumeNumber.volumeWidth * (volumeNumber.volumePercent - 0.1) / volumeNumber.volumePercent }))
                 }
             } else if (event.code === 'BracketRight') {
                 event.preventDefault();
                 const volumeNumber = (JSON.parse(window.localStorage.getItem('volume') || '') as Volume)
-                if (volumeNumber.volumePercent > 0.95) {
+                if (volumeNumber.volumePercent > 0.9) {
                     window.localStorage.setItem('volume', JSON.stringify({ volumePercent: 1, volumeWidth: volumeNumber.volumeWidth * 1 / volumeNumber.volumePercent }))
                 } else {
-                    window.localStorage.setItem('volume', JSON.stringify({ volumePercent: volumeNumber.volumePercent + 0.05, volumeWidth: volumeNumber.volumeWidth * (volumeNumber.volumePercent + 0.05) / volumeNumber.volumePercent }))
+                    window.localStorage.setItem('volume', JSON.stringify({ volumePercent: volumeNumber.volumePercent + 0.1, volumeWidth: volumeNumber.volumeWidth * (volumeNumber.volumePercent + 0.1) / volumeNumber.volumePercent }))
                 }
 
             }
