@@ -84,7 +84,9 @@ const FilmSource = ({ data, currentUser }: FilmViewingPageProp) => {
                 </div>
             } */}
             <>
-                <View type='source' setBufferTime={setBufferTime} setCurrentEpisode={setCurrentEpisode} currentUser={currentUser || undefined} currentSubtitles={currentSubtitles} currentEpisode={currentEpisode || 1} currentTime={bufferTime || 0} currentMovie={data} />
+                {(currentEpisode && bufferTime) && (
+                    <View type='source' setBufferTime={setBufferTime} setCurrentEpisode={setCurrentEpisode} currentUser={currentUser || undefined} currentSubtitles={currentSubtitles} currentEpisode={currentEpisode} currentTime={bufferTime} currentMovie={data} />
+                )}
             </>
         </motion.div>
     )
