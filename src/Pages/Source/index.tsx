@@ -12,9 +12,9 @@ const Source = () => {
         if (accessToken && refreshToken && title) {
             localStorage.setItem('accessToken', JSON.stringify(accessToken))
             localStorage.setItem('refreshToken', JSON.stringify(refreshToken))
-            window.location.href = `https://www.qiflix.cloud/${title}`
+            navigate(`/${title}`)
         } else {
-            // navigate('/')
+            navigate('/')
         }
     }, [])
     return (
