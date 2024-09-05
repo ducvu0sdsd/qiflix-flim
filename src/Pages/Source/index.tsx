@@ -14,7 +14,7 @@ const Source = () => {
             localStorage.setItem('refreshToken', JSON.stringify(refreshToken))
             window.location.href = `https://www.qiflix.cloud/${title}`
         } else {
-            navigate('/')
+            // navigate('/')
         }
     }, [])
     return (
