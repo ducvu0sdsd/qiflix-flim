@@ -354,8 +354,8 @@ const View = ({ type = 'default', setCurrentEpisode, currentUser, currentEpisode
                         playerVars: {
                             controls: 1, // Hiển thị bảng điều khiển
                             modestbranding: 1, // Ẩn logo YouTube
-                            showinfo: 0, // Ẩn tiêu đề và thông tin video
-                            rel: 0, // Tắt gợi ý video liên quan 
+                            showinfo: 1, // Ẩn tiêu đề và thông tin video
+                            rel: 1, // Tắt gợi ý video liên quan 
                             fs: 0,
                         },
                     },

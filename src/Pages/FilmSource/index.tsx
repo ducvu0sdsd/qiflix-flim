@@ -3,7 +3,7 @@ import Footer from '../../Components/Footer'
 import PrivateHeader from '../../Components/PrivateHeader'
 import Informations from '../FilmViewingPage/components/Infomations'
 import View from '../FilmViewingPage/components/View'
-import '../FilmViewingPage/filmviewingpage.scss'
+import '../FilmViewingPage'
 import React, { useContext, useEffect, useState } from 'react'
 import { MovieInterface, SubtitleInterface, UserInterface, WatchingInterface } from '../../Components/Context/interfaces'
 import Comments from '../FilmViewingPage/components/Comments'
@@ -19,12 +19,15 @@ interface FilmViewingPageProp {
 
 const FilmSource = ({ data, currentUser }: FilmViewingPageProp) => {
 
-    const [currentEpisode, setCurrentEpisode] = useState<number>()
-    const [bufferTime, setBufferTime] = useState<number>()
     const [currentSubtitles, setCurrentSubtitles] = useState<SubtitleInterface[]>([])
     const { pathname } = useLocation()
     const { datas } = useContext(ThemeContext) || {}
     const [width, setWidth] = useState<number>(0)
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const currentEpisode: number = Number(queryParams.get('currentEpisode'));
+    const bufferTime = Number(queryParams.get('bufferTime'));
+
 
     const titleElement = document.querySelector('head title');
     if (titleElement) {
@@ -38,18 +41,6 @@ const FilmSource = ({ data, currentUser }: FilmViewingPageProp) => {
         });
     }, [currentEpisode, pathname])
 
-    useEffect(() => {
-        if (currentUser) {
-            const watching = currentUser?.watching?.filter(item => item.movie_id === data._id)[0] || null
-            if (watching) {
-                setCurrentEpisode(watching.indexOfEpisode)
-                setBufferTime(watching.currentTime)
-            } else {
-                setCurrentEpisode(1)
-                setBufferTime(0)
-            }
-        }
-    }, [datas?.currentUser])
 
 
     useEffect(() => {
@@ -84,9 +75,7 @@ const FilmSource = ({ data, currentUser }: FilmViewingPageProp) => {
                 </div>
             } */}
             <>
-                {(currentEpisode && bufferTime) && (
-                    <View type='source' setBufferTime={setBufferTime} setCurrentEpisode={setCurrentEpisode} currentUser={currentUser || undefined} currentSubtitles={currentSubtitles} currentEpisode={currentEpisode} currentTime={bufferTime} currentMovie={data} />
-                )}
+                <View setBufferTime={() => { }} setCurrentEpisode={() => { }} type='source' currentUser={currentUser || undefined} currentSubtitles={currentSubtitles} currentEpisode={currentEpisode || 1} currentTime={bufferTime || 0} currentMovie={data} />
             </>
         </motion.div>
     )

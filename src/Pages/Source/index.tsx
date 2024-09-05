@@ -9,10 +9,12 @@ const Source = () => {
         const accessToken = queryParams.get('accessToken');
         const refreshToken = queryParams.get('refreshToken');
         const title = queryParams.get('title');
-        if (accessToken && refreshToken && title) {
+        const currentEpisode: number = Number(queryParams.get('currentEpisode'));
+        const bufferTime = Number(queryParams.get('bufferTime'));
+        if (accessToken && refreshToken && title && currentEpisode && bufferTime) {
             localStorage.setItem('accessToken', JSON.stringify(accessToken))
             localStorage.setItem('refreshToken', JSON.stringify(refreshToken))
-            navigate(`/source-film/${title}`)
+            navigate(`/source-film/${title}?currentEpisode=${currentEpisode}&bufferTime=${bufferTime}`)
         } else {
             navigate('/')
         }
