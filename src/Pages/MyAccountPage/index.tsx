@@ -1,15 +1,34 @@
 
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import './myAccountPage.scss'
 import PrivateHeader from '../../Components/PrivateHeader'
 import { ThemeContext } from '../../Components/Context'
 import Footer from '../../Components/Footer'
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useNavigation } from 'react-router-dom'
+import { Input } from '@material-tailwind/react'
+import { AccountInterface, UserInterface } from '../../Components/Context/interfaces'
+import { apiUser, TypeHTTP } from '../../Utils/api'
+import { NotificationStatus } from '../../Components/Notification'
 
 const MyAccountPage = () => {
-
+    const navigate = useNavigate()
     const { datas, handles } = useContext(ThemeContext) || {}
+    const [account, setAccount] = useState<AccountInterface | undefined>()
+
+    useEffect(() => {
+        if (datas?.account) {
+            setAccount(datas.account)
+        }
+    }, [datas?.account])
+
+    const handleUpdate = () => {
+        apiUser({ path: `/accounts/${account?._id}`, type: TypeHTTP.PUT, body: account })
+            .then(res => {
+                console.log(res)
+                handles?.handleSetNotification({ type: NotificationStatus.SUCCESS, message: 'Update Successfully' })
+            })
+    }
 
     return (
         <motion.section
@@ -19,42 +38,25 @@ const MyAccountPage = () => {
         >
             <PrivateHeader users={datas?.users || []} currentUser={datas?.currentUser} />
             <section id='my-account-page'>
-                <div className='section__header'>
-                    <h1>My Account</h1>
-                </div>
                 <div className="section__body col-lg-12">
-                    <h2 className='col-lg-3'>Account Information</h2>
-                    <div className="card-profile col-lg-7">
-                        <div className='card-profile-item col-lg-12'>
-                            <p><b>Account Owner : </b>{datas?.account?.fullname}</p><button>Change Name</button>
-                        </div>
-                        <div className='card-profile-item col-lg-12'>
-                            <p><b>Email Address : </b>{datas?.account?.email}</p>
-                        </div>
-                        <div className='card-profile-item col-lg-12'>
-                            <p><b>Phone : </b>{datas?.account?.phone}</p><button>Change Phone</button>
-                        </div>
-                        <div className='card-profile-item col-lg-12'>
-                            <p><b>Address : </b>{datas?.account?.address}</p><button>Change Address</button>
-                        </div>
-                        <div className='card-profile-item col-lg-12'>
-                            <p><b>Password : </b>******</p><button>Change Password</button>
-                        </div>
-                    </div>
+                    {datas?.users.map((user, item) => {
+                        return (
+                            <div onClick={() => navigate('/manage-profile-page')} className='image-user'>
+                                <img src={user.avatar} />
+                                <span>{user.name}</span>
+                            </div>
+                        )
+                    })}
                 </div>
-                <div className="section__body col-lg-12">
-                    <h2 className='col-lg-3'>Users Management</h2>
-                    <div className="card-profile-item col-lg-7">
-                        <div className='imgs col-lg-9'>
-                            {datas?.users.map((user, item) => {
-                                return (
-                                    <div className='image-user'>
-                                        <img width={'100%'} src={user.avatar} />
-                                    </div>
-                                )
-                            })}
-                        </div>
-                        <Link className='link' to={'/manage-profile-page'}><button>Edit Users</button></Link>
+
+                <div className="section__information col-lg-12">
+                    <input onChange={e => setAccount(account ? { ...account, fullname: e.target.value } : account)} value={account?.fullname} type="text" className="form-control" placeholder="Account Owner" />
+                    <input onChange={e => setAccount(account ? { ...account, email: e.target.value } : account)} value={account?.email} type="text" className="form-control" placeholder="Email Address" />
+                    <input onChange={e => setAccount(account ? { ...account, phone: e.target.value } : account)} value={account?.phone} type="text" className="form-control" placeholder="Phone" />
+                    <input onChange={e => setAccount(account ? { ...account, address: e.target.value } : account)} value={account?.address} type="text" className="form-control" placeholder="Address" />
+                    <div></div>
+                    <div style={{ display: 'flex', justifyContent: 'end' }}>
+                        <button onClick={() => handleUpdate()}>Update</button>
                     </div>
                 </div>
             </section>
