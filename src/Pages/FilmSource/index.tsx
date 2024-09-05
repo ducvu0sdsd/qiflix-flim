@@ -1,12 +1,12 @@
 
 import Footer from '../../Components/Footer'
 import PrivateHeader from '../../Components/PrivateHeader'
-import Informations from './components/Infomations'
-import View from './components/View'
-import './filmviewingpage.scss'
+import Informations from '../FilmViewingPage/components/Infomations'
+import View from '../FilmViewingPage/components/View'
+import '../FilmViewingPage/filmviewingpage.scss'
 import React, { useContext, useEffect, useState } from 'react'
 import { MovieInterface, SubtitleInterface, UserInterface, WatchingInterface } from '../../Components/Context/interfaces'
-import Comments from './components/Comments'
+import Comments from '../FilmViewingPage/components/Comments'
 import { useLocation } from 'react-router-dom'
 import { TypeHTTP, apiUser } from '../../Utils/api'
 import { ThemeContext } from '../../Components/Context'
@@ -17,7 +17,7 @@ interface FilmViewingPageProp {
     currentUser: UserInterface | undefined
 }
 
-const FilmViewingPage = ({ data, currentUser }: FilmViewingPageProp) => {
+const FilmSource = ({ data, currentUser }: FilmViewingPageProp) => {
 
     const [currentEpisode, setCurrentEpisode] = useState<number>()
     const [bufferTime, setBufferTime] = useState<number>()
@@ -84,13 +84,10 @@ const FilmViewingPage = ({ data, currentUser }: FilmViewingPageProp) => {
                 </div>
             } */}
             <>
-                <View type='default' setBufferTime={setBufferTime} setCurrentEpisode={setCurrentEpisode} currentUser={currentUser || undefined} currentSubtitles={currentSubtitles} currentEpisode={currentEpisode || 1} currentTime={bufferTime || 0} currentMovie={data} />
-                <Informations currentEpisode={currentEpisode || 1} currentFilm={data} currentUser={currentUser || undefined} setCurrentEpisode={setCurrentEpisode} setBufferTime={setBufferTime} />
-                <Comments movie_id={data._id} user_id={currentUser?._id || ''} user_avatar={currentUser?.avatar || ''} />
-                <Footer />
+                <View type='source' setBufferTime={setBufferTime} setCurrentEpisode={setCurrentEpisode} currentUser={currentUser || undefined} currentSubtitles={currentSubtitles} currentEpisode={currentEpisode || 1} currentTime={bufferTime || 0} currentMovie={data} />
             </>
         </motion.div>
     )
 }
 
-export default FilmViewingPage
+export default FilmSource

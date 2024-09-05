@@ -19,6 +19,7 @@ import QiflixPage from './Pages/QiflixPage';
 import MyAccountPage from './Pages/MyAccountPage';
 import DetailFilm from './Pages/DetailFilm';
 import Source from './Pages/Source';
+import FilmSource from './Pages/FilmSource';
 
 export interface RoutesType {
     name: string,
@@ -164,6 +165,9 @@ function RoutesElement() {
         { name: 'detail-movie-page', component: <DetailFilm /> },
         ...(datas?.movies ? datas.movies.map((movie) => {
             return { name: movie.url, component: <FilmViewingPage data={movie} currentUser={datas.currentUser || undefined} /> }
+        }) : []),
+        ...(datas?.movies ? datas.movies.map((movie) => {
+            return { name: `source-film/${movie.url}`, component: <FilmSource data={movie} currentUser={datas.currentUser || undefined} /> }
         }) : []),
     ]
 

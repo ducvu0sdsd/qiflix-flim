@@ -17,9 +17,10 @@ export interface ViewProps {
     currentUser: UserInterface | undefined
     setCurrentEpisode: React.Dispatch<React.SetStateAction<number | undefined>>;
     setBufferTime: React.Dispatch<React.SetStateAction<number | undefined>>;
+    type: string
 }
 
-const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, currentTime, currentSubtitles, setBufferTime }: ViewProps) => {
+const View = ({ type = 'default', setCurrentEpisode, currentUser, currentEpisode, currentMovie, currentTime, currentSubtitles, setBufferTime }: ViewProps) => {
     //ref
     const reactPlayerRef = useRef<ReactPlayer>(null);
 
@@ -324,7 +325,7 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
 
 
     return (
-        <section style={{ height: `${window.innerHeight}px` }} id='video'>
+        <section style={type === 'default' ? { height: `${window.innerHeight}px` } : {}} id='video'>
             {!fullScreen && <>
                 <Link className='link' to={'/home-page'}><i className='btn-return bx bx-left-arrow-alt'></i></Link>
                 <i className='bx bx-book-content btn-share' onMouseEnter={() => setVisibleGuide(true)} onMouseLeave={() => setVisibleGuide(false)} >
@@ -342,7 +343,9 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
                     </div>
                 </i>
             </>}
-            <div onClick={handlePlayOrPause} className='wrapper-video'></div>
+            {type === 'default' && (
+                <div onClick={handlePlayOrPause} className='wrapper-video'></div>
+            )}
             <ReactPlayer
                 config={{
                     youtube: {
@@ -360,7 +363,7 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
                 }}
                 ref={reactPlayerRef}
                 width={'100%'}
-                height={`${window.innerHeight}px`}
+                height={type === 'default' ? `${window.innerHeight}px` : 'auto'}
                 controls={false}
                 volume={volume}
                 playing={playing}
@@ -376,32 +379,33 @@ const View = ({ setCurrentEpisode, currentUser, currentEpisode, currentMovie, cu
             // url={'https://aa.opstream6.com/20220324/5431_283b15c7/index.m3u8'}
             />
 
-
-            <Bottom
-                setVisibleGuide={setVisibleGuide}
-                handleChangeFullScreen={handleChangeFullScreen}
-                setChanging={setChanging}
-                handleChangeEpisode={handleChangeEpisode}
-                currentUser={currentUser}
-                displayNextEpisode={displayNextEpisode}
-                currentSubtitles={currentSubtitles}
-                openSubtitle={openSubtitle}
-                setOpenSubtitle={setOpenSubtitle}
-                currentEpisode={currentEpisode}
-                currentMovie={currentMovie}
-                fullScreen={fullScreen}
-                subtitle={subtitle}
-                playing={playing}
-                setVolume={setVolume}
-                played={played || 0}
-                duration={duration || 0}
-                video={reactPlayerRef.current}
-                muted={muted}
-                setDisplayAction={setDisplayAction}
-                setFullScreen={setFullScreen}
-                setMuted={setMuted}
-                setPlaying={setPlaying}
-            />
+            {type === 'default' && (
+                <Bottom
+                    setVisibleGuide={setVisibleGuide}
+                    handleChangeFullScreen={handleChangeFullScreen}
+                    setChanging={setChanging}
+                    handleChangeEpisode={handleChangeEpisode}
+                    currentUser={currentUser}
+                    displayNextEpisode={displayNextEpisode}
+                    currentSubtitles={currentSubtitles}
+                    openSubtitle={openSubtitle}
+                    setOpenSubtitle={setOpenSubtitle}
+                    currentEpisode={currentEpisode}
+                    currentMovie={currentMovie}
+                    fullScreen={fullScreen}
+                    subtitle={subtitle}
+                    playing={playing}
+                    setVolume={setVolume}
+                    played={played || 0}
+                    duration={duration || 0}
+                    video={reactPlayerRef.current}
+                    muted={muted}
+                    setDisplayAction={setDisplayAction}
+                    setFullScreen={setFullScreen}
+                    setMuted={setMuted}
+                    setPlaying={setPlaying}
+                />
+            )}
         </section>
     )
 }

@@ -12,7 +12,7 @@ const Source = () => {
         if (accessToken && refreshToken && title) {
             localStorage.setItem('accessToken', JSON.stringify(accessToken))
             localStorage.setItem('refreshToken', JSON.stringify(refreshToken))
-            navigate(`/${title}`)
+            navigate(`/source-film/${title}`)
         } else {
             navigate('/')
         }
