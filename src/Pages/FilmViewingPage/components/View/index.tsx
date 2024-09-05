@@ -352,7 +352,7 @@ const View = ({ type = 'default', setCurrentEpisode, currentUser, currentEpisode
                 config={{
                     youtube: {
                         playerVars: {
-                            controls: 0, // Hiển thị bảng điều khiển
+                            controls: 1, // Hiển thị bảng điều khiển
                             modestbranding: 1, // Ẩn logo YouTube
                             showinfo: 0, // Ẩn tiêu đề và thông tin video
                             rel: 0, // Tắt gợi ý video liên quan 
