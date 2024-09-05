@@ -71,7 +71,7 @@ const FilmViewingPage = ({ data, currentUser }: FilmViewingPageProp) => {
             animate={{ x: 0 }}
             exit={{ x: window.innerWidth, transition: { duration: 0.2 } }}
         >
-            {width >= 600 ?
+            {/* {width >= 600 ?
                 <>
                     <View setBufferTime={setBufferTime} setCurrentEpisode={setCurrentEpisode} currentUser={currentUser || undefined} currentSubtitles={currentSubtitles} currentEpisode={currentEpisode || 1} currentTime={bufferTime || 0} currentMovie={data} />
                     <Informations currentEpisode={currentEpisode || 1} currentFilm={data} currentUser={currentUser || undefined} setCurrentEpisode={setCurrentEpisode} setBufferTime={setBufferTime} />
@@ -82,7 +82,13 @@ const FilmViewingPage = ({ data, currentUser }: FilmViewingPageProp) => {
                     <img src={Phone} width={'50%'} />
                     <p style={{ color: 'white' }}>Please rotate your phone screen horizontally</p>
                 </div>
-            }
+            } */}
+            <>
+                <View setBufferTime={setBufferTime} setCurrentEpisode={setCurrentEpisode} currentUser={currentUser || undefined} currentSubtitles={currentSubtitles} currentEpisode={currentEpisode || 1} currentTime={bufferTime || 0} currentMovie={data} />
+                <Informations currentEpisode={currentEpisode || 1} currentFilm={data} currentUser={currentUser || undefined} setCurrentEpisode={setCurrentEpisode} setBufferTime={setBufferTime} />
+                <Comments movie_id={data._id} user_id={currentUser?._id || ''} user_avatar={currentUser?.avatar || ''} />
+                <Footer />
+            </>
         </motion.div>
     )
 }
