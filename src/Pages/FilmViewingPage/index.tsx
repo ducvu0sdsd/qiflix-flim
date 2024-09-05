@@ -27,21 +27,18 @@ const FilmViewingPage = ({ data, currentUser }: FilmViewingPageProp) => {
     const { datas } = useContext(ThemeContext) || {}
     const [width, setWidth] = useState<number>(0)
     const queryParams = new URLSearchParams(location.search);
+    const accessToken = queryParams.get('accessToken');
+    const refreshToken = queryParams.get('refreshToken');
+    if (accessToken && refreshToken) {
+        localStorage.setItem('accessToken', JSON.stringify(accessToken))
+        localStorage.setItem('refreshToken', JSON.stringify(refreshToken))
+        window.location.reload()
+    }
 
     const titleElement = document.querySelector('head title');
     if (titleElement) {
         titleElement.textContent = data.title;
     }
-
-    useEffect(() => {
-        const accessToken = queryParams.get('accessToken');
-        const refreshToken = queryParams.get('refreshToken');
-        if (accessToken && refreshToken) {
-            localStorage.setItem('accessToken', JSON.stringify(accessToken))
-            localStorage.setItem('refreshToken', JSON.stringify(refreshToken))
-            window.location.reload()
-        }
-    }, [])
 
     useEffect(() => {
         window.scrollTo({
