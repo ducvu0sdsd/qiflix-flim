@@ -18,6 +18,7 @@ import { AnimatePresence } from 'framer-motion';
 import QiflixPage from './Pages/QiflixPage';
 import MyAccountPage from './Pages/MyAccountPage';
 import DetailFilm from './Pages/DetailFilm';
+import Source from './Pages/Source';
 
 export interface RoutesType {
     name: string,
@@ -147,7 +148,8 @@ function RoutesElement() {
     const routes: RoutesType[] = [
         { name: '', component: <PublicPage /> },
         { name: 'sign-in-page', component: <SignInPage /> },
-        { name: 'sign-up-page/:email', component: <SignUpPage /> }
+        { name: 'sign-up-page/:email', component: <SignUpPage /> },
+        { name: 'source', component: <Source /> }
     ]
     const routesUser: RoutesType[] = [
         { name: ':url', component: <ManageProfilePage /> },
