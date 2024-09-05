@@ -367,9 +367,9 @@ const View = ({ type = 'default', setCurrentEpisode, currentUser, currentEpisode
                 width={'100%'}
                 height={type === 'default' ? `${window.innerHeight}px` : 'auto'}
                 controls={type === 'default' ? false : true}
-                volume={volume}
+                volume={type === 'default' ? volume : 1}
                 playing={playing}
-                muted={muted}
+                muted={type === 'default' ? muted : false}
                 progressInterval={100}
                 onStart={() => { reactPlayerRef.current?.seekTo(currentTime) }}
                 onProgress={() => handleOnProgress()}
