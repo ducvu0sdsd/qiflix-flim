@@ -326,25 +326,27 @@ const View = ({ type = 'default', setCurrentEpisode, currentUser, currentEpisode
 
     return (
         <section style={type === 'default' ? { height: `${window.innerHeight}px` } : {}} id='video'>
-            {!fullScreen && <>
-                <Link className='link' to={'/home-page'}><i className='btn-return bx bx-left-arrow-alt'></i></Link>
-                <i className='bx bx-book-content btn-share' onMouseEnter={() => setVisibleGuide(true)} onMouseLeave={() => setVisibleGuide(false)} >
-                    <div className='content' style={{ width: visibleGuide ? 'auto' : 0, padding: visibleGuide ? '15px' : '0' }}>
-                        {visibleGuide && guides.map((item, index) => (
-                            <div key={index} style={{ display: 'flex', alignItems: 'center' }}>
-                                <div style={{ fontWeight: 'bold', fontSize: '18px', width: '70px' }}>
-                                    {item.key}
-                                </div>
-                                <div style={{ fontSize: '16px', width: '250px' }}>
-                                    <span>{': ' + item.value}</span>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </i>
-            </>}
             {type === 'default' && (
-                <div onClick={handlePlayOrPause} className='wrapper-video'></div>
+                <>
+                    {!fullScreen && <>
+                        <Link className='link' to={'/home-page'}><i className='btn-return bx bx-left-arrow-alt'></i></Link>
+                        <i className='bx bx-book-content btn-share' onMouseEnter={() => setVisibleGuide(true)} onMouseLeave={() => setVisibleGuide(false)} >
+                            <div className='content' style={{ width: visibleGuide ? 'auto' : 0, padding: visibleGuide ? '15px' : '0' }}>
+                                {visibleGuide && guides.map((item, index) => (
+                                    <div key={index} style={{ display: 'flex', alignItems: 'center' }}>
+                                        <div style={{ fontWeight: 'bold', fontSize: '18px', width: '70px' }}>
+                                            {item.key}
+                                        </div>
+                                        <div style={{ fontSize: '16px', width: '250px' }}>
+                                            <span>{': ' + item.value}</span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </i>
+                    </>}
+                    <div onClick={handlePlayOrPause} className='wrapper-video'></div>
+                </>
             )}
             <ReactPlayer
                 config={{
@@ -364,7 +366,7 @@ const View = ({ type = 'default', setCurrentEpisode, currentUser, currentEpisode
                 ref={reactPlayerRef}
                 width={'100%'}
                 height={type === 'default' ? `${window.innerHeight}px` : 'auto'}
-                controls={false}
+                controls={type === 'default' ? false : true}
                 volume={volume}
                 playing={playing}
                 muted={muted}
