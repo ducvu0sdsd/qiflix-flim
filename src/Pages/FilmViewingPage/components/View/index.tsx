@@ -356,7 +356,7 @@ const View = ({ type = 'default', setCurrentEpisode, currentUser, currentEpisode
                             modestbranding: 1, // Ẩn logo YouTube
                             showinfo: 1, // Ẩn tiêu đề và thông tin video
                             rel: 1, // Tắt gợi ý video liên quan 
-                            fs: 1,
+                            fs: 0,
                         },
                     },
                     facebook: {

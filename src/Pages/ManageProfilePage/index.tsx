@@ -101,10 +101,11 @@ const ManageProfilePage = () => {
                 handles?.handleSetNotification({ type: NotificationStatus.WARNING, message: 'Please choose gender' })
                 return
             }
+            console.log({ name, gender, avatar: avatarCreate, account_id: datas?.account?._id, pin: pin })
             apiUser({ type: TypeHTTP.POST, body: { name, gender, avatar: avatarCreate, account_id: datas?.account?._id, pin: pin }, path: '/users' })
                 .then((result) => {
                     handles?.handleSetNotification({ type: NotificationStatus.SUCCESS, message: 'Successful Create User "' + name + '"' })
-                    window.location.reload()
+                    // window.location.reload()
                 })
         }
 
