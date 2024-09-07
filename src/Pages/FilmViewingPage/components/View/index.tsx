@@ -224,10 +224,10 @@ const View = ({ type = 'default', setCurrentEpisode, currentUser, currentEpisode
             }
             if (waitingUpdate === 0) {
                 if (reactPlayerRef.current?.getCurrentTime() / duration > 0.95 && currentEpisode === currentMovie.listEpisode?.episodes.length) {
-                    setWaitingUpdate(10)
+                    setWaitingUpdate(100)
                     apiUser({ path: `/users/delete-watching/${currentUser._id}`, body: watching, type: TypeHTTP.PUT })
                 } else {
-                    setWaitingUpdate(10)
+                    setWaitingUpdate(100)
                     apiUser({ path: `/users/update-watching/${currentUser._id}`, body: watching, type: TypeHTTP.PUT })
                 }
             } else {
