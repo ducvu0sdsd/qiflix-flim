@@ -365,7 +365,7 @@ const View = ({ type = 'default', setCurrentEpisode, currentUser, currentEpisode
                 }}
                 ref={reactPlayerRef}
                 width={'100%'}
-                height={type === 'default' ? `${window.innerHeight}px` : currentMovie.listEpisode?.episodes[currentEpisode - 1].url.includes('youtube') ? `${window.innerHeight - 25}px` : 'auto'}
+                height={type === 'default' ? `${window.innerHeight}px` : currentMovie.listEpisode?.episodes[currentEpisode - 1].url.includes('youtube') ? `${window.innerHeight}px` : 'auto'}
                 controls={type === 'default' ? false : true}
                 volume={type === 'default' ? volume : 1}
                 playing={playing}
