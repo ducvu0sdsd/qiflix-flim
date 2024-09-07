@@ -76,9 +76,9 @@ const FilmSource = ({ data, currentUser }: FilmViewingPageProp) => {
             } */}
             <>
                 <View setBufferTime={() => { }} setCurrentEpisode={() => { }} type='source' currentUser={currentUser || undefined} currentSubtitles={currentSubtitles} currentEpisode={currentEpisode || 1} currentTime={bufferTime || 0} currentMovie={data} />
-                <div style={{ backgroundColor: 'black', width: '100%', height: '200px' }}>
+                {/* <div style={{ backgroundColor: 'black', width: '100%', height: '200px' }}>
 
-                </div>
+                </div> */}
             </>
         </motion.div>
     )
