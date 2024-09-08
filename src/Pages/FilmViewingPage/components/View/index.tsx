@@ -18,7 +18,7 @@ export interface ViewProps {
     setCurrentEpisode: React.Dispatch<React.SetStateAction<number | undefined>>;
     setBufferTime: React.Dispatch<React.SetStateAction<number | undefined>>;
     type: string,
-    currentUserId: string
+    currentUserId: string | undefined
 }
 
 const View = ({ currentUserId, type = 'default', setCurrentEpisode, currentUser, currentEpisode, currentMovie, currentTime, currentSubtitles, setBufferTime }: ViewProps) => {
