@@ -75,12 +75,12 @@ const FilmSource = ({ data, currentUser }: FilmViewingPageProp) => {
                     <p style={{ color: 'white' }}>Please rotate your phone screen horizontally</p>
                 </div>
             } */}
-            <>
+            <div style={{ height: '100vh', backgroundColor: 'black' }}>
                 <View currentUserId={currentUserId || undefined} setBufferTime={() => { }} setCurrentEpisode={() => { }} type='source' currentUser={currentUser || undefined} currentSubtitles={currentSubtitles} currentEpisode={currentEpisode || 1} currentTime={bufferTime || 0} currentMovie={data} />
                 {/* <div style={{ backgroundColor: 'black', width: '100%', height: '200px' }}>
 
                 </div> */}
-            </>
+            </div>
         </motion.div>
     )
 }
