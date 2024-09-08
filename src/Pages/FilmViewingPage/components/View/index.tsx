@@ -17,10 +17,11 @@ export interface ViewProps {
     currentUser: UserInterface | undefined
     setCurrentEpisode: React.Dispatch<React.SetStateAction<number | undefined>>;
     setBufferTime: React.Dispatch<React.SetStateAction<number | undefined>>;
-    type: string
+    type: string,
+    currentUserId: string
 }
 
-const View = ({ type = 'default', setCurrentEpisode, currentUser, currentEpisode, currentMovie, currentTime, currentSubtitles, setBufferTime }: ViewProps) => {
+const View = ({ currentUserId, type = 'default', setCurrentEpisode, currentUser, currentEpisode, currentMovie, currentTime, currentSubtitles, setBufferTime }: ViewProps) => {
     //ref
     const reactPlayerRef = useRef<ReactPlayer>(null);
 
@@ -215,23 +216,45 @@ const View = ({ type = 'default', setCurrentEpisode, currentUser, currentEpisode
 
 
         // Update Watching
-        if (reactPlayerRef.current?.getCurrentTime() && duration && currentUser) {
-            const watching = {
-                movie_id: currentMovie._id,
-                indexOfEpisode: currentEpisode,
-                currentTime: reactPlayerRef.current?.getCurrentTime(),
-                process: reactPlayerRef.current?.getCurrentTime() / duration
-            }
-            if (waitingUpdate === 0) {
-                if (reactPlayerRef.current?.getCurrentTime() / duration > 0.95 && currentEpisode === currentMovie.listEpisode?.episodes.length) {
-                    setWaitingUpdate(100)
-                    apiUser({ path: `/users/delete-watching/${currentUser._id}`, body: watching, type: TypeHTTP.PUT })
-                } else {
-                    setWaitingUpdate(100)
-                    apiUser({ path: `/users/update-watching/${currentUser._id}`, body: watching, type: TypeHTTP.PUT })
+        if (type === 'default') {
+            if (reactPlayerRef.current?.getCurrentTime() && duration && currentUser) {
+                const watching = {
+                    movie_id: currentMovie._id,
+                    indexOfEpisode: currentEpisode,
+                    currentTime: reactPlayerRef.current?.getCurrentTime(),
+                    process: reactPlayerRef.current?.getCurrentTime() / duration
                 }
-            } else {
-                setWaitingUpdate(prev => prev - 1)
+                if (waitingUpdate === 0) {
+                    if (reactPlayerRef.current?.getCurrentTime() / duration > 0.95 && currentEpisode === currentMovie.listEpisode?.episodes.length) {
+                        setWaitingUpdate(100)
+                        apiUser({ path: `/users/delete-watching/${currentUser._id}`, body: watching, type: TypeHTTP.PUT })
+                    } else {
+                        setWaitingUpdate(100)
+                        apiUser({ path: `/users/update-watching/${currentUser._id}`, body: watching, type: TypeHTTP.PUT })
+                    }
+                } else {
+                    setWaitingUpdate(prev => prev - 1)
+                }
+            }
+        } else {
+            if (reactPlayerRef.current?.getCurrentTime() && duration && currentUserId) {
+                const watching = {
+                    movie_id: currentMovie._id,
+                    indexOfEpisode: currentEpisode,
+                    currentTime: reactPlayerRef.current?.getCurrentTime(),
+                    process: reactPlayerRef.current?.getCurrentTime() / duration
+                }
+                if (waitingUpdate === 0) {
+                    if (reactPlayerRef.current?.getCurrentTime() / duration > 0.95 && currentEpisode === currentMovie.listEpisode?.episodes.length) {
+                        setWaitingUpdate(100)
+                        apiUser({ path: `/users/delete-watching/${currentUserId}`, body: watching, type: TypeHTTP.PUT })
+                    } else {
+                        setWaitingUpdate(100)
+                        apiUser({ path: `/users/update-watching/${currentUserId}`, body: watching, type: TypeHTTP.PUT })
+                    }
+                } else {
+                    setWaitingUpdate(prev => prev - 1)
+                }
             }
         }
     }

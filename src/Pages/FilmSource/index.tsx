@@ -27,6 +27,7 @@ const FilmSource = ({ data, currentUser }: FilmViewingPageProp) => {
     const queryParams = new URLSearchParams(location.search);
     const currentEpisode: number = Number(queryParams.get('currentEpisode'));
     const bufferTime = Number(queryParams.get('bufferTime'));
+    const currentUserId = queryParams.get('currentUser')
 
 
     const titleElement = document.querySelector('head title');
