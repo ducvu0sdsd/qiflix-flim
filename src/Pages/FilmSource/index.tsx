@@ -75,7 +75,7 @@ const FilmSource = ({ data, currentUser }: FilmViewingPageProp) => {
                     <p style={{ color: 'white' }}>Please rotate your phone screen horizontally</p>
                 </div>
             } */}
-            {data.listEpisode?.episodes[currentEpisode].url.includes('youtube') ? (
+            {data.listEpisode?.episodes[currentEpisode]?.url.includes('youtube') ? (
                 <View currentUserId={currentUserId || undefined} setBufferTime={() => { }} setCurrentEpisode={() => { }} type='source' currentUser={currentUser || undefined} currentSubtitles={currentSubtitles} currentEpisode={currentEpisode || 1} currentTime={bufferTime || 0} currentMovie={data} />
             ) : (
                 <div style={{ height: '100vh', backgroundColor: 'black', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
