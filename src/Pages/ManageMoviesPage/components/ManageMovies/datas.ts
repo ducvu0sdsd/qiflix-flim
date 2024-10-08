@@ -35,5 +35,5 @@ export const movieGenres = [
 ];
 
 export const belongs = [
-    "Korea", "Studio Ghibli", "Anime", "Hong Kong"
+    "Korea", "Studio Ghibli", "Anime", "Hong Kong", "Conan Detective"
 ]
