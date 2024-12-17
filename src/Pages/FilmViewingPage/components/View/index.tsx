@@ -45,7 +45,12 @@ const View = ({ currentUserId, type = 'default', setCurrentEpisode, currentUser,
     }, [currentEpisode])
 
     useEffect(() => {
-        setOpenSubtitle(currentSubtitles.length > 0)
+        let currentEpSub = currentSubtitles.filter(item => item.episode === currentEpisode)[0]
+        if (currentEpSub) {
+            setOpenSubtitle(true)
+        } else {
+            setOpenSubtitle(false)
+        }
     }, [currentSubtitles])
 
     useEffect(() => {
@@ -176,14 +181,17 @@ const View = ({ currentUserId, type = 'default', setCurrentEpisode, currentUser,
         setPlayed(reactPlayerRef.current?.getCurrentTime() || 0)
         if (currentSubtitles.length > 0) {
             let have = false
-            currentSubtitles[0].subtitles.forEach(item => {
-                if (reactPlayerRef.current?.getCurrentTime()) {
-                    if (reactPlayerRef.current?.getCurrentTime() >= item.firstTime && reactPlayerRef.current?.getCurrentTime() < item.lastTime) {
-                        setSubtitle(item.content)
-                        have = true
+            let currentEpSub = currentSubtitles.filter(item => item.episode === currentEpisode)[0]
+            if (currentEpSub) {
+                currentEpSub.subtitles.forEach(item => {
+                    if (reactPlayerRef.current?.getCurrentTime()) {
+                        if (reactPlayerRef.current?.getCurrentTime() >= item.firstTime && reactPlayerRef.current?.getCurrentTime() < item.lastTime) {
+                            setSubtitle(item.content)
+                            have = true
+                        }
                     }
-                }
-            })
+                })
+            }
             if (!have) {
                 setSubtitle('')
             }

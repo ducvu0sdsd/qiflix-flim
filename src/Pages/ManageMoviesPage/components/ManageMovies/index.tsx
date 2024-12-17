@@ -66,7 +66,7 @@ const ManageMovies = () => {
         } else {
             console.error('currentMovieSub?._id is null or invalid');
         }
-        const epi = $('#view .txt-episode').val()
+        const epi = $('.txt-episode').val()
         if (/[0-9]{1,}/.test(epi)) {
             formData.append('episode', epi)
         }
@@ -241,7 +241,7 @@ const ManageMovies = () => {
                         )
                     })}
                 </select>
-                <input type="text" placeholder='Episode' className="form-control txt-espisode" />
+                <input type="text" placeholder='Episode' className="form-control txt-episode" />
                 <input type='file' accept='.srt' onChange={(e: any) => setSelectedFile(e.target.files[0])} />
                 <button onClick={handleCreateSubtitle} type="button" style={{ margin: '0 5px' }} className="btn btn-primary">Create</button>
             </div>

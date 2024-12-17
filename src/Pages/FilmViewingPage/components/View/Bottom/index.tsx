@@ -190,11 +190,15 @@ const Bottom = ({ setVisibleGuide, handleChangeFullScreen, setChanging, setVolum
 
     return (
         <div className='bottom'>
-            <div onClick={() => handlePlayOrPause()} className='subtitle'>
-                <div className='content'>
-                    <span className='sub'>{subtitle}</span>
-                </div >
-            </div>
+            {openSubtitle && (
+                <div onClick={() => handlePlayOrPause()} className='subtitle'>
+                    <div className='content'>
+                        {subtitle !== '' && (
+                            <span className='sub'>{subtitle}</span>
+                        )}
+                    </div >
+                </div>
+            )}
             <button
                 onClick={() => handleChangeEpisode(1)}
                 style={{ display: `${displayNextEpisode ? 'block' : 'none'}` }} className='btn-next-episode'>

@@ -55,6 +55,7 @@ const FilmViewingPage = ({ data, currentUser }: FilmViewingPageProp) => {
     useEffect(() => {
         apiUser({ path: `/subtitles/${data._id}`, type: TypeHTTP.GET })
             .then(res => {
+                console.log(res)
                 setCurrentSubtitles(res)
             })
     }, [])
