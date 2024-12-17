@@ -192,7 +192,7 @@ const Bottom = ({ setVisibleGuide, handleChangeFullScreen, setChanging, setVolum
         <div className='bottom'>
             <div onClick={() => handlePlayOrPause()} className='subtitle'>
                 <div className='content'>
-                    {subtitle}
+                    <span className='sub'>{subtitle}</span>
                 </div >
             </div>
             <button

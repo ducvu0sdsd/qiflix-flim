@@ -89,17 +89,16 @@
 
         & .subtitle {
             position: absolute;
-            top: -120px;
+            top: -220px;
             left: 0;
             width: 100%;
-            height: 120px;
+            height: 200px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 25px;
             font-weight: 550;
             overflow: hidden;
+            border-radius: 20px;
 
             & .content {
                 height: 100%;
@@ -108,7 +107,17 @@
                 align-items: center;
                 justify-content: center;
                 text-align: center;
+                border-radius: 20px;
 
+                & .sub {
+                    color: black;
+                    background-color: white;
+                    font-weight: bold;
+                    padding: 20px 20px;
+                    // padding-top: 100px;
+                    font-size: 50px;
+                    border-radius: 20px;
+                }
             }
         }
 
