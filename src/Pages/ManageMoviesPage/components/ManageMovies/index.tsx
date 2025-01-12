@@ -91,7 +91,7 @@ const ManageMovies = () => {
         if (episode.length === 0) {
             setEpisode(prev => [...prev, { indexOfEpisode: parseInt($('.1').val()), name: $('.2').val(), url: $('.3').val() }])
         } else {
-            setEpisode(prev => [...prev, { indexOfEpisode: episode.length, name: `Episode ${episode.length}`, url: $('.3').val() }])
+            setEpisode(prev => [...prev, { indexOfEpisode: episode.length + 1, name: `Episode ${episode.length + 1}`, url: $('.3').val() }])
         }
     }
 
