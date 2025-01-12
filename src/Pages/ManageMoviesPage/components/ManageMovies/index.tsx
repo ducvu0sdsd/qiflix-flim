@@ -87,6 +87,14 @@ const ManageMovies = () => {
             })
     }
 
+    const handleAddEpisode = () => {
+        if (episode.length === 0) {
+            setEpisode(prev => [...prev, { indexOfEpisode: parseInt($('.1').val()), name: $('.2').val(), url: $('.3').val() }])
+        } else {
+            setEpisode(prev => [...prev, { indexOfEpisode: episode.length, name: `Episode ${episode.length}`, url: $('.3').val() }])
+        }
+    }
+
     useEffect(() => {
         const title = $('.txt-title')
         const des = $('.txt-des')
@@ -179,10 +187,12 @@ const ManageMovies = () => {
                     </div>
                 </div>
                 <div className='episode'>
-                    <input type="text" placeholder='Index Of Episode:' className="form-control 1" />
-                    <input type="text" placeholder='Episode Name' className="form-control 2" />
+                    {episode.length === 0 && (<>
+                        <input type="text" placeholder='Index Of Episode:' className="form-control 1" />
+                        <input type="text" placeholder='Episode Name' className="form-control 2" />
+                    </>)}
                     <input type="text" placeholder='Episode URL' className="form-control 3" />
-                    <button onClick={() => setEpisode(prev => [...prev, { indexOfEpisode: parseInt($('.1').val()), name: $('.2').val(), url: $('.3').val() }])} type="button" className="btn btn-success">Create</button>
+                    <button onClick={() => handleAddEpisode()} type="button" className="btn btn-success">Create</button>
                     <button onClick={() => setEpisode(prev => prev.filter((item, index) => index !== prev.length - 1))}>x</button>
                 </div>
                 <div className='episode'>
