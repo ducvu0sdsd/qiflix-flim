@@ -114,20 +114,20 @@ const ManageMovies = () => {
         country.val(currentMovie?.country)
         thumVer.val(currentMovie?.thumbnailVertical)
 
-        setTitle(currentMovie.title)
-        setDescription(currentMovie.description)
-        setUrl(currentMovie.url)
-        setThumbnail(currentMovie.thumbnail)
-        setThumbnailVertical(currentMovie.thumbnailVertical)
-        setTrailerUrl(currentMovie.trailerUrl)
-        setYearRelease(currentMovie.yearRelease)
-        setCountry(currentMovie.country)
-        setActors(currentMovie.actors)
-        setDirectors(currentMovie.directors)
-        if (currentMovie?.genres && currentMovie?.belong && currentMovie.listEpisode?.episodes) {
+        setTitle(currentMovie?.title)
+        setDescription(currentMovie?.description)
+        setUrl(currentMovie?.url)
+        setThumbnail(currentMovie?.thumbnail)
+        setThumbnailVertical(currentMovie?.thumbnailVertical)
+        setTrailerUrl(currentMovie?.trailerUrl)
+        setYearRelease(currentMovie?.yearRelease)
+        setCountry(currentMovie?.country)
+        setActors(currentMovie?.actors)
+        setDirectors(currentMovie?.directors)
+        if (currentMovie?.genres && currentMovie?.belong && currentMovie?.listEpisode?.episodes) {
             setGenre(currentMovie?.genres)
-            setBelong(currentMovie.belong)
-            setEpisode(currentMovie.listEpisode?.episodes)
+            setBelong(currentMovie?.belong)
+            setEpisode(currentMovie?.listEpisode?.episodes)
         }
     }, [currentMovie])
 
